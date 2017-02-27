@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\DefaultArgDescriptions.cs" />
     <Compile Include="Actions\GetClients\GetClientsAction.cs" />
     <Compile Include="Actions\GetClients\GetClientsArgs.cs" />
     <Compile Include="Actions\GetDataSets\GetDataSetsAction.cs" />
