@@ -101,7 +101,7 @@
             return table.Rows.Count;
         }
 
-        public IEnumerable<ClientRecord> GetClients()
+        public IEnumerable<ClientRecord> GetClients(int top)
         {
             return this.connection.Query<ClientRecord>(
                 nameof(this.GetClients),
@@ -109,7 +109,7 @@
                 transaction: this.transaction);
         }
 
-        public IEnumerable<PlotRecord> GetPlots(int clientId)
+        public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
         {
             var @param = new { ClientId = clientId };
             return this.connection.Query<PlotRecord>(

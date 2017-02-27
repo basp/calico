@@ -51,6 +51,9 @@
       <HintPath>..\packages\DotSpatial.Topology.1.9\lib\net40-Client\DotSpatial.Topology.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Optional.3.2.0\lib\net452\Optional.dll</HintPath>
     </Reference>
@@ -73,6 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\GetClients\GetClientsAction.cs" />
+    <Compile Include="Actions\GetClients\GetClientsArgs.cs" />
+    <Compile Include="Actions\GetPlots\GetPlotsAction.cs" />
+    <Compile Include="Actions\GetPlots\GetPlotsArgs.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesAction.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesArgs.cs" />
     <Compile Include="Actions\NewClient\NewClientAction.cs" />
@@ -97,5 +104,6 @@
       <Name>Calico</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

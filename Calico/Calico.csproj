@@ -66,6 +66,9 @@
     <Compile Include="Commands\GetClients\GetClientsRequest.cs" />
     <Compile Include="Commands\GetClients\GetClientsResponse.cs" />
     <Compile Include="Commands\GetClients\GetClientsCommand.cs" />
+    <Compile Include="Commands\GetPlots\GetPlotsCommand.cs" />
+    <Compile Include="Commands\GetPlots\GetPlotsRequest.cs" />
+    <Compile Include="Commands\GetPlots\GetPlotsResponse.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesCommand.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesRequest.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesResponse.cs" />
@@ -97,8 +100,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\GetPlots\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

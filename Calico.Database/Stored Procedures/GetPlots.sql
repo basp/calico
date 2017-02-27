@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[GetPlots]
 	@ClientId INT,
-	@Top INT = 50
+	@Top INT
 AS
-SELECT TOP(@Top) [Id], [Name], [Geometry]
+SELECT TOP(@Top) [Id], [ClientId], [Name], [Geometry]
 FROM [dbo].[Plots]
 ORDER BY [Id] DESC

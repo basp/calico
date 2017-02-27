@@ -24,6 +24,14 @@
         public bool Help { get; set; }
 
         [ArgActionMethod]
+        public void GetClients(GetClientsArgs args) =>
+            new GetClientsAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
+        public void GetPlots(GetPlotsArgs args) =>
+            new GetPlotsAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         public void ImportFeatures(ImportFeaturesArgs args) =>
             new ImportFeaturesAction(ConnectionFactory).Execute(args);
 
@@ -47,6 +55,8 @@
 
             Mapper.Initialize(x =>
             {
+                x.CreateMap<GetClientsArgs, GetClientsRequest>();
+                x.CreateMap<GetPlotsArgs, GetPlotsRequest>();
                 x.CreateMap<NewPlotArgs, NewPlotRequest>();
                 x.CreateMap<NewClientArgs, NewClientRequest>();
                 x.CreateMap<NewDataSetArgs, NewDataSetRequest>()

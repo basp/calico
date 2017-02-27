@@ -5,14 +5,14 @@
 
     using static Optional.Option;
 
-    using Req = GetClientsRequest;
-    using Res = GetClientsResponse;
+    using Req = GetPlotsRequest;
+    using Res = GetPlotsResponse;
 
-    public class GetClientsCommand : ICommand<Req, Res, Exception>
+    public class GetPlotsCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
 
-        public GetClientsCommand(IRepository repository)
+        public GetPlotsCommand(IRepository repository)
         {
             this.repository = repository;
         }
@@ -21,11 +21,11 @@
         {
             try
             {
-                var clients = this.repository.GetClients(req.Top);
-                var res = new Res { Clients = clients };
+                var plots = this.repository.GetPlots(req.ClientId, req.Top);
+                var res = new Res { Plots = plots };
                 return Some<Res, Exception>(res);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return None<Res, Exception>(ex);
             }
