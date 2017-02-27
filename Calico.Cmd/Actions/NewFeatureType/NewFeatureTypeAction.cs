@@ -1,20 +1,20 @@
 ﻿namespace Calico.Cmd
 {
-    using AutoMapper;
-    using Serilog;
     using System;
     using System.Data.SqlClient;
+    using AutoMapper;
+    using Serilog;
 
-    public class NewClientAction : IAction<NewClientArgs>
+    public class NewFeatureTypeAction : IAction<NewFeatureTypeArgs>
     {
         private readonly Func<SqlConnection> connectionFactory;
 
-        public NewClientAction(Func<SqlConnection> connectionFactory)
+        public NewFeatureTypeAction(Func<SqlConnection> connectionFactory)
         {
             this.connectionFactory = connectionFactory;
         }
 
-        public void Execute(NewClientArgs args)
+        public void Execute(NewFeatureTypeArgs args)
         {
             using (var conn = this.connectionFactory())
             {
@@ -22,23 +22,27 @@
                 using (var tx = conn.BeginTransaction())
                 {
                     var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewClientCommand(repo);
-                    var req = Mapper.Map<NewClientRequest>(args);
+                    var cmd = new NewFeatureTypeCommand(repo);
+                    var req = Mapper.Map<NewFeatureTypeRequest>(args);
                     var res = cmd.Execute(req);
 
                     res.MatchSome(x =>
                     {
                         tx.Commit();
                         Log.Information(
-                            "Created client {ClientName} with id {ClientId}",
-                            x.Client.Name,
-                            x.Client.Id);
+                            "Created new feature type {FeatureTypeName} with id {FeatureTypeId}",
+                            x.FeatureType.Name,
+                            x.FeatureType.Id);
                     });
 
                     res.MatchNone(x =>
                     {
                         tx.Rollback();
-                        Log.Error(x, "Failed to create client");
+                        Log.Error(
+                            x,
+                            "Failed to create feature type {FeatureTypeName} for client {ClientId}",
+                            req.Name,
+                            req.ClientId);
                     });
                 }
             }

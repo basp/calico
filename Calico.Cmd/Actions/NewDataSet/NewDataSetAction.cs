@@ -1,20 +1,20 @@
 ﻿namespace Calico.Cmd
 {
-    using AutoMapper;
-    using Serilog;
     using System;
     using System.Data.SqlClient;
+    using AutoMapper;
+    using Serilog;
 
-    public class NewClientAction : IAction<NewClientArgs>
+    public class NewDataSetAction : IAction<NewDataSetArgs>
     {
         private readonly Func<SqlConnection> connectionFactory;
 
-        public NewClientAction(Func<SqlConnection> connectionFactory)
+        public NewDataSetAction(Func<SqlConnection> connectionFactory)
         {
             this.connectionFactory = connectionFactory;
         }
 
-        public void Execute(NewClientArgs args)
+        public void Execute(NewDataSetArgs args)
         {
             using (var conn = this.connectionFactory())
             {
@@ -22,23 +22,27 @@
                 using (var tx = conn.BeginTransaction())
                 {
                     var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewClientCommand(repo);
-                    var req = Mapper.Map<NewClientRequest>(args);
+                    var cmd = new NewDataSetCommand(repo);
+                    var req = Mapper.Map<NewDataSetRequest>(args);
                     var res = cmd.Execute(req);
 
                     res.MatchSome(x =>
                     {
                         tx.Commit();
                         Log.Information(
-                            "Created client {ClientName} with id {ClientId}",
-                            x.Client.Name,
-                            x.Client.Id);
+                            "Created data set {DataSetName} with id {DataSetId}",
+                            x.DataSet.Name,
+                            x.DataSet.Id);
                     });
 
                     res.MatchNone(x =>
                     {
                         tx.Rollback();
-                        Log.Error(x, "Failed to create client");
+                        Log.Error(
+                            x,
+                            "Failed to create data set {DataSetName} for plot {PlotId}",
+                            req.Name,
+                            req.PlotId);
                     });
                 }
             }

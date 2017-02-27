@@ -48,7 +48,7 @@
     <Reference Include="DotSpatial.Topology, Version=1.9.0.0, Culture=neutral, PublicKeyToken=a66b5e9434ca3671, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Topology.1.9\lib\net40-Client\DotSpatial.Topology.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Types, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Optional.3.2.0\lib\net452\Optional.dll</HintPath>
     </Reference>
@@ -63,9 +63,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRecord.cs" />
+    <Compile Include="Commands\GetClients\GetClientsRequest.cs" />
+    <Compile Include="Commands\GetClients\GetClientsResponse.cs" />
+    <Compile Include="Commands\GetClients\GetClientsCommand.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesCommand.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesRequest.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesResponse.cs" />
+    <Compile Include="Commands\NewDataSet\NewDataSetCommand.cs" />
+    <Compile Include="Commands\NewDataSet\NewDataSetRequest.cs" />
+    <Compile Include="Commands\NewDataSet\NewDataSetResponse.cs" />
+    <Compile Include="Commands\NewFeatureType\NewFeatureTypeCommand.cs" />
+    <Compile Include="Commands\NewFeatureType\NewFeatureTypeRequest.cs" />
+    <Compile Include="Commands\NewFeatureType\NewFeatureTypeResponse.cs" />
     <Compile Include="DataSetRecord.cs" />
     <Compile Include="DataTypeRecord.cs" />
     <Compile Include="FeatureRecord.cs" />
@@ -88,6 +97,8 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\GetPlots\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

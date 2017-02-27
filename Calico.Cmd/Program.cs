@@ -1,12 +1,12 @@
 ﻿namespace Calico.Cmd
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.SqlClient;
+    using AutoMapper;
     using PowerArgs;
     using Serilog;
-    using AutoMapper;
 
+    [ArgExceptionBehavior(ArgExceptionPolicy.StandardExceptionHandling)]
     internal class Program
     {
         private static SqlConnectionStringBuilder ConnectionStringBuilder =
@@ -20,6 +20,9 @@
         private static Func<SqlConnection> ConnectionFactory =
             () => new SqlConnection(ConnectionStringBuilder.ConnectionString);
 
+        [HelpHook]
+        public bool Help { get; set; }
+
         [ArgActionMethod]
         public void ImportFeatures(ImportFeaturesArgs args) =>
             new ImportFeaturesAction(ConnectionFactory).Execute(args);
@@ -27,6 +30,10 @@
         [ArgActionMethod]
         public void NewClient(NewClientArgs args) =>
             new NewClientAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
+        public void NewDataSet(NewDataSetArgs args) =>
+            new NewDataSetAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
         public void NewPlot(NewPlotArgs args) =>
@@ -42,8 +49,12 @@
             {
                 x.CreateMap<NewPlotArgs, NewPlotRequest>();
                 x.CreateMap<NewClientArgs, NewClientRequest>();
+                x.CreateMap<NewDataSetArgs, NewDataSetRequest>()
+                    .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<ImportFeaturesArgs, ImportFeaturesRequest>();
             });
+
+            Args.InvokeAction<Program>(args);
         }
     }
 }

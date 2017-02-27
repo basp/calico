@@ -8,6 +8,10 @@
 
         int BulkCopyFeatures(IEnumerable<FeatureRecord> recs);
 
+        IEnumerable<ClientRecord> GetClients();
+
+        IEnumerable<PlotRecord> GetPlots(int clientId);
+
         int InsertAttribute(AttributeRecord rec);
 
         int InsertClient(ClientRecord rec);

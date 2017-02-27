@@ -101,6 +101,24 @@
             return table.Rows.Count;
         }
 
+        public IEnumerable<ClientRecord> GetClients()
+        {
+            return this.connection.Query<ClientRecord>(
+                nameof(this.GetClients),
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public IEnumerable<PlotRecord> GetPlots(int clientId)
+        {
+            var @param = new { ClientId = clientId };
+            return this.connection.Query<PlotRecord>(
+                nameof(this.GetPlots),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public int InsertAttribute(AttributeRecord rec)
         {
             throw new NotImplementedException();

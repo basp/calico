@@ -1,6 +1,7 @@
 ﻿namespace Calico.Cmd
 {
     using AutoMapper;
+    using Serilog;
     using System;
     using System.Data.SqlClient;
 
@@ -28,11 +29,19 @@
                     res.MatchSome(x =>
                     {
                         tx.Commit();
+                        Log.Information(
+                            "Created plot {PlotName} with id {PlotId}",
+                            x.Plot.Name,
+                            x.Plot.Id);
                     });
 
                     res.MatchNone(x =>
                     {
                         tx.Rollback();
+                        Log.Error(
+                            x,
+                            "Failed to create plot from shapefile {Shapefile}",
+                            req.PathToShapefile);
                     });
                 }
             }
