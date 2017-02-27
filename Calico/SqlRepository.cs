@@ -109,6 +109,16 @@
                 transaction: this.transaction);
         }
 
+        public IEnumerable<DataSetRecord> GetDataSets(int plotId, int top)
+        {
+            var @param = new { PlotId = plotId, Top = top };
+            return this.connection.Query<DataSetRecord>(
+                nameof(this.GetDataSets),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
         {
             var @param = new { ClientId = clientId };

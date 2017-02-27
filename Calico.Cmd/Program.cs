@@ -28,6 +28,10 @@
             new GetClientsAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        public void GetDataSets(GetDataSetsArgs args) =>
+            new GetDataSetsAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         public void GetPlots(GetPlotsArgs args) =>
             new GetPlotsAction(ConnectionFactory).Execute(args);
 

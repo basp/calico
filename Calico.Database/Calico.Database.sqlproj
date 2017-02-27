@@ -79,5 +79,6 @@
     <Build Include="Stored Procedures\UpsertAttributeValue.sql" />
     <Build Include="Stored Procedures\GetClients.sql" />
     <Build Include="Stored Procedures\GetPlots.sql" />
+    <Build Include="Stored Procedures\GetDataSets.sql" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,8 @@
 
         IEnumerable<ClientRecord> GetClients(int top);
 
+        IEnumerable<DataSetRecord> GetDataSets(int plotId, int top);
+
         IEnumerable<PlotRecord> GetPlots(int clientId, int top);
 
         int InsertAttribute(AttributeRecord rec);

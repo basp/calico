@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Actions\GetClients\GetClientsAction.cs" />
     <Compile Include="Actions\GetClients\GetClientsArgs.cs" />
+    <Compile Include="Actions\GetDataSets\GetDataSetsAction.cs" />
+    <Compile Include="Actions\GetDataSets\GetDataSetsArgs.cs" />
     <Compile Include="Actions\GetPlots\GetPlotsAction.cs" />
     <Compile Include="Actions\GetPlots\GetPlotsArgs.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesAction.cs" />

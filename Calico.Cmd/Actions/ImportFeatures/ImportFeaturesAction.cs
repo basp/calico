@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.SqlClient;
+    using AutoMapper;
 
     public class ImportFeaturesAction : IAction<ImportFeaturesArgs>
     {
@@ -21,8 +22,18 @@
                 {
                     var repo = new SqlRepository(conn, tx);
                     var cmd = new ImportFeaturesCommand(repo);
+                    var req = Mapper.Map<ImportFeaturesRequest>(args);
+                    var res = cmd.Execute(req);
 
-                    throw new NotImplementedException();
+                    res.MatchSome(x =>
+                    {
+                        tx.Commit();
+                    });
+
+                    res.MatchNone(x =>
+                    {
+                        tx.Rollback();
+                    });
                 }
             }
         }

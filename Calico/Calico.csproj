@@ -66,6 +66,9 @@
     <Compile Include="Commands\GetClients\GetClientsRequest.cs" />
     <Compile Include="Commands\GetClients\GetClientsResponse.cs" />
     <Compile Include="Commands\GetClients\GetClientsCommand.cs" />
+    <Compile Include="Commands\GetDataSets\GetDataSetsCommand.cs" />
+    <Compile Include="Commands\GetDataSets\GetDataSetsRequest.cs" />
+    <Compile Include="Commands\GetDataSets\GetDataSetsResponse.cs" />
     <Compile Include="Commands\GetPlots\GetPlotsCommand.cs" />
     <Compile Include="Commands\GetPlots\GetPlotsRequest.cs" />
     <Compile Include="Commands\GetPlots\GetPlotsResponse.cs" />
