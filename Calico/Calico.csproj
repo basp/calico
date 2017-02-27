@@ -78,6 +78,9 @@
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeCommand.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeRequest.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeResponse.cs" />
+    <Compile Include="Commands\ScanShapefile\ScanShapefileCommand.cs" />
+    <Compile Include="Commands\ScanShapefile\ScanShapefileRequest.cs" />
+    <Compile Include="Commands\ScanShapefile\ScanShapefileResponse.cs" />
     <Compile Include="DataSetRecord.cs" />
     <Compile Include="DataTypeRecord.cs" />
     <Compile Include="FeatureRecord.cs" />
