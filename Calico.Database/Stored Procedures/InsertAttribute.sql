@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[InsertAttribute]
-	@DataTypeId INT,
 	@FeatureTypeId INT,
+	@DataTypeId INT,
 	@Index INT,
 	@Name NVARCHAR(MAX)
 AS

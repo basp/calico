@@ -1,9 +1,12 @@
 ﻿namespace Calico
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     using Dapper;
+    using Microsoft.SqlServer.Types;
 
     public class SqlRepository : IRepository
     {
@@ -16,6 +19,91 @@
         {
             this.connection = connection;
             this.transaction = transaction;
+        }
+
+        private static DataTable CreateAttributeValueTable()
+        {
+            var cols = new Dictionary<string, Type>
+            {
+                ["DataSetId"] = typeof(int),
+                ["AttributeId"] = typeof(int),
+                ["FeatureIndex"] = typeof(int),
+                ["DoubleValue"] = typeof(double),
+                ["LongValue"] = typeof(long),
+                ["StringValue"] = typeof(string),
+            }
+            .Select(x => new DataColumn(x.Key, x.Value))
+            .ToArray();
+
+            var table = new DataTable();
+            table.Columns.AddRange(cols);
+            return table;
+        }
+
+        private static DataTable CreateFeatureTable()
+        {
+            var cols = new Dictionary<string, Type>
+            {
+                ["DataSetId"] = typeof(int),
+                ["Index"] = typeof(int),
+                ["Geometry"] = typeof(SqlGeometry),
+            }
+            .Select(x => new DataColumn(x.Key, x.Value))
+            .ToArray();
+
+            var table = new DataTable();
+            table.Columns.AddRange(cols);
+            return table;
+        }
+
+        public int BulkCopyAttributeValues(IEnumerable<AttributeValueRecord> recs)
+        {
+            var table = CreateAttributeValueTable();
+            foreach (var v in recs)
+            {
+                var row = table.NewRow();
+                row["DataSetId"] = v.DataSetId;
+                row["AttributeId"] = v.AttributeId;
+                row["FeatureIndex"] = v.FeatureIndex;
+                row["DoubleValue"] = v.DoubleValue;
+                row["LongValue"] = v.LongValue;
+                row["StringValue"] = v.StringValue;
+                table.Rows.Add(row);
+            }
+
+            var opts = SqlBulkCopyOptions.Default;
+            using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
+            {
+                copy.WriteToServer(table);
+            }
+
+            return table.Rows.Count;
+        }
+
+        public int BulkCopyFeatures(IEnumerable<FeatureRecord> recs)
+        {
+            var table = CreateFeatureTable();
+            foreach (var f in recs)
+            {
+                var row = table.NewRow();
+                row["DataSetId"] = f.DataSetId;
+                row["Index"] = f.Index;
+                row["Geometry"] = f.Geometry;
+                table.Rows.Add(row);
+            }
+
+            var opts = SqlBulkCopyOptions.Default;
+            using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
+            {
+                copy.WriteToServer(table);
+            }
+
+            return table.Rows.Count;
+        }
+
+        public int InsertAttribute(AttributeRecord rec)
+        {
+            throw new NotImplementedException();
         }
 
         public int InsertClient(ClientRecord rec)
@@ -46,6 +134,16 @@
         {
             var @param = new { rec.ClientId, rec.Name, rec.Geometry };
             return this.Insert(nameof(this.InsertPlot), @param);
+        }
+
+        public int UpsertAttributeValue(AttributeValueRecord rec)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpsertFeature(FeatureRecord rec)
+        {
+            throw new NotImplementedException();
         }
 
         private int Insert(string sproc, object @param)

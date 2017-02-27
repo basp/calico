@@ -74,7 +74,8 @@
     <Build Include="Stored Procedures\InsertPlot.sql" />
     <Build Include="Stored Procedures\InsertFeatureType.sql" />
     <Build Include="Stored Procedures\InsertDataSet.sql" />
-    <Build Include="Stored Procedures\InsertFeature.sql" />
+    <Build Include="Stored Procedures\UpsertFeature.sql" />
     <Build Include="Stored Procedures\InsertAttribute.sql" />
+    <Build Include="Stored Procedures\UpsertAttributeValue.sql" />
   </ItemGroup>
 </Project>

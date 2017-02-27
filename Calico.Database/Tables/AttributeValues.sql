@@ -1,6 +1,5 @@
 ﻿CREATE TABLE [dbo].[AttributeValues]
 (
-	[Id] INT NOT NULL IDENTITY(1,1),
 	[DataSetId] INT NOT NULL,
 	[AttributeId] INT NOT NULL,
 	[FeatureIndex] INT NOT NULL,
@@ -11,9 +10,7 @@
 		ON DELETE CASCADE,
 	CONSTRAINT [FK_AttributeValues_DataSets] FOREIGN KEY ([DataSetId]) REFERENCES [DataSets]([Id])
 		ON DELETE CASCADE, 
-    CONSTRAINT [PK_AttributeValues] PRIMARY KEY ([Id])
+    CONSTRAINT [PK_AttributeValues] PRIMARY KEY ([DataSetId], [AttributeId], [FeatureIndex])
 )
 
 GO
-
-CREATE UNIQUE INDEX [IX_AttributeValues_Column] ON [dbo].[AttributeValues] ([DataSetId], [AttributeId], [FeatureIndex])

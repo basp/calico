@@ -2,11 +2,9 @@
 {
     public class AttributeValueRecord
     {
-        public int Id { get; set; }
-
         public int DataSetId { get; set; }
 
-        public int PropertyId { get; set; }
+        public int AttributeId { get; set; }
 
         public int FeatureIndex { get; set; }
 

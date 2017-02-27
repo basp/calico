@@ -52,9 +52,6 @@
     <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Optional.3.2.0\lib\net452\Optional.dll</HintPath>
     </Reference>
-    <Reference Include="PowerArgs, Version=2.8.0.0, Culture=neutral, PublicKeyToken=26a276264bbd55b8, processorArchitecture=MSIL">
-      <HintPath>..\packages\PowerArgs.2.8.0.0\lib\net45\PowerArgs.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRecord.cs" />
+    <Compile Include="Commands\ImportFeatures\ImportFeaturesCommand.cs" />
+    <Compile Include="Commands\ImportFeatures\ImportFeaturesRequest.cs" />
+    <Compile Include="Commands\ImportFeatures\ImportFeaturesResponse.cs" />
     <Compile Include="DataSetRecord.cs" />
     <Compile Include="DataTypeRecord.cs" />
     <Compile Include="FeatureRecord.cs" />

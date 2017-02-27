@@ -11,5 +11,3 @@
 )
 
 GO
-
-CREATE UNIQUE INDEX [IX_Attributes_Column] ON [dbo].[Attributes] ([FeatureTypeId], [Index])
