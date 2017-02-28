@@ -1,4 +1,8 @@
-﻿namespace Calico
+﻿// <copyright file="GetPlotsCommand.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
 {
     using System;
     using Optional;
@@ -25,7 +29,7 @@
                 var res = new Res { Plots = plots };
                 return Some<Res, Exception>(res);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return None<Res, Exception>(ex);
             }

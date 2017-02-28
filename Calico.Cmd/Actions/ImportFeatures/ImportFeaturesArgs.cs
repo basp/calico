@@ -5,7 +5,7 @@
     public class ImportFeaturesArgs
     {
         [ArgRequired]
-        [ArgDescription(DefaultArgDescriptions.TargetDataSet)]
+        [ArgDescription(DefaultArgDescriptions.DataSetId)]
         public int DataSetId { get; set; }
 
         [ArgRequired]

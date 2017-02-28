@@ -7,7 +7,7 @@
     <ProjectGuid>{C5166013-3768-453B-86CE-C56529270F86}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Calico.Cmd</RootNamespace>
-    <AssemblyName>Calico.Cmd</AssemblyName>
+    <AssemblyName>calicmd</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -77,18 +77,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\DefaultArgDescriptions.cs" />
+    <Compile Include="Actions\GetAttributes\GetAttributesAction.cs" />
+    <Compile Include="Actions\GetAttributes\GetAttributesArgs.cs" />
     <Compile Include="Actions\GetClients\GetClientsAction.cs" />
     <Compile Include="Actions\GetClients\GetClientsArgs.cs" />
     <Compile Include="Actions\GetDataSets\GetDataSetsAction.cs" />
     <Compile Include="Actions\GetDataSets\GetDataSetsArgs.cs" />
+    <Compile Include="Actions\GetDataSet\GetDataSetAction.cs" />
+    <Compile Include="Actions\GetDataSet\GetDataSetArgs.cs" />
+    <Compile Include="Actions\GetDataTypes\GetDataTypesAction.cs" />
+    <Compile Include="Actions\GetDataTypes\GetDataTypesArgs.cs" />
+    <Compile Include="Actions\GetFeatureTypes\GetFeatureTypesAction.cs" />
+    <Compile Include="Actions\GetFeatureTypes\GetFeatureTypesArgs.cs" />
     <Compile Include="Actions\GetPlots\GetPlotsAction.cs" />
     <Compile Include="Actions\GetPlots\GetPlotsArgs.cs" />
+    <Compile Include="Actions\ImportAttributes\ImportAttributesAction.cs" />
+    <Compile Include="Actions\ImportAttributes\ImportAttributesArgs.cs" />
+    <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesAction.cs" />
+    <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesArgs.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesAction.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesArgs.cs" />
     <Compile Include="Actions\NewClient\NewClientAction.cs" />
     <Compile Include="Actions\NewClient\NewClientArgs.cs" />
     <Compile Include="Actions\NewDataSet\NewDataSetAction.cs" />
     <Compile Include="Actions\NewDataSet\NewDataSetArgs.cs" />
+    <Compile Include="Actions\NewDataType\NewDataTypeAction.cs" />
+    <Compile Include="Actions\NewDataType\NewDataTypeArgs.cs" />
     <Compile Include="Actions\NewFeatureType\NewFeatureTypeAction.cs" />
     <Compile Include="Actions\NewFeatureType\NewFeatureTypeArgs.cs" />
     <Compile Include="Actions\NewPlot\NewPlotAction.cs" />

@@ -1,17 +1,22 @@
-﻿namespace Calico
+﻿// <copyright file="ImportFeaturesCommand.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
 {
     using System;
+    using System.Data.SqlTypes;
     using System.Linq;
     using DotSpatial.Data;
+    using DotSpatial.Topology;
+    using Microsoft.SqlServer.Types;
     using Optional;
+    using Serilog;
 
     using static Optional.Option;
 
     using Req = ImportFeaturesRequest;
     using Res = ImportFeaturesResponse;
-    using Microsoft.SqlServer.Types;
-    using DotSpatial.Topology;
-    using System.Data.SqlTypes;
 
     public class ImportFeaturesCommand : ICommand<Req, Res, Exception>
     {
@@ -27,6 +32,13 @@
             try
             {
                 var shapefile = Shapefile.OpenFile(req.PathToShapefile);
+                var dataSet = this.repository.GetDataSet(req.DataSetId);
+                var featureType = this.repository.GetFeatureType(dataSet.FeatureTypeId);
+                Log.Information(
+                    "Importing features for data set {DataSetName} with feature type {FeatureTypeName}",
+                    dataSet.Name,
+                    featureType.Name);
+
                 var recs = shapefile.Features
                     .Select((x, i) => CreateFeatureRecord(req.DataSetId, i, x, req.SRID));
 

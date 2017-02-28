@@ -74,11 +74,13 @@
     <Build Include="Stored Procedures\InsertPlot.sql" />
     <Build Include="Stored Procedures\InsertFeatureType.sql" />
     <Build Include="Stored Procedures\InsertDataSet.sql" />
-    <Build Include="Stored Procedures\UpsertFeature.sql" />
-    <Build Include="Stored Procedures\InsertAttribute.sql" />
-    <Build Include="Stored Procedures\UpsertAttributeValue.sql" />
     <Build Include="Stored Procedures\GetClients.sql" />
     <Build Include="Stored Procedures\GetPlots.sql" />
     <Build Include="Stored Procedures\GetDataSets.sql" />
+    <Build Include="Stored Procedures\GetFeatureTypes.sql" />
+    <Build Include="Stored Procedures\GetDataTypes.sql" />
+    <Build Include="Stored Procedures\GetAttributes.sql" />
+    <Build Include="Stored Procedures\GetDataSet.sql" />
+    <Build Include="Stored Procedures\GetFeatureType.sql" />
   </ItemGroup>
 </Project>

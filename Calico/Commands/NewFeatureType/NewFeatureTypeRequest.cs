@@ -1,4 +1,8 @@
-﻿namespace Calico
+﻿// <copyright file="NewFeatureTypeRequest.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
 {
     public class NewFeatureTypeRequest
     {

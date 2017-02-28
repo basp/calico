@@ -1,4 +1,8 @@
-﻿namespace Calico
+﻿// <copyright file="GetDataSetsCommand.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
 {
     using System;
     using Optional;
@@ -21,9 +25,11 @@
         {
             try
             {
-                return None<Res, Exception>(new NotImplementedException());
+                var dataSets = this.repository.GetDataSets(req.PlotId, req.Top);
+                var res = new Res { DataSets = dataSets };
+                return Some<Res, Exception>(res);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return None<Res, Exception>(ex);
             }

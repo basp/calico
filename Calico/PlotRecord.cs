@@ -1,7 +1,11 @@
-﻿using Microsoft.SqlServer.Types;
+﻿// <copyright file="PlotRecord.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
 
 namespace Calico
 {
+    using Microsoft.SqlServer.Types;
+
     public class PlotRecord
     {
         public int Id { get; set; }

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>SA0001;SA1600</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,9 @@
     <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Optional.3.2.0\lib\net452\Optional.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.4.0\lib\net45\Serilog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,21 +67,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRecord.cs" />
+    <Compile Include="Commands\GetAttributes\GetAttributesCommand.cs" />
+    <Compile Include="Commands\GetAttributes\GetAttributesRequest.cs" />
+    <Compile Include="Commands\GetAttributes\GetAttributesResponse.cs" />
     <Compile Include="Commands\GetClients\GetClientsRequest.cs" />
     <Compile Include="Commands\GetClients\GetClientsResponse.cs" />
     <Compile Include="Commands\GetClients\GetClientsCommand.cs" />
     <Compile Include="Commands\GetDataSets\GetDataSetsCommand.cs" />
     <Compile Include="Commands\GetDataSets\GetDataSetsRequest.cs" />
     <Compile Include="Commands\GetDataSets\GetDataSetsResponse.cs" />
+    <Compile Include="Commands\GetDataSet\GetDataSetCommand.cs" />
+    <Compile Include="Commands\GetDataSet\GetDataSetRequest.cs" />
+    <Compile Include="Commands\GetDataSet\GetDataSetResponse.cs" />
+    <Compile Include="Commands\GetDataTypes\GetDataTypesCommand.cs" />
+    <Compile Include="Commands\GetDataTypes\GetDataTypesRequest.cs" />
+    <Compile Include="Commands\GetDataTypes\GetDataTypesResponse.cs" />
+    <Compile Include="Commands\GetFeatureTypes\GetFeatureTypesCommand.cs" />
+    <Compile Include="Commands\GetFeatureTypes\GetFeatureTypesRequest.cs" />
+    <Compile Include="Commands\GetFeatureTypes\GetFeatureTypesResponse.cs" />
     <Compile Include="Commands\GetPlots\GetPlotsCommand.cs" />
     <Compile Include="Commands\GetPlots\GetPlotsRequest.cs" />
     <Compile Include="Commands\GetPlots\GetPlotsResponse.cs" />
+    <Compile Include="Commands\ImportAttributes\ImportAttributesCommand.cs" />
+    <Compile Include="Commands\ImportAttributes\ImportAttributesRequest.cs" />
+    <Compile Include="Commands\ImportAttributes\ImportAttributesResponse.cs" />
+    <Compile Include="Commands\ImportAttributeValues\ImportAttributeValuesCommand.cs" />
+    <Compile Include="Commands\ImportAttributeValues\ImportAttributeValuesRequest.cs" />
+    <Compile Include="Commands\ImportAttributeValues\ImportAttributeValuesResponse.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesCommand.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesRequest.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesResponse.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetCommand.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetRequest.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetResponse.cs" />
+    <Compile Include="Commands\NewDataType\NewDataTypeCommand.cs" />
+    <Compile Include="Commands\NewDataType\NewDataTypeRequest.cs" />
+    <Compile Include="Commands\NewDataType\NewDataTypeResponse.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeCommand.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeRequest.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeResponse.cs" />
@@ -105,7 +130,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

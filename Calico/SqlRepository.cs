@@ -1,4 +1,8 @@
-﻿namespace Calico
+﻿// <copyright file="SqlRepository.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
 {
     using System;
     using System.Collections.Generic;
@@ -21,39 +25,27 @@
             this.transaction = transaction;
         }
 
-        private static DataTable CreateAttributeValueTable()
+        public int BulkCopyAttributes(IEnumerable<AttributeRecord> recs)
         {
-            var cols = new Dictionary<string, Type>
+            var table = CreateAttributeTable();
+            foreach (var a in recs)
             {
-                ["DataSetId"] = typeof(int),
-                ["AttributeId"] = typeof(int),
-                ["FeatureIndex"] = typeof(int),
-                ["DoubleValue"] = typeof(double),
-                ["LongValue"] = typeof(long),
-                ["StringValue"] = typeof(string),
+                var row = table.NewRow();
+                row["FeatureTypeId"] = a.FeatureTypeId;
+                row["Index"] = a.Index;
+                row["DataTypeId"] = a.DataTypeId;
+                row["Name"] = a.Name;
+                table.Rows.Add(row);
             }
-            .Select(x => new DataColumn(x.Key, x.Value))
-            .ToArray();
 
-            var table = new DataTable();
-            table.Columns.AddRange(cols);
-            return table;
-        }
-
-        private static DataTable CreateFeatureTable()
-        {
-            var cols = new Dictionary<string, Type>
+            var opts = SqlBulkCopyOptions.Default;
+            using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
             {
-                ["DataSetId"] = typeof(int),
-                ["Index"] = typeof(int),
-                ["Geometry"] = typeof(SqlGeometry),
+                copy.DestinationTableName = "Attributes";
+                copy.WriteToServer(table);
             }
-            .Select(x => new DataColumn(x.Key, x.Value))
-            .ToArray();
 
-            var table = new DataTable();
-            table.Columns.AddRange(cols);
-            return table;
+            return table.Rows.Count;
         }
 
         public int BulkCopyAttributeValues(IEnumerable<AttributeValueRecord> recs)
@@ -63,17 +55,31 @@
             {
                 var row = table.NewRow();
                 row["DataSetId"] = v.DataSetId;
-                row["AttributeId"] = v.AttributeId;
                 row["FeatureIndex"] = v.FeatureIndex;
-                row["DoubleValue"] = v.DoubleValue;
-                row["LongValue"] = v.LongValue;
-                row["StringValue"] = v.StringValue;
+                row["AttributeIndex"] = v.AttributeIndex;
+
+                if (v.DoubleValue.HasValue)
+                {
+                    row["DoubleValue"] = v.DoubleValue;
+                }
+
+                if (v.LongValue.HasValue)
+                {
+                    row["LongValue"] = v.LongValue;
+                }
+
+                if (!string.IsNullOrEmpty(v.StringValue))
+                {
+                    row["StringValue"] = v.StringValue;
+                }
+
                 table.Rows.Add(row);
             }
 
             var opts = SqlBulkCopyOptions.Default;
             using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
             {
+                copy.DestinationTableName = "AttributeValues";
                 copy.WriteToServer(table);
             }
 
@@ -95,16 +101,39 @@
             var opts = SqlBulkCopyOptions.Default;
             using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
             {
+                copy.DestinationTableName = "Features";
                 copy.WriteToServer(table);
             }
 
             return table.Rows.Count;
         }
 
+        public IEnumerable<AttributeRecord> GetAttributes(int featureTypeId)
+        {
+            var @param = new { FeatureTypeId = featureTypeId };
+            return this.connection.Query<AttributeRecord>(
+                nameof(this.GetAttributes),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public IEnumerable<ClientRecord> GetClients(int top)
         {
+            var @param = new { Top = top };
             return this.connection.Query<ClientRecord>(
                 nameof(this.GetClients),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public DataSetRecord GetDataSet(int id)
+        {
+            var @param = new { Id = id };
+            return this.connection.QuerySingle<DataSetRecord>(
+                nameof(this.GetDataSet),
+                @param,
                 commandType: CommandType.StoredProcedure,
                 transaction: this.transaction);
         }
@@ -119,19 +148,42 @@
                 transaction: this.transaction);
         }
 
-        public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
+        public IEnumerable<DataTypeRecord> GetDataTypes()
         {
-            var @param = new { ClientId = clientId };
-            return this.connection.Query<PlotRecord>(
-                nameof(this.GetPlots),
+            return this.connection.Query<DataTypeRecord>(
+                nameof(this.GetDataTypes),
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public FeatureTypeRecord GetFeatureType(int id)
+        {
+            var @param = new { Id = id };
+            return this.connection.QuerySingle<FeatureTypeRecord>(
+                nameof(this.GetFeatureType),
                 @param,
                 commandType: CommandType.StoredProcedure,
                 transaction: this.transaction);
         }
 
-        public int InsertAttribute(AttributeRecord rec)
+        public IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top)
         {
-            throw new NotImplementedException();
+            var @param = new { ClientId = clientId, Top = top };
+            return this.connection.Query<FeatureTypeRecord>(
+                nameof(this.GetFeatureTypes),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
+        {
+            var @param = new { ClientId = clientId, Top = top };
+            return this.connection.Query<PlotRecord>(
+                nameof(this.GetPlots),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
         }
 
         public int InsertClient(ClientRecord rec)
@@ -164,14 +216,56 @@
             return this.Insert(nameof(this.InsertPlot), @param);
         }
 
-        public int UpsertAttributeValue(AttributeValueRecord rec)
+        private static DataTable CreateAttributeTable()
         {
-            throw new NotImplementedException();
+            var cols = new Dictionary<string, Type>
+            {
+                ["FeatureTypeId"] = typeof(int),
+                ["Index"] = typeof(int),
+                ["DataTypeId"] = typeof(int),
+                ["Name"] = typeof(string),
+            }
+            .Select(x => new DataColumn(x.Key, x.Value))
+            .ToArray();
+
+            var table = new DataTable();
+            table.Columns.AddRange(cols);
+            return table;
         }
 
-        public int UpsertFeature(FeatureRecord rec)
+        private static DataTable CreateAttributeValueTable()
         {
-            throw new NotImplementedException();
+            var cols = new Dictionary<string, Type>
+            {
+                ["DataSetId"] = typeof(int),
+                ["FeatureIndex"] = typeof(int),
+                ["AttributeIndex"] = typeof(int),
+                ["DoubleValue"] = typeof(double),
+                ["LongValue"] = typeof(long),
+                ["StringValue"] = typeof(string),
+            }
+            .Select(x => new DataColumn(x.Key, x.Value))
+            .ToArray();
+
+            var table = new DataTable();
+            table.Columns.AddRange(cols);
+            return table;
+        }
+
+        private static DataTable CreateFeatureTable()
+        {
+            var cols = new Dictionary<string, Type>
+            {
+                ["DataSetId"] = typeof(int),
+                ["Index"] = typeof(int),
+                ["Geometry"] = typeof(SqlGeometry),
+            }
+            .Select(x => new DataColumn(x.Key, x.Value))
+            .ToArray();
+
+            var table = new DataTable();
+            table.Columns.AddRange(cols);
+            return table;
         }
 
         private int Insert(string sproc, object @param)

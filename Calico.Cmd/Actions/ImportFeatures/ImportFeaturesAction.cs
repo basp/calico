@@ -3,6 +3,7 @@
     using System;
     using System.Data.SqlClient;
     using AutoMapper;
+    using Serilog;
 
     public class ImportFeaturesAction : IAction<ImportFeaturesArgs>
     {
@@ -28,11 +29,19 @@
                     res.MatchSome(x =>
                     {
                         tx.Commit();
+                        Log.Information(
+                            "Imported {FeatureCount} features from {Shapefile}",
+                            x.RowCount,
+                            req.PathToShapefile);
                     });
 
                     res.MatchNone(x =>
                     {
                         tx.Rollback();
+                        Log.Error(
+                            x,
+                            "Could not import features from shapefile {Shapefile}",
+                            req.PathToShapefile);
                     });
                 }
             }
