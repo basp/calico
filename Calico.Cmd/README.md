@@ -28,5 +28,11 @@ And then issue the next command:
 
 > calico getdatatypes | json | ft
 
+    Id Name   SqlType  BclType
+    -- ----   -------  -------
+     1 Double FLOAT    System.Double
+     2 Long   BIGINT   System.Int64
+     3 String NVARCHAR System.String
+
 The `json` will convert the (JSON) output of `calico` to an object structure
 and the `ft` command will format it as a table.
