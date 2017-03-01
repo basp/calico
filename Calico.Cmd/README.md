@@ -17,16 +17,18 @@ After getting everyting up and running you will end up with a minimal
 database. The only thing you will have is some data types that are used
 internally. You can inspect them easily using the following command:
 
-> calico GetDataTypes
+    calico GetDataTypes
 
 However, this will give you a blurb of JSON that is usually not very easy
 to deal with. I recommend you assign the following alias:
 
-> set-alias json convertfrom-json
+    set-alias json convertfrom-json
 
 And then issue the next command:
 
-> calico getdatatypes | json | ft
+    calico getdatatypes | json | ft
+
+The result should look something like this:
 
     Id Name   SqlType  BclType
     -- ----   -------  -------
