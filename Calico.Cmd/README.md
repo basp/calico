@@ -11,3 +11,22 @@ TODO: Explain how to get data into the system
 
 # Lego not Playmobile
 TODO: Rant a bit
+
+# Tutorial
+After getting everyting up and running you will end up with a minimal
+database. The only thing you will have is some data types that are used
+internally. You can inspect them easily using the following command:
+
+> calico GetDataTypes
+
+However, this will give you a blurb of JSON that is usually not very easy
+to deal with. I recommend you assign the following alias:
+
+> set-alias json convertfrom-json
+
+And then issue the next command:
+
+> calico getdatatypes | json | ft
+
+The `json` will convert the (JSON) output of `calico` to an object structure
+and the `ft` command will format it as a table.
