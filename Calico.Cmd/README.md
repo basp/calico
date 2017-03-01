@@ -48,9 +48,8 @@ so we really don't care much about fancier types for now. If there's a real
 demand/use-case then we can implemented it.
 
 ## Creating a plot
-A **Plot** is a bit like a workspace. It's not only a *geographical* object but
-it also holds a lot of related information. A plot is is like a workspace in that
-it functions as a container for other data. 
+A **Plot** is a bit like a workspace. But it's not only just a mere conceptual container.
+A **Plot** actually is the owner object of quite a bit of data.
 
 Usually, when you import some data, you will have to associate it with a plot. However, a plot cannot be defined without some
 geometry. This means that even if you insert data in a disconnected way (readings
