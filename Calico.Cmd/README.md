@@ -13,6 +13,7 @@ TODO: Explain how to get data into the system
 TODO: Rant a bit
 
 # Tutorial
+## Getting started
 After getting everyting up and running you will end up with a minimal
 database. The only thing you will have is some data types that are used
 internally. You can inspect them easily using the following command:
@@ -38,3 +39,20 @@ The result should look something like this:
 
 The `json` will convert the (JSON) output of `calico` to an object structure
 and the `ft` command will format it as a table.
+
+It's important to note that ***Calico** only supports those three types 
+*out-of-the-box*. It's not *that* hard to extend Calico to have (for instance)
+a native understanding of `DateTime` or `Decimal` but at this point our samples
+arrive in tye types mentioned above (and there's lots of ofther use-cases to solve)
+so we really don't care much about fancier types for now. If there's a real
+demand/use-case then we can implemented it.
+
+## Creating a plot
+A **Plot** is a bit like a workspace. It's not only a *geographical* object but
+it also holds a lot of related information. A plot is is like a workspace in that
+it functions as a container for other data. 
+
+Usually, when you import some data, you will have to associate it with a plot. However, a plot cannot be defined without some
+geometry. This means that even if you insert data in a disconnected way (readings
+with the wrong plot) it will always be possible to correct for at least 90% of the cases
+by associating the data geographically with the data that is stored in the database.
