@@ -1,0 +1,6 @@
+﻿INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
+VALUES (N'Double', N'FLOAT', N'System.Double')
+INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
+VALUES (N'Long', N'BIGINT', N'System.Int64')
+INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
+VALUES (N'String', N'NVARCHAR', N'System.String')

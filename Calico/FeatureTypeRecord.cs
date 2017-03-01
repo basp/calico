@@ -11,7 +11,5 @@ namespace Calico
         public int ClientId { get; set; }
 
         public string Name { get; set; }
-
-        public byte[] Checksum { get; set; }
     }
 }

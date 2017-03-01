@@ -15,7 +15,7 @@
             @"The id of the plot that the data is associated with";
 
         public const string Shapefile =
-            @"The shapefile to pull data from";
+            @"The full path to a shapefile file";
 
         public const string SpatialReferenceSystem =
             @"The spatial reference system id (SRID) to use";

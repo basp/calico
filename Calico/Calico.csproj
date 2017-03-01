@@ -94,6 +94,9 @@
     <Compile Include="Commands\ImportAttributeValues\ImportAttributeValuesCommand.cs" />
     <Compile Include="Commands\ImportAttributeValues\ImportAttributeValuesRequest.cs" />
     <Compile Include="Commands\ImportAttributeValues\ImportAttributeValuesResponse.cs" />
+    <Compile Include="Commands\ImportDataSet\ImportDataSetCommand.cs" />
+    <Compile Include="Commands\ImportDataSet\ImportDataSetRequest.cs" />
+    <Compile Include="Commands\ImportDataSet\ImportDataSetResponse.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesCommand.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesRequest.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesResponse.cs" />
@@ -137,5 +140,6 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

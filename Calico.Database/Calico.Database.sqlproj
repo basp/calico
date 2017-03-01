@@ -59,6 +59,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Clients.sql" />
@@ -82,5 +83,8 @@
     <Build Include="Stored Procedures\GetAttributes.sql" />
     <Build Include="Stored Procedures\GetDataSet.sql" />
     <Build Include="Stored Procedures\GetFeatureType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\InsertDataTypes.sql" />
   </ItemGroup>
 </Project>

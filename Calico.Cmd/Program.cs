@@ -93,6 +93,11 @@
         public void NewPlot(NewPlotArgs args) =>
             new NewPlotAction(ConnectionFactory).Execute(args);
 
+        [ArgActionMethod]
+        [ArgDescription("Scans a shapefile for information")]
+        public void ScanShapefile(ScanShapefileArgs args) =>
+            new ScanShapefileAction(ConnectionFactory).Execute(args);
+
         private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -117,6 +122,7 @@
                 x.CreateMap<ImportAttributesArgs, ImportAttributesRequest>();
                 x.CreateMap<ImportAttributeValuesArgs, ImportAttributeValuesRequest>();
                 x.CreateMap<ImportFeaturesArgs, ImportFeaturesRequest>();
+                x.CreateMap<ScanShapefileArgs, ScanShapefileRequest>();
             });
 
             Args.InvokeAction<Program>(args);

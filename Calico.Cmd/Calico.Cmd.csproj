@@ -107,6 +107,8 @@
     <Compile Include="Actions\NewFeatureType\NewFeatureTypeArgs.cs" />
     <Compile Include="Actions\NewPlot\NewPlotAction.cs" />
     <Compile Include="Actions\NewPlot\NewPlotArgs.cs" />
+    <Compile Include="Actions\ScanShapefile\ScanShapefileAction.cs" />
+    <Compile Include="Actions\ScanShapefile\ScanShapefileArgs.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +116,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calico\Calico.csproj">
