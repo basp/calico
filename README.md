@@ -1,3 +1,5 @@
+> Programming is just mapping data.
+
 # calico
 Experimental.
 

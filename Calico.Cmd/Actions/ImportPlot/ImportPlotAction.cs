@@ -18,7 +18,7 @@
 
         public void Execute(ImportPlotArgs args)
         {
-            // Default to filename if no plot name is supplied
+            // Default when no plot name is supplied
             args.Name = string.IsNullOrWhiteSpace(args.Name)
                 ? Path.GetFileNameWithoutExtension(args.PathToShapefile)
                 : args.Name;
