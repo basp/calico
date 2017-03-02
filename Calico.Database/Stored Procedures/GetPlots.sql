@@ -4,4 +4,4 @@
 AS
 SELECT TOP(@Top) [Id], [ClientId], [Name], [Geometry]
 FROM [dbo].[Plots]
-ORDER BY [Id] DESC
+ORDER BY [Id]
