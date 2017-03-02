@@ -47,11 +47,6 @@ arrive in tye types mentioned above (and there's lots of ofther use-cases to sol
 so we really don't care much about fancier types for now. If there's a real
 demand/use-case then we can implemented it.
 
-## Creating a plot
-A **Plot** is a bit like a workspace. But it's not only just a mere conceptual container.
-A **Plot** actually is the owner object of quite a bit of data.
-
-Usually, when you import some data, you will have to associate it with a plot. However, a plot cannot be defined without some
-geometry. This means that even if you insert data in a disconnected way (readings
-with the wrong plot) it will always be possible to correct for at least 90% of the cases
-by associating the data geographically with the data that is stored in the database.
+# TODO
+* Abstract shapefiles into stores (IO in our logic? Shame shame! Think about testability ffs!)
+* Make a plot point to a feature and data set and remove geography from plot record itself.

@@ -7,3 +7,5 @@
     CONSTRAINT [FK_Plots_Clients] FOREIGN KEY ([ClientId]) REFERENCES [Clients]([Id]), 
     CONSTRAINT [PK_Plots] PRIMARY KEY ([Id]) 
 )
+
+GO

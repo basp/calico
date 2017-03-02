@@ -100,6 +100,9 @@
     <Compile Include="Commands\ImportFeatures\ImportFeaturesCommand.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesRequest.cs" />
     <Compile Include="Commands\ImportFeatures\ImportFeaturesResponse.cs" />
+    <Compile Include="Commands\ImportPlot\ImportPlotCommand.cs" />
+    <Compile Include="Commands\ImportPlot\ImportPlotRequest.cs" />
+    <Compile Include="Commands\ImportPlot\ImportPlotResponse.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetCommand.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetRequest.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetResponse.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeCommand.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeRequest.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeResponse.cs" />
+    <Compile Include="Commands\ScanShapefile\ScannedAttribute.cs" />
     <Compile Include="Commands\ScanShapefile\ScanShapefileCommand.cs" />
     <Compile Include="Commands\ScanShapefile\ScanShapefileRequest.cs" />
     <Compile Include="Commands\ScanShapefile\ScanShapefileResponse.cs" />

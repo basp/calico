@@ -36,10 +36,10 @@ namespace Calico
                     req.ClientId,
                     shapefile.DataTable);
 
-                var attributes = featureTypes.SelectMany(
-                    x => this.repository.GetAttributes(x.Id));
-
                 var numberOfFeatures = shapefile.Features.Count;
+
+                var attributes = shapefile.GetColumns()
+                    .Select(x => new ScannedAttribute(x.ColumnName, x.DataType));
 
                 var res = new Res
                 {

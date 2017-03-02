@@ -97,6 +97,8 @@
     <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesArgs.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesAction.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesArgs.cs" />
+    <Compile Include="Actions\ImportPlot\ImportPlotAction.cs" />
+    <Compile Include="Actions\ImportPlot\ImportPlotArgs.cs" />
     <Compile Include="Actions\NewClient\NewClientAction.cs" />
     <Compile Include="Actions\NewClient\NewClientArgs.cs" />
     <Compile Include="Actions\NewDataSet\NewDataSetAction.cs" />

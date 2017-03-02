@@ -43,15 +43,6 @@ namespace Calico
                     featureType.Name);
 
                 var attributes = this.repository.GetAttributes(dataSet.FeatureTypeId);
-                foreach (var attr in attributes)
-                {
-                    var dataType = dataTypes[attr.DataTypeId];
-                    Log.Debug(
-                        "Attribute {AttributeName} ({DataTypeName})",
-                        attr.Name,
-                        dataType.Name);
-                }
-
                 var mapping = attributes.ToDictionary(x => x.Name, x => x);
 
                 foreach (var col in shapefile.GetColumns())
@@ -109,16 +100,18 @@ namespace Calico
                     var attr = attributes[j];
                     var dt = dataTypes[attr.DataTypeId];
 
+                    var val = table.Rows[i][j];
+
                     switch (dt.Name)
                     {
                         case "Long":
-                            rec.LongValue = (long)table.Rows[i][j];
+                            rec.LongValue = val == DBNull.Value ? (long?)null : (long)val;
                             break;
                         case "Double":
-                            rec.DoubleValue = (double)table.Rows[i][j];
+                            rec.DoubleValue = val == DBNull.Value ? (double?)null : (double)val;
                             break;
                         case "String":
-                            rec.StringValue = table.Rows[i][j].ToString();
+                            rec.StringValue = val == DBNull.Value ? null : (string)val;
                             break;
                     }
 

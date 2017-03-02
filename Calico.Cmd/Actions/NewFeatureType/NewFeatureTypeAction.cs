@@ -33,12 +33,6 @@
                             "Created new feature type {FeatureTypeName} with id {FeatureTypeId}",
                             x.FeatureType.Name,
                             x.FeatureType.Id);
-
-                        const string SuggestedCommand = "ImportAttributes";
-                        Log.Information(
-                            "You'll need to {SuggestedCommand} to finalize {FeatureTypeName}", 
-                            SuggestedCommand,
-                            req.Name);
                     });
 
                     res.MatchNone(x =>

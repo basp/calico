@@ -10,7 +10,7 @@ namespace Calico
     {
         public int NumberOfFeatures { get; set; }
 
-        public IEnumerable<AttributeRecord> Attributes { get; set; }
+        public IEnumerable<ScannedAttribute> Attributes { get; set; }
 
         public IEnumerable<FeatureTypeRecord> FeatureTypes { get; set; }
     }

@@ -69,6 +69,11 @@
             new ImportFeaturesAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Import a plot from a shapefile")]
+        public void ImportPlot(ImportPlotArgs args) =>
+            new ImportPlotAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Creates a new client")]
         public void NewClient(NewClientArgs args) =>
             new NewClientAction(ConnectionFactory).Execute(args);
@@ -122,6 +127,7 @@
                 x.CreateMap<ImportAttributesArgs, ImportAttributesRequest>();
                 x.CreateMap<ImportAttributeValuesArgs, ImportAttributeValuesRequest>();
                 x.CreateMap<ImportFeaturesArgs, ImportFeaturesRequest>();
+                x.CreateMap<ImportPlotArgs, ImportPlotRequest>();
                 x.CreateMap<ScanShapefileArgs, ScanShapefileRequest>();
             });
 

@@ -9,7 +9,7 @@
         public int ClientId { get; set; }
 
         [ArgRequired]
-        [ArgDescription("The name of the client")]
+        [ArgDescription("The name of the feature type")]
         public string Name { get; set; }
     }
 }
