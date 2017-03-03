@@ -1,5 +1,8 @@
 ﻿Set-Alias Calico D:\dev\calico\Calico.Cmd\bin\Debug\calicmd.exe
 
+# Yeah, we'll def need a better way to do this
+# For now though, you'll just have to edit this to 
+# the -ClientId context that you're working in.
 $Script:ClientId = 1
 
 function Get-Attributes {
@@ -23,9 +26,15 @@ function Get-Plots {
 	Calico GetPlots -ClientId $Script:ClientId | ConvertFrom-Json
 }
 
+function New-Client {
+    [Parameter(Position = 0, Mandatory = $True)]
+    param([String] $Name)
+    Calico NewClient -Name $Name
+}
+
 function Resolve-Shapefile {
     param(
-        [Parameter(Position=0)]
+        [Parameter(Position=0, Mandatory=$True)]
         [String] $Path)
     Calico ScanShapefile -ClientId $Script:ClientId -PathToShapefile $Path | ConvertFrom-Json
 }
