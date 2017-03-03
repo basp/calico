@@ -1,6 +1,6 @@
-> Programming is just mapping data.
+# Calico
+Currently it's the beginnings of a *GeoJSON* server but mostly a CLI to interface with the engine.
 
-# calico
-Experimental.
+# Getting started
+Calico depends on a `IRepository` implementation. This interface doesn't assume much but *does* have a lot of operations. An `SqlRepository` is shipped by default. This requires some kind of SQL Server instance.
 
-It's for GIS sandboxing and also a (*wanna be*) reference architecture for console applications (and applications in general).

@@ -68,6 +68,7 @@
       <HintPath>..\packages\Serilog.Sinks.Literate.2.1.0\lib\net45\Serilog.Sinks.Literate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -124,7 +125,6 @@
     <None Include="App.config" />
     <None Include="Calico.ps1" />
     <None Include="packages.config" />
-    <None Include="README.md" />
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>

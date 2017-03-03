@@ -5,6 +5,7 @@
 namespace Calico.Cmd
 {
     using System;
+    using System.Configuration;
     using System.Data.SqlClient;
     using AutoMapper;
     using PowerArgs;
@@ -13,13 +14,11 @@ namespace Calico.Cmd
     [ArgExceptionBehavior(ArgExceptionPolicy.StandardExceptionHandling)]
     internal class Program
     {
-        private static SqlConnectionStringBuilder connectionStringBuilder =
-            new SqlConnectionStringBuilder
-            {
-                ["Data Source"] = @".\SQLEXPRESS",
-                ["Initial Catalog"] = "Calico",
-                ["Integrated Security"] = "SSPI",
-            };
+        private static string env =
+            ConfigurationManager.AppSettings.Get("env");
+
+        private static string connectionString =
+            ConfigurationManager.ConnectionStrings[env].ConnectionString;
 
         [HelpHook]
         public bool Help { get; set; }
@@ -115,7 +114,7 @@ namespace Calico.Cmd
             new ScanShapefileAction(ConnectionFactory).Execute(args);
 
         private static SqlConnection ConnectionFactory() =>
-            new SqlConnection(connectionStringBuilder.ConnectionString);
+            new SqlConnection(connectionString);
 
         private static void Main(string[] args)
         {

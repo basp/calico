@@ -2,14 +2,26 @@
 
 $Script:ClientId = 1
 
-function Set-ClientId {
-    param([Int] $ClientId)
-    $Script:ClientId = $ClientId
+function Get-Attributes {
+	param([Int] $FeatureTypeId)
+	Calico GetAttributes -FeatureTypeId $FeatureTypeId | ConvertFrom-Json
+}
+
+function Get-DataTypes {
+	Calico GetDataTypes | ConvertFrom-Json
+}
+
+function Get-FeatureTypes {
+	Calico GetFeatureTypes -ClientId $Script:ClientId | ConvertFrom-Json
+}
+
+function Get-Plots {
+	Calico GetPlots -ClientId $Script:ClientId | ConvertFrom-Json
 }
 
 function Resolve-Shapefile {
     param(
-        [Parameter(Position=0, ValueFromPipeline=$True)]
+        [Parameter(Position=0)]
         [String] $Path)
     Calico ScanShapefile -ClientId $Script:ClientId -PathToShapefile $Path | ConvertFrom-Json
 }
