@@ -26,8 +26,10 @@ function Get-Plots {
 }
 
 function New-Client {
-    [Parameter(Position = 0, Mandatory = $True)]
-    param([String] $Name)
+   
+    param(
+        [Parameter(Position = 0, Mandatory = $True)]
+        [String] $Name)
     Calico NewClient -Name $Name
 }
 
