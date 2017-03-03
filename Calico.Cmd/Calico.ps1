@@ -33,7 +33,7 @@ function New-Client {
 
 function Resolve-Shapefile {
     param(
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position = 0, Mandatory = $True)]
         [String] $Path)
     Calico ScanShapefile -ClientId $Script:ClientId -PathToShapefile $Path | ConvertFrom-Json
 }
