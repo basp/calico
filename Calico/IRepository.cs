@@ -29,7 +29,11 @@ namespace Calico
 
         IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top);
 
+        PlotRecord GetPlot(int id);
+
         IEnumerable<PlotRecord> GetPlots(int clientId, int top);
+
+        IEnumerable<PlotRecord> GetPlotsContainingGeometry(int clientId, string wkt);
 
         int InsertClient(ClientRecord rec);
 

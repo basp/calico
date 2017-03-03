@@ -13,5 +13,7 @@ namespace Calico
         public IEnumerable<ScannedAttribute> Attributes { get; set; }
 
         public IEnumerable<FeatureTypeRecord> FeatureTypes { get; set; }
+
+        public IEnumerable<PlotRecord> Plots { get; set; }
     }
 }

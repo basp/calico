@@ -1,9 +1,13 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="ImportAttributeValuesAction.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
-    using AutoMapper;
-    using Serilog;
     using System;
     using System.Data.SqlClient;
+    using AutoMapper;
+    using Serilog;
 
     public class ImportAttributeValuesAction : IAction<ImportAttributeValuesArgs>
     {

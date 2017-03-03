@@ -1,4 +1,8 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="Program.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
@@ -9,16 +13,13 @@
     [ArgExceptionBehavior(ArgExceptionPolicy.StandardExceptionHandling)]
     internal class Program
     {
-        private static SqlConnectionStringBuilder ConnectionStringBuilder =
+        private static SqlConnectionStringBuilder connectionStringBuilder =
             new SqlConnectionStringBuilder
             {
                 ["Data Source"] = @".\SQLEXPRESS",
                 ["Initial Catalog"] = "Calico",
                 ["Integrated Security"] = "SSPI",
             };
-
-        private static Func<SqlConnection> ConnectionFactory =
-            () => new SqlConnection(ConnectionStringBuilder.ConnectionString);
 
         [HelpHook]
         public bool Help { get; set; }
@@ -64,6 +65,11 @@
             new ImportAttributeValuesAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Import a data set from a shapefile")]
+        public void ImportDataSet(ImportDataSetArgs args) =>
+            new ImportDataSetAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Imports features from a shapefile")]
         public void ImportFeatures(ImportFeaturesArgs args) =>
             new ImportFeaturesAction(ConnectionFactory).Execute(args);
@@ -103,6 +109,9 @@
         public void ScanShapefile(ScanShapefileArgs args) =>
             new ScanShapefileAction(ConnectionFactory).Execute(args);
 
+        private static SqlConnection ConnectionFactory() =>
+            new SqlConnection(connectionStringBuilder.ConnectionString);
+
         private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -126,8 +135,11 @@
                 x.CreateMap<NewFeatureTypeArgs, NewFeatureTypeRequest>();
                 x.CreateMap<ImportAttributesArgs, ImportAttributesRequest>();
                 x.CreateMap<ImportAttributeValuesArgs, ImportAttributeValuesRequest>();
+                x.CreateMap<ImportDataSetArgs, ImportDataSetRequest>()
+                    .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<ImportFeaturesArgs, ImportFeaturesRequest>();
-                x.CreateMap<ImportPlotArgs, ImportPlotRequest>();
+                x.CreateMap<ImportPlotArgs, ImportPlotRequest>()
+                    .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<ScanShapefileArgs, ScanShapefileRequest>();
             });
 

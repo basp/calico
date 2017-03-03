@@ -1,4 +1,8 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="ImportFeaturesAction.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;

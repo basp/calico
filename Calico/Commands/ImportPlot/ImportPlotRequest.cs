@@ -4,6 +4,8 @@
 
 namespace Calico
 {
+    using System;
+
     public class ImportPlotRequest
     {
         public int ClientId { get; set; }
@@ -13,6 +15,8 @@ namespace Calico
         public string Name { get; set; }
 
         public string PathToShapefile { get; set; }
+
+        public DateTime DateCreated { get; set; }
 
         public int SRID { get; set; }
     }

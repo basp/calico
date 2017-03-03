@@ -1,4 +1,4 @@
-﻿// <copyright file="NewDataSetAction.cs" company="TMG">
+﻿// <copyright file="ImportDataSetAction.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,37 +6,44 @@ namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
+    using System.IO;
     using AutoMapper;
     using Serilog;
 
-    public class NewDataSetAction : IAction<NewDataSetArgs>
+    public class ImportDataSetAction : IAction<ImportDataSetArgs>
     {
         private readonly Func<SqlConnection> connectionFactory;
 
-        public NewDataSetAction(Func<SqlConnection> connectionFactory)
+        public ImportDataSetAction(Func<SqlConnection> connectionFactory)
         {
             this.connectionFactory = connectionFactory;
         }
 
-        public void Execute(NewDataSetArgs args)
+        public void Execute(ImportDataSetArgs args)
         {
+            args.Name = string.IsNullOrWhiteSpace(args.Name)
+                ? Path.GetFileNameWithoutExtension(args.PathToShapefile)
+                : args.Name;
+
             using (var conn = this.connectionFactory())
             {
                 conn.Open();
                 using (var tx = conn.BeginTransaction())
                 {
                     var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewDataSetCommand(repo);
-                    var req = Mapper.Map<NewDataSetRequest>(args);
+                    var cmd = new ImportDataSetCommand(repo);
+                    var req = Mapper.Map<ImportDataSetRequest>(args);
                     var res = cmd.Execute(req);
 
                     res.MatchSome(x =>
                     {
                         tx.Commit();
                         Log.Information(
-                            "Created data set {DataSetName} with id {DataSetId}",
+                            "Imported {DataSetName} ({DataSetId}) for plot {PlotName} ({PlotId})",
                             x.DataSet.Name,
-                            x.DataSet.Id);
+                            x.DataSet.Id,
+                            x.Plot.Name,
+                            x.Plot.Id);
                     });
 
                     res.MatchNone(x =>
@@ -44,9 +51,8 @@ namespace Calico.Cmd
                         tx.Rollback();
                         Log.Error(
                             x,
-                            "Failed to create data set {DataSetName} for plot {PlotId}",
-                            req.Name,
-                            req.PlotId);
+                            "Failed to import data set from shapefile {Shapefile}",
+                            req.PathToShapefile);
                     });
                 }
             }

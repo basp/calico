@@ -5,11 +5,8 @@
 namespace Calico
 {
     using System;
-    using System.Data.SqlTypes;
     using System.Linq;
     using DotSpatial.Data;
-    using DotSpatial.Topology;
-    using Microsoft.SqlServer.Types;
     using Optional;
     using Serilog;
 
@@ -62,15 +59,9 @@ namespace Calico
             {
                 DataSetId = dataSetId,
                 Index = index,
-                Geometry = GetSTGeometry(feature.BasicGeometry, srid),
+                Wkt = feature.BasicGeometry.ToString(),
+                SRID = srid,
             };
-        }
-
-        private static SqlGeometry GetSTGeometry(IBasicGeometry bg, int srid)
-        {
-            var wkt = bg.ToString();
-            var chars = new SqlChars(new SqlString(wkt));
-            return SqlGeometry.STGeomFromText(chars, srid);
         }
     }
 }

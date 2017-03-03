@@ -1,4 +1,8 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="ImportPlotArgs.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
     using PowerArgs;
 

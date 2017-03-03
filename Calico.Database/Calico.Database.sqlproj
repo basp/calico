@@ -83,8 +83,13 @@
     <Build Include="Stored Procedures\GetAttributes.sql" />
     <Build Include="Stored Procedures\GetDataSet.sql" />
     <Build Include="Stored Procedures\GetFeatureType.sql" />
+    <Build Include="Stored Procedures\GetPlot.sql" />
+    <Build Include="Stored Procedures\GetPlotsContainingGeometry.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertDataTypes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Calico.Database.publish.xml" />
   </ItemGroup>
 </Project>

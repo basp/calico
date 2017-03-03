@@ -8,6 +8,7 @@ namespace Calico
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Data.SqlTypes;
     using System.Linq;
     using Dapper;
     using Microsoft.SqlServer.Types;
@@ -94,7 +95,7 @@ namespace Calico
                 var row = table.NewRow();
                 row["DataSetId"] = f.DataSetId;
                 row["Index"] = f.Index;
-                row["Geometry"] = f.Geometry;
+                row["Geometry"] = ValidSqlGeometryFromWkt(f.Wkt, f.SRID);
                 table.Rows.Add(row);
             }
 
@@ -176,11 +177,34 @@ namespace Calico
                 transaction: this.transaction);
         }
 
+        public PlotRecord GetPlot(int plotId)
+        {
+            var @param = new { PlotId = plotId };
+            return this.connection.QuerySingle<PlotRecord>(
+                nameof(this.GetPlot),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
         {
             var @param = new { ClientId = clientId, Top = top };
             return this.connection.Query<PlotRecord>(
                 nameof(this.GetPlots),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public IEnumerable<PlotRecord> GetPlotsContainingGeometry(
+            int clientId,
+            string wkt)
+        {
+            var geometry = SqlGeometry.Parse(wkt).MakeValid();
+            var @param = new { ClientId = clientId, Geometry = geometry };
+            return this.connection.Query<PlotRecord>(
+                nameof(this.GetPlotsContainingGeometry),
                 @param,
                 commandType: CommandType.StoredProcedure,
                 transaction: this.transaction);
@@ -212,7 +236,8 @@ namespace Calico
 
         public int InsertPlot(PlotRecord rec)
         {
-            var @param = new { rec.ClientId, rec.Name, rec.Geometry };
+            var geo = ValidSqlGeometryFromWkt(rec.Wkt, rec.SRID);
+            var @param = new { rec.ClientId, rec.Name, Geometry = geo };
             return this.Insert(nameof(this.InsertPlot), @param);
         }
 
@@ -266,6 +291,12 @@ namespace Calico
             var table = new DataTable();
             table.Columns.AddRange(cols);
             return table;
+        }
+
+        private static SqlGeometry ValidSqlGeometryFromWkt(string wkt, int srid)
+        {
+            var text = new SqlChars(new SqlString(wkt));
+            return SqlGeometry.STGeomFromText(text, srid).MakeValid();
         }
 
         private int Insert(string sproc, object @param)

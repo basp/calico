@@ -12,6 +12,8 @@ namespace Calico
 
         public int Index { get; set; }
 
-        public SqlGeometry Geometry { get; set; }
+        public string Wkt { get; set; }
+
+        public int SRID { get; set; }
     }
 }

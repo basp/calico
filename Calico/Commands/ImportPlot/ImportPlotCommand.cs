@@ -24,19 +24,17 @@ namespace Calico
 
         public Option<Res, Exception> Execute(Req req)
         {
-            var res = from plot in this.NewPlot(req)
-                      from dataSet in this.NewDataSet(plot.Id, req.FeatureTypeId, req.Name)
-                      from features in this.ImportFeatures(dataSet.Id, req.PathToShapefile, req.SRID)
-                      from attrs in this.ImportAttributeValues(dataSet.Id, req.PathToShapefile)
-                      select new Res
-                      {
-                          Plot = plot,
-                          DataSet = dataSet,
-                          NumberOfFeatures = features,
-                          NumberOfAttributes = attrs,
-                      };
-
-            return res;
+            return from plot in this.NewPlot(req)
+                   from dataSet in this.NewDataSet(plot.Id, req)
+                   from features in this.ImportFeatures(dataSet.Id, req.PathToShapefile, req.SRID)
+                   from attrs in this.ImportAttributeValues(dataSet.Id, req.PathToShapefile)
+                   select new Res
+                   {
+                       Plot = plot,
+                       DataSet = dataSet,
+                       NumberOfFeatures = features,
+                       NumberOfAttributes = attrs,
+                   };
         }
 
         private Option<PlotRecord, Exception> NewPlot(Req req)
@@ -54,16 +52,15 @@ namespace Calico
 
         private Option<DataSetRecord, Exception> NewDataSet(
             int plotId,
-            int featureTypeId,
-            string name)
+            Req req)
         {
             var cmd = new NewDataSetCommand(this.repository);
             var res = cmd.Execute(new NewDataSetRequest
             {
                 PlotId = plotId,
-                FeatureTypeId = featureTypeId,
-                Name = name,
-                DateCreated = DateTime.UtcNow,
+                FeatureTypeId = req.FeatureTypeId,
+                Name = req.Name,
+                DateCreated = req.DateCreated,
             });
 
             return res.Map(x => x.DataSet);

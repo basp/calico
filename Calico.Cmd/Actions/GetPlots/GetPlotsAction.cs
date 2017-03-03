@@ -1,4 +1,8 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="GetPlotsAction.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
@@ -32,7 +36,7 @@
                         y.Id,
                         y.ClientId,
                         y.Name,
-                        Geometry = y.Geometry.ToString(),
+                        Geometry = y.Wkt,
                     });
 
                     var json = JsonConvert.SerializeObject(plots);

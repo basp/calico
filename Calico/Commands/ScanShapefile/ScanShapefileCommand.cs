@@ -41,11 +41,14 @@ namespace Calico
                 var attributes = shapefile.GetColumns()
                     .Select(x => new ScannedAttribute(x.ColumnName, x.DataType));
 
+                var feature = shapefile.Features[0].BasicGeometry.ToString();
+
                 var res = new Res
                 {
                     NumberOfFeatures = numberOfFeatures,
                     Attributes = attributes,
                     FeatureTypes = featureTypes,
+                    Plots = this.GetMatchingPlots(req.ClientId, feature),
                 };
 
                 return Some<Res, Exception>(res);
@@ -82,6 +85,15 @@ namespace Calico
             var buf = Encoding.UTF8.GetBytes(str);
             var hash = md5.ComputeHash(buf);
             return Convert.ToBase64String(hash);
+        }
+
+        private IEnumerable<PlotRecord> GetMatchingPlots(
+            int clientId,
+            string geometry)
+        {
+            return this.repository.GetPlotsContainingGeometry(
+                clientId,
+                geometry);
         }
 
         private IEnumerable<FeatureTypeRecord> GetMatchingFeatureTypes(

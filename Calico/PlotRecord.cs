@@ -14,6 +14,8 @@ namespace Calico
 
         public string Name { get; set; }
 
-        public SqlGeometry Geometry { get; set; }
+        public string Wkt { get; set; }
+
+        public int SRID { get; set; }
     }
 }

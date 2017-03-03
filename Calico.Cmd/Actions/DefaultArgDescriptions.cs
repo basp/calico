@@ -1,4 +1,8 @@
-﻿namespace Calico
+﻿// <copyright file="DefaultArgDescriptions.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
 {
     public static class DefaultArgDescriptions
     {

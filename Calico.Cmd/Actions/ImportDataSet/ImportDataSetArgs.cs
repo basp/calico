@@ -1,4 +1,4 @@
-﻿// <copyright file="NewDataSetArgs.cs" company="TMG">
+﻿// <copyright file="ImportDataSetArgs.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,18 +6,17 @@ namespace Calico.Cmd
 {
     using PowerArgs;
 
-    public class NewDataSetArgs
+    public class ImportDataSetArgs
     {
         [ArgRequired]
-        [ArgDescription(DefaultArgDescriptions.PlotId)]
         public int PlotId { get; set; }
 
         [ArgRequired]
-        [ArgDescription(DefaultArgDescriptions.FeatureTypeId)]
         public int FeatureTypeId { get; set; }
 
         [ArgRequired]
-        [ArgDescription("The name of the data set")]
+        public string PathToShapefile { get; set; }
+
         public string Name { get; set; }
     }
 }

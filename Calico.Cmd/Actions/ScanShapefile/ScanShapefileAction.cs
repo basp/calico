@@ -1,10 +1,14 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="ScanShapefileAction.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
+    using System;
+    using System.Data.SqlClient;
     using AutoMapper;
     using Newtonsoft.Json;
     using Serilog;
-    using System;
-    using System.Data.SqlClient;
 
     public class ScanShapefileAction : IAction<ScanShapefileArgs>
     {

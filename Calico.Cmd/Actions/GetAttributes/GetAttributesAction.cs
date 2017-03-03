@@ -1,10 +1,14 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="GetAttributesAction.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
     using AutoMapper;
-    using Serilog;
     using Newtonsoft.Json;
+    using Serilog;
 
     public class GetAttributesAction : IAction<GetAttributesArgs>
     {

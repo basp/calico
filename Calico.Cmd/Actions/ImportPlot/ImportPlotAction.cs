@@ -1,11 +1,14 @@
-﻿namespace Calico.Cmd
+﻿// <copyright file="ImportPlotAction.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
+    using System.IO;
     using AutoMapper;
     using Serilog;
-    using Newtonsoft.Json;
-    using System.IO;
 
     public class ImportPlotAction : IAction<ImportPlotArgs>
     {
@@ -18,7 +21,6 @@
 
         public void Execute(ImportPlotArgs args)
         {
-            // Default when no plot name is supplied
             args.Name = string.IsNullOrWhiteSpace(args.Name)
                 ? Path.GetFileNameWithoutExtension(args.PathToShapefile)
                 : args.Name;
@@ -49,7 +51,7 @@
                         tx.Rollback();
                         Log.Error(
                             x,
-                            "Could not import plot from shapefile {Shapefile}",
+                            "Failed to import plot from shapefile {Shapefile}",
                             req.PathToShapefile);
                     });
                 }

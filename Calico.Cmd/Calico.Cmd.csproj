@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>SA0001;SA1600</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -95,6 +96,8 @@
     <Compile Include="Actions\ImportAttributes\ImportAttributesArgs.cs" />
     <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesAction.cs" />
     <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesArgs.cs" />
+    <Compile Include="Actions\ImportDataSet\ImportDataSetAction.cs" />
+    <Compile Include="Actions\ImportDataSet\ImportDataSetArgs.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesAction.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesArgs.cs" />
     <Compile Include="Actions\ImportPlot\ImportPlotAction.cs" />
@@ -117,8 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Calico.ps1" />
     <None Include="packages.config" />
     <None Include="README.md" />
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calico\Calico.csproj">
@@ -126,6 +131,10 @@
       <Name>Calico</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

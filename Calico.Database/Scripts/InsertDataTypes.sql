@@ -1,6 +1,18 @@
-﻿INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
-VALUES (N'Double', N'FLOAT', N'System.Double')
-INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
-VALUES (N'Long', N'BIGINT', N'System.Int64')
-INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
-VALUES (N'String', N'NVARCHAR', N'System.String')
+﻿IF NOT EXISTS(SELECT [Id] FROM [dbo].[DataTypes] WHERE [Name] = N'Double')
+EXEC InsertDataType 
+	@Name = N'Double', 
+	@SqlType = N'FLOAT', 
+	@BclType = N'System.Double'
+
+IF NOT EXISTS(SELECT [Id] FROM [dbo].[DataTypes] WHERE [Name] = N'Long')
+EXEC InsertDataType
+	@Name = N'Long',
+	@SqlType = N'BIGINT',
+	@BclType = N'System.Int64'
+
+
+IF NOT EXISTS(SELECT [Id] FROM [dbo].[DataTypes] WHERE [Name] = N'String')
+EXEC InsertDataType 
+	@Name = N'String', 
+	@SqlType = N'VARCHAR', 
+	@BclType = N'System.String'
