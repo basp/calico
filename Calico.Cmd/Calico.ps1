@@ -1,9 +1,8 @@
-﻿Set-Alias Calico D:\dev\calico\Calico.Cmd\bin\Debug\calicmd.exe
-
-# Yeah, we'll def need a better way to do this
+﻿# Yeah, we'll def need a better way to do this
 # For now though, you'll just have to edit this to 
 # the -ClientId context that you're working in.
 $Script:ClientId = 1
+Set-Alias Calico D:\dev\calico\Calico.Cmd\bin\Debug\calicmd.exe
 
 function Get-Attributes {
 	param([Int] $FeatureTypeId)
