@@ -39,14 +39,32 @@ And we'll get back some output that looks like this:
 That''s log output that is send to the console by default. We're using staight up structured logging via **Serlog** and by default we'll use a literate sink to console.
 
 So now that we have a client we can edit the `Calico.ps1` script and replace the `$Script:ClientId` value
-with the value we just got from the system. And then we'll *source* it again.
+with the value we just got from the system. And then we'll *source* it again:
+
+    > . .\somedir\someotherdir\calico\Calico.Cmd\Calico.ps1
 
 ## Importing Data
+### Resolving a directory of shapefiles
 In order to import data we need a *feature type* definition. It's the attributes that we expect to find when we import a particular data set. This might seem a bit confusing so we'll start slowly.
 
-First, you need some data in form of shapefiles. Create a directory somewhere (anywhere, it doens't matter) and name it something that you can remember (for this example we'll name it `sandbox`). Copy all the shapefiles that you can find into that directory and use your PowerShell prompt to navigate to it:
+First, you need some data in the form of shapefiles. Create a directory somewhere (anywhere, it doens't matter) and name it something that you can remember (for this example we'll name it `sandbox`). Copy all the shapefiles that you can find into that directory and use your PowerShell prompt to navigate to it:
 
-    > cd drive:\your\shapefile\dir
+    > cd drive:\sandbox
+
+Calico aims to be easy to use and to *entice* you to explore the data. For our current use-cases there are two important things that it can do:
+
+* It can determine which feature types match a particular shaprefile.
+* And it can also determine the *plot* that the dataset from the shapefile belongs to.
+
+Let's see this in action. If you have the `Calico.ps1` scriopt sourced and once you're in a directory with shapefiles just execute the following command:
+
+    > Resolve-Directory
+
+After a (hopefully short) while you'lll start to see output appear. We'll take a look at what all this output means in the next section.
+
+### Understanding the output
+TODO
+
 
 > It doesn't matter if the shapefiles are all of different types, we'll deal with that in the following sections, just create a sandbox directory and dump every shapefile (usually they are *triplets* of files) that you have into that folder.
 
