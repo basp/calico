@@ -20,7 +20,13 @@ Now we can execute `Get-Clients` from the command line and see that we have no c
 
 We'll assume you're running a clean installation and thus we'll start from the beginning. 
 
-First thing we need is a client *handle* (ref). This allows us to access the actual data. Every user that has access to the data is related to zero or more clients. Those **client** instances determine what segments of the database a user can access. 
+The absolutely easiest thing we can do is to request the **data types** that the system supports.
+
+    > Get-DataTypes
+
+If you're running a fresh installation this will return a list of `Long`, `Double` and `String` recoreds.
+
+However, if we want to do more fancy operations we need a *client handle* (an id). This allows us to access the actual data. Every user that has access to the data is related to zero or more clients. Those **client** instances determine what segments of the database a user can access. 
 
 Let's start by listing all the clients that are currently in the system:
 
@@ -30,13 +36,21 @@ This should give us *nothing (an empty result set).
 
 Now we create a new client:
 
-    > calico NewClient -Name "Tutorial"
+    > New-Client -Name "Tutorial"
 
 And we'll get back some output that looks like this:
 
     [23:11:58 INF] Created client Tutorial with id 1
 
-That''s log output that is send to the console by default. We're using staight up structured logging via **Serlog** and by default we'll use a literate sink to console.
+That''s log output that is send to the console by default. 
+
+> We're using staight up structured logging via **Serlog** and by default we'll use a literate sink to console.
+
+We can list the clients again and confirm that it's actually there:
+
+    > Get-Clients
+
+If you're running a fresh installation of the database that client record will probably have an id of 1 but if it might be any any number.
 
 So now that we have a client we can edit the `Calico.ps1` script and replace the `$Script:ClientId` value
 with the value we just got from the system. And then we'll *source* it again:
