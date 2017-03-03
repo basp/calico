@@ -101,7 +101,7 @@ Take any file, it doesn't really matter which one and we'll execute the `Resolve
 
 > You can also use the `dbf` or `shx` extensions to refer to a shapefile.
 
-> It doesn't matter if the shapefiles are all of different types, we'll deal with that in the following sections, just create a sandbox directory and dump every shapefile (usually they are *triplets* of files) that you have into that folder.
+ It doesn't matter if the shapefiles are all of different types, we'll deal with that in the following sections, just create a sandbox directory and dump every shapefile (usually they are *triplets* of files) that you have into that folder.
 
 Now the first thing you want to do is to run the `Resolve-Directory` command. This will scan each and every shapefile in the current working directory and report back the results. It will identify a feature type and a *plot* (more on that in the next section) if it can. If you have very many feature files it maght take a while to run so it's best starting out with a varied but not too big set of data for config and/or development purposes.
 
