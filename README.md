@@ -24,7 +24,7 @@ The absolutely easiest thing we can do is to request the **data types** that the
 
     > Get-DataTypes
 
-If you're running a fresh installation this will return a list of `Long`, `Double` and `String` recoreds.
+If you're running a fresh installation this will return a list of `Long`, `Double` and `String` records.
 
 However, if we want to do more fancy operations we need a *client handle* (an id). This allows us to access the actual data. Every user that has access to the data is related to zero or more clients. Those **client** instances determine what segments of the database a user can access. 
 
@@ -67,7 +67,7 @@ First, you need some data in the form of shapefiles. Create a directory somewher
 
 Calico aims to be easy to use and to *entice* you to explore the data. For our current use-cases there are two important things that it can do:
 
-* It can determine which feature types match a particular shaprefile.
+* It can determine which feature types match a particular shapefile.
 * And it can also determine the *plot* that the dataset from the shapefile belongs to.
 
 Let's see this in action. If you have the `Calico.ps1` scriopt sourced and once you're in a directory with shapefiles just execute the following command:
@@ -76,9 +76,28 @@ Let's see this in action. If you have the `Calico.ps1` scriopt sourced and once 
 
 After a (hopefully short) while you'lll start to see output appear. We'll take a look at what all this output means in the next section.
 
-### Understanding the output
-TODO
+At this point there's two important properties we want to inspect: `FeatureTypes` and `Plots`. So let's refine our PowerShell command just a little bit:
+    
+    > Resolve-Directory | Select-Object -Property PathToShapefile, FeatureTypes, Plots
 
+You might notice that the **FeatureTypes** and **Plots** columns are eerily empty. We'll fix that shortly.
+
+### Creating a feature type
+The **feature type** is a very important concept. It's useful functionally as well as technically. 
+
+* The concept of a *feature type* allows us to **automamagically* find the feature type for a particular shapefile.
+* It allows us to perform reasonably efficent RDBMS operations on a data set that might be very heteregeneous.
+* We can do *safe-guarding* and *validation* and all kinds of checks to make sure no unexpected data seeps into our **attribute-value** system that supports importing hetereogeneous datasets.
+* If offers a layer of abstraction that can be well documented.
+* It's a container for *attributes*.
+
+So it's used internally (in the system) and externally (outside the system to communicate about features). Let's create one!
+
+If you've foloowed along so far, you should've noticed that **Calico** was not able to rognize any plots or feature types. Let's start by fixing this. Take any file, it doesn't really matter which one and we'll execute the `Resolve-Shapefile` command as such:
+
+    > Resolve-Shapefile -Path drive:\sandbox\shapfile.sho
+
+> You can also use the `dbf` or `shx` extensions to refer to a shapefile.
 
 > It doesn't matter if the shapefiles are all of different types, we'll deal with that in the following sections, just create a sandbox directory and dump every shapefile (usually they are *triplets* of files) that you have into that folder.
 
