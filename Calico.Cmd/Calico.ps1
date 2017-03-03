@@ -1,6 +1,6 @@
 ﻿Set-Alias Calico D:\dev\calico\Calico.Cmd\bin\Debug\calicmd.exe
 
-$Script:ClientId = 0
+$Script:ClientId = 1
 
 function Set-ClientId {
     param([Int] $ClientId)
@@ -8,15 +8,13 @@ function Set-ClientId {
 }
 
 function Resolve-Shapefile {
-    param([String] $Path)
+    param(
+        [Parameter(Position=0, ValueFromPipeline=$True)]
+        [String] $Path)
     Calico ScanShapefile -ClientId $Script:ClientId -PathToShapefile $Path | ConvertFrom-Json
 }
 
-function Import-DataSet {
-
+function Resolve-Directory {
+    Get-ChildItem *.shp | ForEach-Object { Resolve-Shapefile -Path $_.FullName }
 }
 
-function Import-Directory {
-    Get-ChildItem *.shp | ForEach-Object { $_.FullName }
-
-}

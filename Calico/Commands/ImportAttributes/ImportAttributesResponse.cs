@@ -4,8 +4,10 @@
 
 namespace Calico
 {
+    using System.Collections.Generic;
+
     public class ImportAttributesResponse
     {
-        public int RowCount { get; set; }
+        public IEnumerable<AttributeRecord> Attributes { get; set; }
     }
 }

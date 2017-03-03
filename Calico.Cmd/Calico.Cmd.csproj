@@ -100,6 +100,8 @@
     <Compile Include="Actions\ImportDataSet\ImportDataSetArgs.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesAction.cs" />
     <Compile Include="Actions\ImportFeatures\ImportFeaturesArgs.cs" />
+    <Compile Include="Actions\ImportFeatureType\ImportFeatureTypeArgs.cs" />
+    <Compile Include="Actions\ImportFeatureType\ImportFeatureTypeAction.cs" />
     <Compile Include="Actions\ImportPlot\ImportPlotAction.cs" />
     <Compile Include="Actions\ImportPlot\ImportPlotArgs.cs" />
     <Compile Include="Actions\NewClient\NewClientAction.cs" />

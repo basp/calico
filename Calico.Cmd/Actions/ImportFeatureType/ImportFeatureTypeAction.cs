@@ -1,4 +1,4 @@
-﻿// <copyright file="ImportAttributesAction.cs" company="TMG">
+﻿// <copyright file="ImportFeatureTypeAction.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,20 +6,19 @@ namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
-    using System.Linq;
     using AutoMapper;
     using Serilog;
 
-    public class ImportAttributesAction : IAction<ImportAttributesArgs>
+    public class ImportFeatureTypeAction : IAction<ImportFeatureTypeArgs>
     {
         private readonly Func<SqlConnection> connectionFactory;
 
-        public ImportAttributesAction(Func<SqlConnection> connectionFactory)
+        public ImportFeatureTypeAction(Func<SqlConnection> connectionFactory)
         {
             this.connectionFactory = connectionFactory;
         }
 
-        public void Execute(ImportAttributesArgs args)
+        public void Execute(ImportFeatureTypeArgs args)
         {
             using (var conn = this.connectionFactory())
             {
@@ -27,17 +26,19 @@ namespace Calico.Cmd
                 using (var tx = conn.BeginTransaction())
                 {
                     var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportAttributesCommand(repo);
-                    var req = Mapper.Map<ImportAttributesRequest>(args);
+                    var cmd = new ImportFeatureTypeCommand(repo);
+                    var req = Mapper.Map<ImportFeatureTypeRequest>(args);
                     var res = cmd.Execute(req);
 
                     res.MatchSome(x =>
                     {
                         tx.Commit();
                         Log.Information(
-                            "Imported {RowCount} attributes from {Shapefile}",
-                            x.Attributes.Count(),
-                            req.PathToShapefile);
+                            "Imported feature type {FeatureTypeName} ({FeatureTypeId}) for client {ClientName} ({ClientId})",
+                            x.FeatureType.Name,
+                            x.FeatureType.Id,
+                            x.Client.Name,
+                            x.Client.Id);
                     });
 
                     res.MatchNone(x =>
@@ -45,7 +46,7 @@ namespace Calico.Cmd
                         tx.Rollback();
                         Log.Error(
                             x,
-                            "Failed to import attributes from {Shapefile}",
+                            "Failed to import feature type from shapefile {Shapefile}",
                             req.PathToShapefile);
                     });
                 }

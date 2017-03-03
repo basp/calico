@@ -119,6 +119,16 @@ namespace Calico
                 transaction: this.transaction);
         }
 
+        public ClientRecord GetClient(int id)
+        {
+            var @param = new { Id = id };
+            return this.connection.QuerySingle<ClientRecord>(
+                nameof(this.GetClient),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public IEnumerable<ClientRecord> GetClients(int top)
         {
             var @param = new { Top = top };

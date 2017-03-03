@@ -8,6 +8,8 @@ namespace Calico
 
     public class ScanShapefileResponse
     {
+        public string PathToShapefile { get; set; }
+
         public int NumberOfFeatures { get; set; }
 
         public IEnumerable<ScannedAttribute> Attributes { get; set; }

@@ -45,6 +45,7 @@ namespace Calico
 
                 var res = new Res
                 {
+                    PathToShapefile = req.PathToShapefile,
                     NumberOfFeatures = numberOfFeatures,
                     Attributes = attributes,
                     FeatureTypes = featureTypes,

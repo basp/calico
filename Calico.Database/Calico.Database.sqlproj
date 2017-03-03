@@ -85,6 +85,7 @@
     <Build Include="Stored Procedures\GetFeatureType.sql" />
     <Build Include="Stored Procedures\GetPlot.sql" />
     <Build Include="Stored Procedures\GetPlotsContainingGeometry.sql" />
+    <Build Include="Stored Procedures\GetClient.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertDataTypes.sql" />

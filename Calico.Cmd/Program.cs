@@ -75,6 +75,11 @@ namespace Calico.Cmd
             new ImportFeaturesAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Imports a feature type from a shapefile")]
+        public void ImportFeatureType(ImportFeatureTypeArgs args) =>
+            new ImportFeatureTypeAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Import a plot from a shapefile")]
         public void ImportPlot(ImportPlotArgs args) =>
             new ImportPlotAction(ConnectionFactory).Execute(args);
@@ -138,6 +143,7 @@ namespace Calico.Cmd
                 x.CreateMap<ImportDataSetArgs, ImportDataSetRequest>()
                     .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<ImportFeaturesArgs, ImportFeaturesRequest>();
+                x.CreateMap<ImportFeatureTypeArgs, ImportFeatureTypeRequest>();
                 x.CreateMap<ImportPlotArgs, ImportPlotRequest>()
                     .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<ScanShapefileArgs, ScanShapefileRequest>();

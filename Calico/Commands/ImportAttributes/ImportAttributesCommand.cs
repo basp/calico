@@ -49,7 +49,7 @@ namespace Calico
                     });
 
                 var c = this.repository.BulkCopyAttributes(recs);
-                var res = new Res { RowCount = c };
+                var res = new Res { Attributes = recs };
                 return Some<Res, Exception>(res);
             }
             catch (Exception ex)
