@@ -7,6 +7,10 @@ function Get-Attributes {
 	Calico GetAttributes -FeatureTypeId $FeatureTypeId | ConvertFrom-Json
 }
 
+function Get-Clients {
+    Calico GetClients | ConvertFrom-Json
+}
+
 function Get-DataTypes {
 	Calico GetDataTypes | ConvertFrom-Json
 }
