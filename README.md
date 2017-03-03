@@ -85,15 +85,17 @@ You might notice that the **FeatureTypes** and **Plots** columns are eerily empt
 ### Creating a feature type
 The **feature type** is a very important concept. It's useful functionally as well as technically. 
 
-* The concept of a *feature type* allows us to **automamagically* find the feature type for a particular shapefile.
+* The concept of a *feature type* allows us to **automagically* find the feature type for a particular shapefile.
 * It allows us to perform reasonably efficent RDBMS operations on a data set that might be very heteregeneous.
 * We can do *safe-guarding* and *validation* and all kinds of checks to make sure no unexpected data seeps into our **attribute-value** system that supports importing hetereogeneous datasets.
 * If offers a layer of abstraction that can be well documented.
 * It's a container for *attributes*.
 
-So it's used internally (in the system) and externally (outside the system to communicate about features). Let's create one!
+So it's used internally (in the system) and externally (outside the system) to communicate about features. Let's create one!
 
-If you've foloowed along so far, you should've noticed that **Calico** was not able to rognize any plots or feature types. Let's start by fixing this. Take any file, it doesn't really matter which one and we'll execute the `Resolve-Shapefile` command as such:
+If you've followed along so far, you should've noticed that **Calico** was not able to recognize any plots or feature types using the `Resolve-Direcotry` command. Let's start by fixing this. 
+
+Take any file, it doesn't really matter which one and we'll execute the `Resolve-Shapefile` command as such:
 
     > Resolve-Shapefile -Path drive:\sandbox\shapfile.sho
 
