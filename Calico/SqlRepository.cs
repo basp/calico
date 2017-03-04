@@ -96,6 +96,7 @@ namespace Calico
                 row["DataSetId"] = f.DataSetId;
                 row["Index"] = f.Index;
                 row["Geometry"] = ValidSqlGeometryFromWkt(f.Wkt, f.SRID);
+                row["SRID"] = f.SRID;
                 table.Rows.Add(row);
             }
 
@@ -107,6 +108,26 @@ namespace Calico
             }
 
             return table.Rows.Count;
+        }
+
+        public int DeleteDataSet(int id)
+        {
+            var @param = new { Id = id };
+            return this.connection.Execute(
+                nameof(this.DeleteDataSet),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public int DeletePlot(int id)
+        {
+            var @param = new { Id = id };
+            return this.connection.Execute(
+                nameof(this.DeletePlot),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
         }
 
         public IEnumerable<AttributeRecord> GetAttributes(int featureTypeId)
@@ -247,7 +268,7 @@ namespace Calico
         public int InsertPlot(PlotRecord rec)
         {
             var geo = ValidSqlGeometryFromWkt(rec.Wkt, rec.SRID);
-            var @param = new { rec.ClientId, rec.Name, Geometry = geo };
+            var @param = new { rec.ClientId, rec.Name, Geometry = geo, rec.SRID };
             return this.Insert(nameof(this.InsertPlot), @param);
         }
 
@@ -294,6 +315,7 @@ namespace Calico
                 ["DataSetId"] = typeof(int),
                 ["Index"] = typeof(int),
                 ["Geometry"] = typeof(SqlGeometry),
+                ["SRID"] = typeof(int),
             }
             .Select(x => new DataColumn(x.Key, x.Value))
             .ToArray();

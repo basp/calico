@@ -24,6 +24,16 @@ namespace Calico.Cmd
         public bool Help { get; set; }
 
         [ArgActionMethod]
+        [ArgDescription("Deletes a data set")]
+        public void DeleteDataSet(DeleteDataSetArgs args) =>
+            new DeleteDataSetAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
+        [ArgDescription("Deletes a plot")]
+        public void DeletePlot(DeletePlotArgs args) =>
+            new DeletePlotAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Gets a list of attributes")]
         public void GetAttributes(GetAttributesArgs args) =>
             new GetAttributesAction(ConnectionFactory).Execute(args);
@@ -125,6 +135,8 @@ namespace Calico.Cmd
 
             Mapper.Initialize(x =>
             {
+                x.CreateMap<DeleteDataSetArgs, DeleteDataSetRequest>();
+                x.CreateMap<DeletePlotArgs, DeletePlotRequest>();
                 x.CreateMap<GetAttributesArgs, GetAttributesRequest>();
                 x.CreateMap<GetClientsArgs, GetClientsRequest>();
                 x.CreateMap<GetDataSetsArgs, GetDataSetsRequest>();

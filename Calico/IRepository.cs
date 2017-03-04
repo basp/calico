@@ -15,6 +15,10 @@ namespace Calico
 
         int BulkCopyFeatures(IEnumerable<FeatureRecord> recs);
 
+        int DeleteDataSet(int id);
+
+        int DeletePlot(int id);
+
         IEnumerable<AttributeRecord> GetAttributes(int featureTypeId);
 
         ClientRecord GetClient(int id);

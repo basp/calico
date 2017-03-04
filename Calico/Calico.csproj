@@ -67,6 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRecord.cs" />
+    <Compile Include="Commands\DeleteDataSet\DeleteDataSetCommand.cs" />
+    <Compile Include="Commands\DeleteDataSet\DeleteDataSetRequest.cs" />
+    <Compile Include="Commands\DeleteDataSet\DeleteDataSetResponse.cs" />
+    <Compile Include="Commands\DeletePlot\DeletePlotCommand.cs" />
+    <Compile Include="Commands\DeletePlot\DeletePlotRequest.cs" />
+    <Compile Include="Commands\DeletePlot\DeletePlotResponse.cs" />
     <Compile Include="Commands\GetAttributes\GetAttributesCommand.cs" />
     <Compile Include="Commands\GetAttributes\GetAttributesRequest.cs" />
     <Compile Include="Commands\GetAttributes\GetAttributesResponse.cs" />

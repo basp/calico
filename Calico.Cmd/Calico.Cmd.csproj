@@ -79,6 +79,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\DefaultArgDescriptions.cs" />
+    <Compile Include="Actions\DeleteDataSet\DeleteDataSetAction.cs" />
+    <Compile Include="Actions\DeleteDataSet\DeleteDataSetArgs.cs" />
+    <Compile Include="Actions\DeletePlot\DeletePlotAction.cs" />
+    <Compile Include="Actions\DeletePlot\DeletePlotArgs.cs" />
     <Compile Include="Actions\GetAttributes\GetAttributesAction.cs" />
     <Compile Include="Actions\GetAttributes\GetAttributesArgs.cs" />
     <Compile Include="Actions\GetClients\GetClientsAction.cs" />

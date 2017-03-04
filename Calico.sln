@@ -9,10 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Cmd", "Calico.Cmd\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico", "Calico\Calico.csproj", "{12A78C12-42AF-4971-A339-30EE76F2CD06}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{15204ED8-5AFF-40CC-A0A5-84D72861E2BB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{15204ED8-5AFF-40CC-A0A5-84D72861E2BB}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Web", "Calico.Web\Calico.Web.csproj", "{00E72159-7057-4B26-8F61-BBB5B6C57609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{12A78C12-42AF-4971-A339-30EE76F2CD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12A78C12-42AF-4971-A339-30EE76F2CD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12A78C12-42AF-4971-A339-30EE76F2CD06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00E72159-7057-4B26-8F61-BBB5B6C57609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00E72159-7057-4B26-8F61-BBB5B6C57609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00E72159-7057-4B26-8F61-BBB5B6C57609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00E72159-7057-4B26-8F61-BBB5B6C57609}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@
 	[DataSetId] INT NOT NULL,
     [Index] INT NOT NULL, 
 	[Geometry] GEOMETRY NOT NULL, 
-    CONSTRAINT [FK_Features_DataSets] FOREIGN KEY ([DataSetId]) REFERENCES [DataSets]([Id]), 
+    [SRID] INT NOT NULL, 
+    CONSTRAINT [FK_Features_DataSets] FOREIGN KEY ([DataSetId]) REFERENCES [DataSets]([Id]) ON DELETE CASCADE, 
     CONSTRAINT [PK_Features] PRIMARY KEY ([DataSetId], [Index]), 
 )

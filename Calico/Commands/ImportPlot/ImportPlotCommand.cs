@@ -45,6 +45,7 @@ namespace Calico
                 ClientId = req.ClientId,
                 Name = req.Name,
                 PathToShapefile = req.PathToShapefile,
+                SRID = req.SRID,
             });
 
             return res.Map(x => x.Plot);
