@@ -27,7 +27,7 @@ namespace Calico
             try
             {
                 var dataSet = this.repository.GetDataSet(req.Id);
-                Log.Information(
+                Log.Debug(
                     "Deleting data set {DataSetName} with id {DataSetId}",
                     dataSet.Name,
                     dataSet.Id);

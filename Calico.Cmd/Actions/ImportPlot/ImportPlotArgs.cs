@@ -9,15 +9,19 @@ namespace Calico.Cmd
     public class ImportPlotArgs
     {
         [ArgRequired]
+        [ArgDescription(DefaultArgDescriptions.ClientId)]
         public int ClientId { get; set; }
 
         [ArgRequired]
+        [ArgDescription(DefaultArgDescriptions.FeatureTypeId)]
         public int FeatureTypeId { get; set; }
 
         [ArgRequired]
+        [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
 
         [ArgDefaultValue(4326)]
+        [ArgDescription(DefaultArgDescriptions.SpatialReferenceSystem)]
         public int SRID { get; set; }
 
         public string Name { get; set; }

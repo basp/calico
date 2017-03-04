@@ -3,7 +3,12 @@ Set-Alias Calico D:\dev\calico\Calico.Cmd\bin\Debug\calicmd.exe
 
 function Remove-DataSet {
     param([Int] $Id)
-    Calico DeleteDatSet -Id $Id
+    Calico DeleteDataSet -Id $Id
+}
+
+function Remove-FeatureType {
+    param([Int] $Id)
+    Calico DeleteFeatureType -Id $Id
 }
 
 function Remove-Plot {

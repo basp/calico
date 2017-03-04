@@ -15,5 +15,9 @@ namespace Calico.Cmd
         [ArgRequired]
         [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
+
+        [ArgDefaultValue(4326)]
+        [ArgDescription(DefaultArgDescriptions.SpatialReferenceSystem)]
+        public int SRID { get; set; }
     }
 }

@@ -17,6 +17,8 @@ namespace Calico
 
         int DeleteDataSet(int id);
 
+        int DeleteFeatureType(int id);
+
         int DeletePlot(int id);
 
         IEnumerable<AttributeRecord> GetAttributes(int featureTypeId);
@@ -39,7 +41,7 @@ namespace Calico
 
         IEnumerable<PlotRecord> GetPlots(int clientId, int top);
 
-        IEnumerable<PlotRecord> GetPlotsContainingGeometry(int clientId, string wkt);
+        IEnumerable<PlotRecord> GetPlotsContainingGeometry(int clientId, string wkt, int srid);
 
         int InsertClient(ClientRecord rec);
 

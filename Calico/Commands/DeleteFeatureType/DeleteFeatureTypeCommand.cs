@@ -1,4 +1,4 @@
-﻿// <copyright file="DeletePlotCommand.cs" company="TMG">
+﻿// <copyright file="DeleteFeatureTypeCommand.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,18 +6,17 @@ namespace Calico
 {
     using System;
     using Optional;
-    using Serilog;
 
     using static Optional.Option;
 
-    using Req = DeletePlotRequest;
-    using Res = DeletePlotResponse;
+    using Req = DeleteFeatureTypeRequest;
+    using Res = DeleteFeatureTypeResponse;
 
-    public class DeletePlotCommand : ICommand<Req, Res, Exception>
+    public class DeleteFeatureTypeCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
 
-        public DeletePlotCommand(IRepository repository)
+        public DeleteFeatureTypeCommand(IRepository repository)
         {
             this.repository = repository;
         }
@@ -26,16 +25,11 @@ namespace Calico
         {
             try
             {
-                var plot = this.repository.GetPlot(req.Id);
-                Log.Debug(
-                    "Deleting plot {PlotName} with id {PlotId}",
-                    plot.Name,
-                    plot.Id);
-
-                var modified = this.repository.DeletePlot(req.Id);
+                var featureType = this.repository.GetFeatureType(req.Id);
+                var modified = this.repository.DeleteFeatureType(req.Id);
                 var res = new Res
                 {
-                    Plot = plot,
+                    FeatureType = featureType,
                     RowCount = modified,
                 };
 

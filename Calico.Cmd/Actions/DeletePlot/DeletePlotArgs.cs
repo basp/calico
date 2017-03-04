@@ -10,6 +10,7 @@ namespace Calico.Cmd
     {
         [ArgRequired]
         [ArgPosition(1)]
+        [ArgDescription("The id of the plot to delete")]
         public int Id { get; set; }
     }
 }

@@ -88,11 +88,12 @@
     <Build Include="Stored Procedures\GetPlotsContainingGeometry.sql" />
     <Build Include="Stored Procedures\GetClient.sql" />
     <Build Include="Views\Info.DataSets.sql" />
-    <Build Include="Scripts\Info.sql" />
+    <Build Include="Scripts\CreateInfoSchema.sql" />
     <Build Include="Views\Info.Attributes.sql" />
     <Build Include="Views\Info.FeatureTypes.sql" />
     <Build Include="Stored Procedures\DeleteDataSet.sql" />
     <Build Include="Stored Procedures\DeletePlot.sql" />
+    <Build Include="Stored Procedures\DeleteFeatureType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertDataTypes.sql" />

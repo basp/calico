@@ -120,6 +120,16 @@ namespace Calico
                 transaction: this.transaction);
         }
 
+        public int DeleteFeatureType(int id)
+        {
+            var @param = new { Id = id };
+            return this.connection.Execute(
+                nameof(this.DeleteFeatureType),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public int DeletePlot(int id)
         {
             var @param = new { Id = id };
@@ -230,9 +240,10 @@ namespace Calico
 
         public IEnumerable<PlotRecord> GetPlotsContainingGeometry(
             int clientId,
-            string wkt)
+            string wkt,
+            int srid)
         {
-            var geometry = SqlGeometry.Parse(wkt).MakeValid();
+            var geometry = ValidSqlGeometryFromWkt(wkt, srid);
             var @param = new { ClientId = clientId, Geometry = geometry };
             return this.connection.Query<PlotRecord>(
                 nameof(this.GetPlotsContainingGeometry),

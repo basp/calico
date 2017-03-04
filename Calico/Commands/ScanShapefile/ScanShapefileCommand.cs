@@ -49,7 +49,7 @@ namespace Calico
                     NumberOfFeatures = numberOfFeatures,
                     Attributes = attributes,
                     FeatureTypes = featureTypes,
-                    Plots = this.GetMatchingPlots(req.ClientId, feature),
+                    Plots = this.GetMatchingPlots(req.ClientId, feature, req.SRID),
                 };
 
                 return Some<Res, Exception>(res);
@@ -90,11 +90,13 @@ namespace Calico
 
         private IEnumerable<PlotRecord> GetMatchingPlots(
             int clientId,
-            string geometry)
+            string geometry,
+            int srid)
         {
             return this.repository.GetPlotsContainingGeometry(
                 clientId,
-                geometry);
+                geometry,
+                srid);
         }
 
         private IEnumerable<FeatureTypeRecord> GetMatchingFeatureTypes(

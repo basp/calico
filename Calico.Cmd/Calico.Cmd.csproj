@@ -81,6 +81,8 @@
     <Compile Include="Actions\DefaultArgDescriptions.cs" />
     <Compile Include="Actions\DeleteDataSet\DeleteDataSetAction.cs" />
     <Compile Include="Actions\DeleteDataSet\DeleteDataSetArgs.cs" />
+    <Compile Include="Actions\DeleteFeatureType\DeleteFeatureTypeAction.cs" />
+    <Compile Include="Actions\DeleteFeatureType\DeleteFeatureTypeArgs.cs" />
     <Compile Include="Actions\DeletePlot\DeletePlotAction.cs" />
     <Compile Include="Actions\DeletePlot\DeletePlotArgs.cs" />
     <Compile Include="Actions\GetAttributes\GetAttributesAction.cs" />

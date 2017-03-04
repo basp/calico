@@ -29,6 +29,11 @@ namespace Calico.Cmd
             new DeleteDataSetAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Deletes a feature type")]
+        public void DeleteFeatureType(DeleteFeatureTypeArgs args) =>
+            new DeleteFeatureTypeAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Deletes a plot")]
         public void DeletePlot(DeletePlotArgs args) =>
             new DeletePlotAction(ConnectionFactory).Execute(args);
@@ -136,6 +141,7 @@ namespace Calico.Cmd
             Mapper.Initialize(x =>
             {
                 x.CreateMap<DeleteDataSetArgs, DeleteDataSetRequest>();
+                x.CreateMap<DeleteFeatureTypeArgs, DeleteFeatureTypeRequest>();
                 x.CreateMap<DeletePlotArgs, DeletePlotRequest>();
                 x.CreateMap<GetAttributesArgs, GetAttributesRequest>();
                 x.CreateMap<GetClientsArgs, GetClientsRequest>();
