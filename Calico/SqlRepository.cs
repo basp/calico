@@ -12,6 +12,7 @@ namespace Calico
     using System.Linq;
     using Dapper;
     using Microsoft.SqlServer.Types;
+    using Serilog;
 
     public class SqlRepository : IRepository
     {
@@ -359,6 +360,7 @@ namespace Calico
             var text = new SqlChars(new SqlString(wkt));
 
             // http://stackoverflow.com/questions/4409922/sql-spatial-polygon-inside-out
+            // NOTE: We still have issues with some particular shapefiles and SqlGeography
             return SqlGeography.STGeomFromText(text, srid)
                 .MakeValid()
                 .ReorientObject();

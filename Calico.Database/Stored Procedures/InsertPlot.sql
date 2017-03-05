@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[InsertPlot]
-	@ClientId INT,
-	@Name NVARCHAR(MAX),
-	@Geometry GEOMETRY,
-	@Geography GEOGRAPHY,
-	@SRID INT
+	@ClientId int,
+	@Name nvarchar(MAX),
+	@Geometry geometry,
+	@Geography geography,
+	@SRID int
 AS
 INSERT INTO [dbo].[Plots] (
 	[ClientId], 
@@ -12,4 +12,4 @@ INSERT INTO [dbo].[Plots] (
 	[Geography],
 	[SRID])
 VALUES (@ClientId, @Name, @Geometry, @Geography, @SRID)
-SELECT CAST(SCOPE_IDENTITY() AS INT)
+SELECT CAST(SCOPE_IDENTITY() AS int)

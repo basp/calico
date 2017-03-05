@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[InsertDataType]
-	@Name NVARCHAR(MAX),
-	@SqlType NVARCHAR(MAX),
-	@BclType NVARCHAR(MAX)
+	@Name nvarchar(MAX),
+	@SqlType nvarchar(MAX),
+	@BclType nvarchar(MAX)
 AS
 INSERT INTO [dbo].[DataTypes] ([Name], [SqlType], [BclType])
 VALUES (@Name, @SqlType, @BclType)
-SELECT CAST(SCOPE_IDENTITY() AS INT)
+SELECT CAST(SCOPE_IDENTITY() AS int)

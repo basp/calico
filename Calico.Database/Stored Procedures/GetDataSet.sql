@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetDataSet]
-	@Id INT
+	@Id int
 AS
 SELECT [Id], [PlotId], [FeatureTypeId], [Name], [DateCreated]
 FROM [dbo].[DataSets]

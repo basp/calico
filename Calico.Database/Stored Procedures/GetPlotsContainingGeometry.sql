@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetPlotsContainingGeometry]
-	@ClientId INT,
-	@Geometry GEOMETRY
+	@ClientId int,
+	@Geometry geometry
 AS
 SELECT 
 	[Id], 

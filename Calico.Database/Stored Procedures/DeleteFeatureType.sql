@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteFeatureType]
-	@Id INT
+	@Id int
 AS
 DELETE FROM [dbo].[FeatureTypes] 
 WHERE [Id] = @Id

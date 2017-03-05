@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetClient]
-	@Id INT
+	@Id int
 AS
 SELECT TOP 1 [Id], [Name]
 FROM [dbo].[Clients]

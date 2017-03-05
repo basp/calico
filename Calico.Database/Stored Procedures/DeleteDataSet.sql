@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteDataSet]
-	@Id INT
+	@Id int
 AS
 DELETE FROM [dbo].[DataSets]
 WHERE [Id] = @Id

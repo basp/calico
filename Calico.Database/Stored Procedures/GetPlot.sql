@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetPlot]
-	@PlotId INT
+	@PlotId int
 AS
 SELECT 
 	[Id], 

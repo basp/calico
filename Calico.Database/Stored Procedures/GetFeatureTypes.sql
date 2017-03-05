@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetFeatureTypes]
-	@ClientId INT,
-	@Top INT
+	@ClientId int,
+	@Top int
 AS
 SELECT TOP(@Top) [Id], [ClientId], [Name]
 FROM [dbo].[FeatureTypes]

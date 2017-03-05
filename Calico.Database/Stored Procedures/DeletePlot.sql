@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[DeletePlot]
-	@Id INT
+	@Id int
 AS
 DELETE FROM [dbo].[Plots]
 WHERE [Id] = @Id

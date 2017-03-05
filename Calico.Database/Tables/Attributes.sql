@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[Attributes]
 (
-	[FeatureTypeId] INT NOT NULL,
-	[Index] INT NOT NULL,
-	[DataTypeId] INT NOT NULL,
-	[Name] NVARCHAR(MAX) NOT NULL, 
+	[FeatureTypeId] int NOT NULL,
+	[Index] int NOT NULL,
+	[DataTypeId] int NOT NULL,
+	[Name] nvarchar(MAX) NOT NULL, 
     CONSTRAINT [FK_Attributes_FeatureTypes] FOREIGN KEY ([FeatureTypeId]) 
 		REFERENCES [FeatureTypes]([Id]) 
 		ON DELETE CASCADE,

@@ -61,6 +61,7 @@
     <Folder Include="Stored Procedures" />
     <Folder Include="Scripts" />
     <Folder Include="Views" />
+    <Folder Include="Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Clients.sql" />
@@ -94,6 +95,7 @@
     <Build Include="Stored Procedures\DeleteDataSet.sql" />
     <Build Include="Stored Procedures\DeletePlot.sql" />
     <Build Include="Stored Procedures\DeleteFeatureType.sql" />
+    <Build Include="Functions\NearestPlots.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertDataTypes.sql" />

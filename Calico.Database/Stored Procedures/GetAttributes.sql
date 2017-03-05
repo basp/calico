@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetAttributes]
-	@FeatureTypeId INT
+	@FeatureTypeId int
 AS
 SELECT [FeatureTypeId], [Index], [DataTypeId], [Name]
 FROM [dbo].[Attributes]

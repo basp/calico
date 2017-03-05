@@ -115,6 +115,9 @@
     <Compile Include="Commands\ImportPlot\ImportPlotCommand.cs" />
     <Compile Include="Commands\ImportPlot\ImportPlotRequest.cs" />
     <Compile Include="Commands\ImportPlot\ImportPlotResponse.cs" />
+    <Compile Include="Commands\ImportShapefile\ImportShapefileCommand.cs" />
+    <Compile Include="Commands\ImportShapefile\ImportShapefileRequest.cs" />
+    <Compile Include="Commands\ImportShapefile\ImportShapefileResponse.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetCommand.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetRequest.cs" />
     <Compile Include="Commands\NewDataSet\NewDataSetResponse.cs" />

@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetPlots]
-	@ClientId INT,
-	@Top INT
+	@ClientId int,
+	@Top int
 AS
 SELECT TOP(@Top) 
 	[Id], 

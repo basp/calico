@@ -59,9 +59,9 @@ with the value we just got from the system. And then we'll *source* it again:
 
 ## Importing Data
 ### Resolving a directory of shapefiles
-In order to import data we need a *feature type* definition. It's the attributes that we expect to find when we import a particular data set. This might seem a bit confusing so we'll start slowly.
+In order to import data we need a *feature type* definition. It's the attributes that we expect to find when we import a particular data set.
 
-First, you need some data in the form of shapefiles. Create a directory somewhere (anywhere, it doens't matter) and name it something that you can remember (for this example we'll name it `sandbox`). Copy all the shapefiles that you can find into that directory and use your PowerShell prompt to navigate to it:
+First, you need some data in the form of shapefiles. Create a directory somewhere (anywhere, it doens't matter) and name it something that you can remember (for this example we'll name it `sandbox`). Copy a varied set of shapefiles into that directory and use your PowerShell prompt to navigate to it:
 
     > cd drive:\sandbox
 
@@ -80,7 +80,7 @@ At this point there's two important properties we want to inspect: `FeatureTypes
     
     > Resolve-Directory | Select-Object -Property PathToShapefile, FeatureTypes, Plots
 
-You might notice that the **FeatureTypes** and **Plots** columns are eerily empty. We'll fix that shortly.
+You might notice that the **FeatureTypes** and **Plots** columns are eerily empty. We'll fix that in the next section.
 
 ### Creating a feature type
 The **feature type** is a very important concept. It's useful functionally as well as technically. 
@@ -91,18 +91,15 @@ The **feature type** is a very important concept. It's useful functionally as we
 * If offers a layer of abstraction that can be well documented.
 * It's a container for *attributes*.
 
-So it's used internally (in the system) and externally (outside the system) to communicate about features. Let's create one!
+So it's used internally (in the system) and externally (outside the system) to communicate about features. We can use the `Import-FeatureType` command to import a feature type and its attributes from a shapefile. 
 
-If you've followed along so far, you should've noticed that **Calico** was not able to recognize any plots or feature types using the `Resolve-Direcotry` command. Let's start by fixing this. 
+    > Import-FeatureType .\someshapefile.shp -Name 'Some feature type name'
 
-Take any file, it doesn't really matter which one and we'll execute the `Resolve-Shapefile` command as such:
+# API
 
-    > Resolve-Shapefile -Path drive:\sandbox\shapfile.sho
-
-> You can also use the `dbf` or `shx` extensions to refer to a shapefile.
-
- It doesn't matter if the shapefiles are all of different types, we'll deal with that in the following sections, just create a sandbox directory and dump every shapefile (usually they are *triplets* of files) that you have into that folder.
-
-Now the first thing you want to do is to run the `Resolve-Directory` command. This will scan each and every shapefile in the current working directory and report back the results. It will identify a feature type and a *plot* (more on that in the next section) if it can. If you have very many feature files it maght take a while to run so it's best starting out with a varied but not too big set of data for config and/or development purposes.
-
-
+    /api/clients
+    /api/clients/{client_id}/plots
+    /api/clients/{client_id}/plots/viool/datasets
+    /api/clients/{client_id}/featuretypes
+    /api/clients/{client_id}/featuretypes/{featuretype_id}/attributes
+    /api/clients/{client_id}/featuretypes/{featuretype_id}/features

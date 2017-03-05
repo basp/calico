@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetDataSets]
-	@PlotId INT,
-	@Top INT
+	@PlotId int,
+	@Top int
 AS
 SELECT TOP(@Top) [Id], [PlotId], [FeatureTypeId], [Name], [DateCreated] 
 FROM [dbo].[DataSets]

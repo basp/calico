@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetFeatureType]
-	@Id INT
+	@Id int
 AS
 SELECT [Id], [ClientId], [Name]
 FROM [dbo].[FeatureTypes]
