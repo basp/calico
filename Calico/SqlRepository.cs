@@ -96,6 +96,7 @@ namespace Calico
                 row["DataSetId"] = f.DataSetId;
                 row["Index"] = f.Index;
                 row["Geometry"] = ValidSqlGeometryFromWkt(f.Wkt, f.SRID);
+                row["Geography"] = ValidSqlGeographyFromWkt(f.Wkt, f.SRID);
                 row["SRID"] = f.SRID;
                 table.Rows.Add(row);
             }
@@ -278,8 +279,17 @@ namespace Calico
 
         public int InsertPlot(PlotRecord rec)
         {
-            var geo = ValidSqlGeometryFromWkt(rec.Wkt, rec.SRID);
-            var @param = new { rec.ClientId, rec.Name, Geometry = geo, rec.SRID };
+            var geom = ValidSqlGeometryFromWkt(rec.Wkt, rec.SRID);
+            var geog = ValidSqlGeographyFromWkt(rec.Wkt, rec.SRID);
+            var @param = new
+            {
+                rec.ClientId,
+                rec.Name,
+                Geometry = geom,
+                Geography = geog,
+                rec.SRID,
+            };
+
             return this.Insert(nameof(this.InsertPlot), @param);
         }
 
@@ -326,6 +336,7 @@ namespace Calico
                 ["DataSetId"] = typeof(int),
                 ["Index"] = typeof(int),
                 ["Geometry"] = typeof(SqlGeometry),
+                ["Geography"] = typeof(SqlGeography),
                 ["SRID"] = typeof(int),
             }
             .Select(x => new DataColumn(x.Key, x.Value))
@@ -339,7 +350,18 @@ namespace Calico
         private static SqlGeometry ValidSqlGeometryFromWkt(string wkt, int srid)
         {
             var text = new SqlChars(new SqlString(wkt));
-            return SqlGeometry.STGeomFromText(text, srid).MakeValid();
+            return SqlGeometry.STGeomFromText(text, srid)
+                .MakeValid();
+        }
+
+        private static SqlGeography ValidSqlGeographyFromWkt(string wkt, int srid)
+        {
+            var text = new SqlChars(new SqlString(wkt));
+
+            // http://stackoverflow.com/questions/4409922/sql-spatial-polygon-inside-out
+            return SqlGeography.STGeomFromText(text, srid)
+                .MakeValid()
+                .ReorientObject();
         }
 
         private int Insert(string sproc, object @param)

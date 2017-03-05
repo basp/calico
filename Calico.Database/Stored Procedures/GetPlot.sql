@@ -5,6 +5,7 @@ SELECT
 	[Id], 
 	[ClientId], 
 	[Name], 
-	[Geometry].ToString() AS [Wkt]
+	[Geometry].ToString() AS [Wkt],
+	[SRID]
 FROM [dbo].[Plots]
 WHERE [Id] = @PlotId

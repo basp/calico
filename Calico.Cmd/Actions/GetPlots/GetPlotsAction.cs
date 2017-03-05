@@ -37,6 +37,7 @@ namespace Calico.Cmd
                         y.ClientId,
                         y.Name,
                         Geometry = y.Wkt,
+                        y.SRID,
                     });
 
                     var json = JsonConvert.SerializeObject(plots);

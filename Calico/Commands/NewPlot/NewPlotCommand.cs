@@ -5,6 +5,7 @@
 namespace Calico
 {
     using System;
+    using System.Linq;
     using DotSpatial.Data;
     using Optional;
 

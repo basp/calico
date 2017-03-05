@@ -4,8 +4,10 @@
 	[ClientId] INT NOT NULL,
 	[Name] NVARCHAR(MAX) NOT NULL,
 	[Geometry] GEOMETRY NOT NULL, 
+    [Geography] [sys].[geography] NOT NULL, 
     [SRID] INT NOT NULL, 
-    CONSTRAINT [FK_Plots_Clients] FOREIGN KEY ([ClientId]) REFERENCES [Clients]([Id]), 
+    CONSTRAINT [FK_Plots_Clients] FOREIGN KEY ([ClientId]) 
+		REFERENCES [Clients]([Id]), 
     CONSTRAINT [PK_Plots] PRIMARY KEY ([Id]) 
 )
 

@@ -22,5 +22,9 @@ namespace Calico.Cmd
 
         [ArgDescription("The name of the of the data set")]
         public string Name { get; set; }
+
+        [ArgDefaultValue(4326)]
+        [ArgDescription(DefaultArgDescriptions.SpatialReferenceSystem)]
+        public int SRID { get; set; }
     }
 }
