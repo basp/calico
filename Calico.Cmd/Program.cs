@@ -24,6 +24,10 @@ namespace Calico.Cmd
         public bool Help { get; set; }
 
         [ArgActionMethod]
+        public void CategorizeDataSet(CategorizeDataSetArgs args) =>
+            new CategorizeDataSetAction().Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Deletes a data set")]
         public void DeleteDataSet(DeleteDataSetArgs args) =>
             new DeleteDataSetAction(ConnectionFactory).Execute(args);
@@ -124,6 +128,10 @@ namespace Calico.Cmd
             new NewPlotAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        public void QuantifyDataSet(QuantifyDataSetArgs args) =>
+            new QuantifyDataSetAction().Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Scans a shapefile for information")]
         public void ScanShapefile(ScanShapefileArgs args) =>
             new ScanShapefileAction(ConnectionFactory).Execute(args);
@@ -140,6 +148,7 @@ namespace Calico.Cmd
 
             Mapper.Initialize(x =>
             {
+                x.CreateMap<CategorizeDataSetArgs, CategorizeDataSetRequest>();
                 x.CreateMap<DeleteDataSetArgs, DeleteDataSetRequest>();
                 x.CreateMap<DeleteFeatureTypeArgs, DeleteFeatureTypeRequest>();
                 x.CreateMap<DeletePlotArgs, DeletePlotRequest>();
@@ -163,6 +172,7 @@ namespace Calico.Cmd
                 x.CreateMap<ImportFeatureTypeArgs, ImportFeatureTypeRequest>();
                 x.CreateMap<ImportPlotArgs, ImportPlotRequest>()
                     .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
+                x.CreateMap<QuantifyDataSetArgs, QuantifyDataSetRequest>();
                 x.CreateMap<ScanShapefileArgs, ScanShapefileRequest>();
             });
 

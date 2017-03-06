@@ -67,6 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRecord.cs" />
+    <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetCommand.cs" />
+    <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetRequest.cs" />
+    <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetResponse.cs" />
+    <Compile Include="Commands\QuantifyDataSet\QuantifyDataSetCommand.cs" />
+    <Compile Include="Commands\QuantifyDataSet\QuantifyDataSetRequest.cs" />
+    <Compile Include="Commands\QuantifyDataSet\QuantifyDataSetResponse.cs" />
     <Compile Include="Commands\DeleteDataSet\DeleteDataSetCommand.cs" />
     <Compile Include="Commands\DeleteDataSet\DeleteDataSetRequest.cs" />
     <Compile Include="Commands\DeleteDataSet\DeleteDataSetResponse.cs" />
@@ -135,6 +141,8 @@
     <Compile Include="DataTypeRecord.cs" />
     <Compile Include="FeatureRecord.cs" />
     <Compile Include="FeatureTypeRecord.cs" />
+    <Compile Include="Classification\CategorizingClassifier.cs" />
+    <Compile Include="IClassifier.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Commands\NewClient\NewClientCommand.cs" />
     <Compile Include="Commands\NewClient\NewClientRequest.cs" />
@@ -143,11 +151,14 @@
     <Compile Include="Commands\NewPlot\NewPlotRequest.cs" />
     <Compile Include="Commands\NewPlot\NewPlotResponse.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="Classification\IQuantifyingClassifier.cs" />
     <Compile Include="PlotRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AttributeRecord.cs" />
     <Compile Include="AttributeValueRecord.cs" />
+    <Compile Include="Classification\QuantileClassifier.cs" />
     <Compile Include="SqlRepository.cs" />
+    <Compile Include="StyleType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -159,6 +170,8 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Classification\ICategorizingClassifier.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

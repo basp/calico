@@ -78,6 +78,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\CategorizeDataSet\CategorizeDataSetArgs.cs" />
+    <Compile Include="Actions\QuantifyDataSet\QuantifyDataSetAction.cs" />
+    <Compile Include="Actions\QuantifyDataSet\QuantifyDataSetArgs.cs" />
     <Compile Include="Actions\DefaultArgDescriptions.cs" />
     <Compile Include="Actions\DeleteDataSet\DeleteDataSetAction.cs" />
     <Compile Include="Actions\DeleteDataSet\DeleteDataSetArgs.cs" />
@@ -143,6 +146,9 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\CategorizeDataSet\CategorizeDataSetAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,52 @@
+﻿// <copyright file="CategorizeDataSetCommand.cs" company="TMG">
+// Copyright (c) TMG. All rights reserved.
+// </copyright>
+
+namespace Calico
+{
+    using System;
+    using System.Data;
+    using System.Linq;
+    using Calico.Classification;
+    using DotSpatial.Data;
+    using Optional;
+
+    using static Optional.Option;
+
+    using Req = CategorizeDataSetRequest;
+    using Res = CategorizeDataSetResponse<string>;
+
+    public class CategorizeDataSetCommand : ICommand<Req, Res, Exception>
+    {
+        private readonly ICategorizingClassifier classifier;
+
+        public CategorizeDataSetCommand(ICategorizingClassifier classifier)
+        {
+            this.classifier = classifier;
+        }
+
+        public Option<Res, Exception> Execute(Req req)
+        {
+            try
+            {
+                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
+                var data = shapefile.DataTable.Rows
+                    .Cast<DataRow>()
+                    .Select(x => x[req.ColumnName])
+                    .Select(x => x.ToString());
+
+                var buckets = this.classifier.Classify(data);
+                var res = new Res
+                {
+                    Result = buckets,
+                };
+
+                return Some<Res, Exception>(res);
+            }
+            catch (Exception ex)
+            {
+                return None<Res, Exception>(ex);
+            }
+        }
+    }
+}

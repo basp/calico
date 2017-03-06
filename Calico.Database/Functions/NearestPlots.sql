@@ -16,6 +16,7 @@ BEGIN
 	INSERT @returntable
 	SELECT TOP(@Top)
 		[Id],
+		[ClientId],
 		[Name],
 		[Geometry].ToString() AS Wkt,
 		[Geography].STDistance(@Target)

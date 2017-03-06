@@ -96,9 +96,12 @@
     <Build Include="Stored Procedures\DeletePlot.sql" />
     <Build Include="Stored Procedures\DeleteFeatureType.sql" />
     <Build Include="Functions\NearestPlots.sql" />
+    <Build Include="Tables\Styles.sql" />
+    <Build Include="Tables\StyleTypes.sql" />
+    <Build Include="Tables\StyleClasses.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\InsertDataTypes.sql" />
+    <PostDeploy Include="Scripts\PostDeploy.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Calico.Database.publish.xml" />
