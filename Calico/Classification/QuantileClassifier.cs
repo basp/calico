@@ -20,8 +20,6 @@ namespace Calico.Classification
         public IDictionary<double, int> Classify(
             IEnumerable<double> data)
         {
-            var numberOfDataPoints = data.Count();
-            var valuesPerBucket = numberOfDataPoints / this.numberOfClasses;
             throw new NotImplementedException();
         }
     }
