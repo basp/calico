@@ -22,8 +22,6 @@ namespace Calico.Classification
         {
             var numberOfDataPoints = data.Count();
             var valuesPerBucket = numberOfDataPoints / this.numberOfClasses;
-
-
             throw new NotImplementedException();
         }
     }

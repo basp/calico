@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classification\Chauvenet.cs" />
+    <Compile Include="Classification\Normal.cs" />
     <Compile Include="ClientRecord.cs" />
     <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetCommand.cs" />
     <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetRequest.cs" />
