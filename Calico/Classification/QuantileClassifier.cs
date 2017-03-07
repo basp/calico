@@ -17,8 +17,7 @@ namespace Calico.Classification
             this.numberOfClasses = numberOfClasses;
         }
 
-        public IDictionary<double, int> Classify(
-            IEnumerable<double> data)
+        public IDictionary<double, int> Classify(IEnumerable<double> data)
         {
             throw new NotImplementedException();
         }

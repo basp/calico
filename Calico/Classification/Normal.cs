@@ -9,6 +9,7 @@ namespace Calico.Classification
     // https://en.wikipedia.org/wiki/Normal_distribution
     public static class Normal
     {
+        // https://en.wikipedia.org/wiki/Normal_distribution#Standard_normal_distribution
         public static double Standard(double x)
         {
             x = Math.Abs(x);
