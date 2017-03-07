@@ -25,9 +25,10 @@ namespace Calico.Classification
             return u / w;
         }
 
-        public static double Stigler(double x)
+        public static double StandardStigler(double x)
         {
-            // var x = Math.Abs(x);
+            x = Math.Abs(x);
+            return Math.Pow(Math.E, -(Math.PI * Math.Pow(x, 2)));
         }
     }
 }

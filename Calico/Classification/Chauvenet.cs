@@ -5,20 +5,36 @@
 namespace Calico.Classification
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Implements Chauvenet's criterion for identifying outliers in a sample.
     /// </summary>
-    public static class Chauvenet
+    public class Chauvenet
     {
-        public static Func<double, double> Create(int sampleSize, double mean, double standardDeviation)
+        private readonly Func<double, double> normal;
+
+        public Chauvenet(Func<double, double> normal)
+        {
+            this.normal = normal;
+        }
+
+        public Func<double, double> Create(int sampleSize, double mean, double standardDeviation)
         {
             var func = new Func<double, double>(x =>
             {
                 // https://en.wikipedia.org/wiki/Chauvenet%27s_criterion
+                //
+                // How many times fits the standard deviation into the
+                // difference between `x` and the mean of the sample (set)?
                 var u = Math.Abs(x - mean) / standardDeviation;
-                var p = Normal.Standard(u);
+
+                // What is the probability score of this occuring in a
+                // standard distribution?
+                var p = this.normal(u);
+
+                // Return a score that involves the size of the sample
+                // and the probability of the value `x` appearing in such
+                // a distrubution.
                 return sampleSize * p;
             });
 
