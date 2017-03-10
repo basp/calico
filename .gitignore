@@ -253,3 +253,6 @@ paket-files/
 
 # Web 
 # Calico.Web
+
+# Doc
+doc/_build

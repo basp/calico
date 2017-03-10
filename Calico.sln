@@ -1,18 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26206.0
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Calico.Database", "Calico.Database\Calico.Database.sqlproj", "{6C42D371-B3EF-4338-BCBF-6FA4948589D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Cmd", "Calico.Cmd\Calico.Cmd.csproj", "{C5166013-3768-453B-86CE-C56529270F86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico", "Calico\Calico.csproj", "{12A78C12-42AF-4971-A339-30EE76F2CD06}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{15204ED8-5AFF-40CC-A0A5-84D72861E2BB}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Web", "Calico.Web\Calico.Web.csproj", "{2F3F8836-F8CB-4F0B-B620-40773D127737}"
 EndProject
