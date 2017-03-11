@@ -39,7 +39,7 @@ namespace Calico
                 var numberOfFeatures = shapefile.Features.Count;
 
                 var attributes = shapefile.GetColumns()
-                    .Select(x => new ScannedAttribute(x.ColumnName, x.DataType));
+                    .Select(x => AttributeProxy.Create(x));
 
                 var feature = shapefile.Features[0].BasicGeometry.ToString();
 

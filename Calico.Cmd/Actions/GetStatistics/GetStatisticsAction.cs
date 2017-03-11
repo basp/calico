@@ -1,22 +1,21 @@
-﻿// <copyright file="QuantifyDataSetAction.cs" company="TMG">
+﻿// <copyright file="GetStatisticsAction.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
 namespace Calico.Cmd
 {
     using System;
+    using System.Data.SqlClient;
     using AutoMapper;
-    using Calico.Visualization;
     using Newtonsoft.Json;
     using Serilog;
 
-    public class QuantifyDataSetAction : IAction<QuantifyDataSetArgs>
+    public class GetStatisticsAction : IAction<GetStatisticsArgs>
     {
-        public void Execute(QuantifyDataSetArgs args)
+        public void Execute(GetStatisticsArgs args)
         {
-            var classifier = new NestedMeansClassifier(args.Depth);
-            var cmd = new QuantifyDataSetCommand<double>(classifier);
-            var req = Mapper.Map<QuantifyDataSetRequest>(args);
+            var cmd = new GetStatisticsCommand();
+            var req = Mapper.Map<GetStatisticsRequest>(args);
             var res = cmd.Execute(req);
 
             res.MatchSome(x =>
@@ -29,7 +28,7 @@ namespace Calico.Cmd
             {
                 Log.Error(
                     x,
-                    "Failed to quantify data set from shapefile {Shapefile}",
+                    "Could not get statistics for shapefile {Shapefile}",
                     args.PathToShapefile);
             });
         }

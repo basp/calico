@@ -49,12 +49,15 @@
     <Reference Include="DotSpatial.Topology, Version=1.9.0.0, Culture=neutral, PublicKeyToken=a66b5e9434ca3671, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Topology.1.9\lib\net40-Client\DotSpatial.Topology.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.17.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Optional.3.2.0\lib\net452\Optional.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.2.4.0\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.2.4.1-dev-00801\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,8 +69,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classification\Chauvenet.cs" />
-    <Compile Include="Classification\Normal.cs" />
+    <Compile Include="Commands\GetStatistics\AttributeStatistics.cs" />
+    <Compile Include="Commands\GetStatistics\GetStatisticsCommand.cs" />
+    <Compile Include="Commands\GetStatistics\GetStatisticsRequest.cs" />
+    <Compile Include="Commands\GetStatistics\GetStatisticsResponse.cs" />
+    <Compile Include="StyleRecord.cs" />
+    <Compile Include="Visualization\Chauvenet.cs" />
+    <Compile Include="Visualization\IColorRamp.cs" />
+    <Compile Include="Visualization\NestedMeansClassifier.cs" />
+    <Compile Include="Visualization\Normal.cs" />
     <Compile Include="ClientRecord.cs" />
     <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetCommand.cs" />
     <Compile Include="Commands\CategorizeDataSet\CategorizeDataSetRequest.cs" />
@@ -135,7 +145,7 @@
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeCommand.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeRequest.cs" />
     <Compile Include="Commands\NewFeatureType\NewFeatureTypeResponse.cs" />
-    <Compile Include="Commands\ScanShapefile\ScannedAttribute.cs" />
+    <Compile Include="AttributeProxy.cs" />
     <Compile Include="Commands\ScanShapefile\ScanShapefileCommand.cs" />
     <Compile Include="Commands\ScanShapefile\ScanShapefileRequest.cs" />
     <Compile Include="Commands\ScanShapefile\ScanShapefileResponse.cs" />
@@ -143,7 +153,7 @@
     <Compile Include="DataTypeRecord.cs" />
     <Compile Include="FeatureRecord.cs" />
     <Compile Include="FeatureTypeRecord.cs" />
-    <Compile Include="Classification\CategorizingClassifier.cs" />
+    <Compile Include="Visualization\CategorizingClassifier.cs" />
     <Compile Include="IClassifier.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Commands\NewClient\NewClientCommand.cs" />
@@ -153,14 +163,15 @@
     <Compile Include="Commands\NewPlot\NewPlotRequest.cs" />
     <Compile Include="Commands\NewPlot\NewPlotResponse.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="Classification\IQuantifyingClassifier.cs" />
     <Compile Include="PlotRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AttributeRecord.cs" />
     <Compile Include="AttributeValueRecord.cs" />
-    <Compile Include="Classification\QuantileClassifier.cs" />
     <Compile Include="SqlRepository.cs" />
+    <Compile Include="StyleClassRecord.cs" />
     <Compile Include="StyleType.cs" />
+    <Compile Include="Visualization\RandomColors.cs" />
+    <Compile Include="Visualization\SingleSymbolClassifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -171,9 +182,6 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Classification\ICategorizingClassifier.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

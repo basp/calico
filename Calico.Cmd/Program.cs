@@ -73,6 +73,11 @@ namespace Calico.Cmd
             new GetPlotsAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Gets statistics about the attributes in a shapefile")]
+        public void GetStatistics(GetStatisticsArgs args) =>
+            new GetStatisticsAction().Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Imports attributes from a shapefile")]
         public void ImportAttributes(ImportAttributesArgs args) =>
             new ImportAttributesAction(ConnectionFactory).Execute(args);
@@ -158,6 +163,7 @@ namespace Calico.Cmd
                 x.CreateMap<GetDataTypesArgs, GetDataTypesRequest>();
                 x.CreateMap<GetFeatureTypesArgs, GetFeatureTypesRequest>();
                 x.CreateMap<GetPlotsArgs, GetPlotsRequest>();
+                x.CreateMap<GetStatisticsArgs, GetStatisticsRequest>();
                 x.CreateMap<NewPlotArgs, NewPlotRequest>();
                 x.CreateMap<NewClientArgs, NewClientRequest>();
                 x.CreateMap<NewDataSetArgs, NewDataSetRequest>()

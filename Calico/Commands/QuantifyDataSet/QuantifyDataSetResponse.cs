@@ -6,8 +6,10 @@ namespace Calico
 {
     using System.Collections.Generic;
 
-    public class QuantifyDataSetResponse<T>
+    public class QuantifyDataSetResponse
     {
-        public IDictionary<T, int> Result { get; set; }
+        public IEnumerable<StyleClassRecord> Classes { get; set; }
+
+        public IEnumerable<double> Outliers { get; set; }
     }
 }

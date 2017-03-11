@@ -5,23 +5,26 @@
 namespace Calico
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Classification;
     using DotSpatial.Data;
+    using MathNet.Numerics.Statistics;
     using Optional;
+    using Visualization;
 
     using static Optional.Option;
 
     using Req = QuantifyDataSetRequest;
-    using Res = QuantifyDataSetResponse<double>;
+    using Res = QuantifyDataSetResponse;
 
     public class QuantifyDataSetCommand<T>
         : ICommand<Req, Res, Exception>
     {
-        private readonly IQuantifyingClassifier classifier;
+        private readonly IClassifier<double> classifier;
+        private readonly Chauvenet chauvenet = new Chauvenet(Normal.Standard);
 
-        public QuantifyDataSetCommand(IQuantifyingClassifier classifier)
+        public QuantifyDataSetCommand(IClassifier<double> classifier)
         {
             this.classifier = classifier;
         }
@@ -36,11 +39,12 @@ namespace Calico
                     .Select(x => x[req.ColumnName])
                     .Select(x => Convert.ToDouble(x));
 
-                var buckets = this.classifier.Classify(data);
-
+                var normalized = this.RemoveOutliers(data, out IEnumerable<double> outliers);
+                var buckets = this.classifier.Classify(req.Normalize ? normalized : data);
                 var res = new Res
                 {
-                    Result = buckets,
+                    Classes = buckets.ToList(),
+                    Outliers = outliers.ToList(),
                 };
 
                 return Some<Res, Exception>(res);
@@ -49,6 +53,18 @@ namespace Calico
             {
                 return None<Res, Exception>(ex);
             }
+        }
+
+        private IEnumerable<double> RemoveOutliers(IEnumerable<double> data, out IEnumerable<double> outliers)
+        {
+            var sampleSize = data.Count();
+            var mean = Statistics.Mean(data);
+            var standardDeviation = Statistics.StandardDeviation(data);
+            var f = this.chauvenet.Create(sampleSize, mean, standardDeviation);
+
+            const double threshold = 0.5;
+            outliers = data.Where(x => f(x) < threshold);
+            return data.Where(x => f(x) > threshold);
         }
     }
 }

@@ -4,8 +4,6 @@
 
 namespace Calico
 {
-    using Microsoft.SqlServer.Types;
-
     public class PlotRecord
     {
         public int Id { get; set; }

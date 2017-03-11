@@ -2,7 +2,7 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Classification
+namespace Calico.Visualization
 {
     using System;
 

@@ -1,6 +1,20 @@
 ﻿$Script:ClientId = 1
 Set-Alias Calico D:\dev\calico\Calico.Cmd\bin\Debug\calicmd.exe
 
+function Get-Categories {
+	param(
+		[Parameter(Position = 0, Mandatory = $True)] $Path,
+		[Parameter(Position = 1, Mandatory = $True)] [string] $Column)
+	Calico CategorizeDataSet -PathToShapefile $Path -ColumnName $Column | ConvertFrom-Json
+}
+
+function Get-Classes {
+	param(
+		[Parameter(Position = 0, Mandatory = $True)] $Path,
+		[Parameter(Position = 1, Mandatory = $True)] [string] $Column)
+	Calico QuantifyDataSet -PathToShapefile $Path -ColumnName $Column -Normalize | ConvertFrom-Json | Format-List
+}
+
 function Remove-DataSet {
     param([Int] $Id)
     Calico DeleteDataSet -Id $Id
@@ -50,9 +64,7 @@ function New-Client {
 }
 
 function Import-DataSet {
-    param(
-        [Parameter(Position = 0, Mandatory = $True)]
-        $Path)
+    param([Parameter(Position = 0, Mandatory = $True)] $Path)
     $Shapefile = Resolve-ShapeFile -Path $Path
     $Plot = ($Shapefile | Select-Object -Property Plots -First 1).Plots
     $FeatureType = ($Shapefile | Select-Object -Property FeatureTypes -First 1).FeatureTypes

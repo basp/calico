@@ -9,5 +9,7 @@ namespace Calico
         public string PathToShapefile { get; set; }
 
         public string ColumnName { get; set; }
+
+        public bool Normalize { get; set; }
     }
 }

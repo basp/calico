@@ -13,5 +13,11 @@ namespace Calico.Cmd
 
         [ArgRequired]
         public string ColumnName { get; set; }
+
+        [ArgDefaultValue(false)]
+        public bool Normalize { get; set; }
+
+        [ArgDefaultValue(2)]
+        public int Depth { get; set; }
     }
 }

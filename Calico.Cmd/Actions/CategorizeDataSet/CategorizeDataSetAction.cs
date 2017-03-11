@@ -6,7 +6,7 @@ namespace Calico.Cmd
 {
     using System;
     using AutoMapper;
-    using Calico.Classification;
+    using Calico.Visualization;
     using Newtonsoft.Json;
     using Serilog;
 
@@ -32,8 +32,6 @@ namespace Calico.Cmd
                     "Failed to categorize data set from shapefile {Shapefile",
                     args.PathToShapefile);
             });
-
-            throw new NotImplementedException();
         }
     }
 }

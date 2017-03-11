@@ -7,20 +7,19 @@ namespace Calico
     using System;
     using System.Data;
     using System.Linq;
-    using Calico.Classification;
     using DotSpatial.Data;
     using Optional;
 
     using static Optional.Option;
 
     using Req = CategorizeDataSetRequest;
-    using Res = CategorizeDataSetResponse<string>;
+    using Res = CategorizeDataSetResponse;
 
     public class CategorizeDataSetCommand : ICommand<Req, Res, Exception>
     {
-        private readonly ICategorizingClassifier classifier;
+        private readonly IClassifier<string> classifier;
 
-        public CategorizeDataSetCommand(ICategorizingClassifier classifier)
+        public CategorizeDataSetCommand(IClassifier<string> classifier)
         {
             this.classifier = classifier;
         }

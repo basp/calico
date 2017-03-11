@@ -4,11 +4,10 @@
 
 namespace Calico
 {
-    using System;
     using System.Collections.Generic;
 
-    public class CategorizeDataSetResponse<T>
+    public class CategorizeDataSetResponse
     {
-        public IDictionary<T, int> Result { get; set; }
+        public IEnumerable<StyleClassRecord> Result { get; set; }
     }
 }

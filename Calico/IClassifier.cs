@@ -8,6 +8,6 @@ namespace Calico
 
     public interface IClassifier<T>
     {
-        IDictionary<T, int> Classify(IEnumerable<T> data);
+        IEnumerable<StyleClassRecord> Classify(IEnumerable<T> data);
     }
 }
