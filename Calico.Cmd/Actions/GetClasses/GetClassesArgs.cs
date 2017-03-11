@@ -9,9 +9,11 @@ namespace Calico.Cmd
     public class GetClassesArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         public string PathToShapefile { get; set; }
 
         [ArgRequired]
+        [ArgPosition(2)]
         public string ColumnName { get; set; }
 
         [ArgDefaultValue(false)]

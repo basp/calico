@@ -12,7 +12,7 @@ namespace Calico
 
         public int NumberOfFeatures { get; set; }
 
-        public IEnumerable<AttributeProxy> Attributes { get; set; }
+        public IEnumerable<AttributeStatistics> Attributes { get; set; }
 
         public IEnumerable<FeatureTypeRecord> FeatureTypes { get; set; }
 

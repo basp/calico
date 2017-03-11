@@ -9,6 +9,7 @@ namespace Calico.Cmd
     public class GetStatisticsArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         public string PathToShapefile { get; set; }
     }
 }

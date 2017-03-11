@@ -38,11 +38,13 @@ namespace Calico
 
                 var numberOfFeatures = shapefile.Features.Count;
 
-                var attributes = shapefile.GetColumns()
-                    .Select(x => AttributeProxy.Create(x));
+                var t = shapefile.DataTable;
+                var cols = t.Columns.Cast<DataColumn>();
+                var attributes = cols
+                    .Select(x => GetStatisticsCommand.GetStatistics(t, x))
+                    .ToList();
 
                 var feature = shapefile.Features[0].BasicGeometry.ToString();
-
                 var res = new Res
                 {
                     PathToShapefile = req.PathToShapefile,

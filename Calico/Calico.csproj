@@ -69,7 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\GetStatistics\AttributeStatistics.cs" />
+    <Compile Include="AttributeStatistics.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsCommand.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsRequest.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsResponse.cs" />

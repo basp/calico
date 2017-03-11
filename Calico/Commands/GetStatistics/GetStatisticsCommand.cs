@@ -19,31 +19,7 @@ namespace Calico
 
     public class GetStatisticsCommand : ICommand<Req, Res, Exception>
     {
-        public GetStatisticsCommand()
-        {
-        }
-
-        public Option<Res, Exception> Execute(Req req)
-        {
-            try
-            {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
-                var t = shapefile.DataTable;
-                var stats = t.Columns
-                    .Cast<DataColumn>()
-                    .Select(x => GetStatistics(t, x))
-                    .ToList();
-
-                var res = new Res { Result = stats };
-                return Some<Res, Exception>(res);
-            }
-            catch (Exception ex)
-            {
-                return None<Res, Exception>(ex);
-            }
-        }
-
-        private static AttributeStatistics GetStatistics(DataTable table, DataColumn column)
+        public static AttributeStatistics GetStatistics(DataTable table, DataColumn column)
         {
             var data = table.Rows
                 .Cast<DataRow>()
@@ -64,6 +40,26 @@ namespace Calico
                 Maximum = stats.Maximum,
                 Minimum = stats.Minimum,
             };
+        }
+
+        public Option<Res, Exception> Execute(Req req)
+        {
+            try
+            {
+                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
+                var t = shapefile.DataTable;
+                var stats = t.Columns
+                    .Cast<DataColumn>()
+                    .Select(x => GetStatistics(t, x))
+                    .ToList();
+
+                var res = new Res { Result = stats };
+                return Some<Res, Exception>(res);
+            }
+            catch (Exception ex)
+            {
+                return None<Res, Exception>(ex);
+            }
         }
     }
 }
