@@ -78,11 +78,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\CategorizeDataSet\CategorizeDataSetArgs.cs" />
+    <Compile Include="Actions\GetCategories\GetCategoriesArgs.cs" />
     <Compile Include="Actions\GetStatistics\GetStatisticsAction.cs" />
     <Compile Include="Actions\GetStatistics\GetStatisticsArgs.cs" />
-    <Compile Include="Actions\QuantifyDataSet\QuantifyDataSetAction.cs" />
-    <Compile Include="Actions\QuantifyDataSet\QuantifyDataSetArgs.cs" />
+    <Compile Include="Actions\GetClasses\GetClassesAction.cs" />
+    <Compile Include="Actions\GetClasses\GetClassesArgs.cs" />
     <Compile Include="Actions\DefaultArgDescriptions.cs" />
     <Compile Include="Actions\DeleteDataSet\DeleteDataSetAction.cs" />
     <Compile Include="Actions\DeleteDataSet\DeleteDataSetArgs.cs" />
@@ -150,7 +150,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\CategorizeDataSet\CategorizeDataSetAction.cs" />
+    <Compile Include="Actions\GetCategories\GetCategoriesAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

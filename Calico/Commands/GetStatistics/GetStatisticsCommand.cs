@@ -29,7 +29,8 @@ namespace Calico
             {
                 var shapefile = Shapefile.OpenFile(req.PathToShapefile);
                 var t = shapefile.DataTable;
-                var stats = shapefile.GetColumns()
+                var stats = t.Columns
+                    .Cast<DataColumn>()
                     .Select(x => GetStatistics(t, x))
                     .ToList();
 

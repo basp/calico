@@ -1,4 +1,4 @@
-﻿// <copyright file="QuantifyDataSetArgs.cs" company="TMG">
+﻿// <copyright file="GetClassesArgs.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@ namespace Calico.Cmd
 {
     using PowerArgs;
 
-    public class QuantifyDataSetArgs
+    public class GetClassesArgs
     {
         [ArgRequired]
         public string PathToShapefile { get; set; }

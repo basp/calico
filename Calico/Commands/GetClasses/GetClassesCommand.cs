@@ -1,4 +1,4 @@
-﻿// <copyright file="QuantifyDataSetCommand.cs" company="TMG">
+﻿// <copyright file="GetClassesCommand.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -15,16 +15,16 @@ namespace Calico
 
     using static Optional.Option;
 
-    using Req = QuantifyDataSetRequest;
-    using Res = QuantifyDataSetResponse;
+    using Req = GetClassesRequest;
+    using Res = GetClassesResponse;
 
-    public class QuantifyDataSetCommand<T>
+    public class GetClassesCommand<T>
         : ICommand<Req, Res, Exception>
     {
         private readonly IClassifier<double> classifier;
         private readonly Chauvenet chauvenet = new Chauvenet(Normal.Standard);
 
-        public QuantifyDataSetCommand(IClassifier<double> classifier)
+        public GetClassesCommand(IClassifier<double> classifier)
         {
             this.classifier = classifier;
         }

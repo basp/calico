@@ -1,4 +1,4 @@
-﻿// <copyright file="QuantifyDataSetAction.cs" company="TMG">
+﻿// <copyright file="GetCategoriesAction.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -10,18 +10,18 @@ namespace Calico.Cmd
     using Newtonsoft.Json;
     using Serilog;
 
-    public class QuantifyDataSetAction : IAction<QuantifyDataSetArgs>
+    public class GetCategoriesAction : IAction<GetCategoriesArgs>
     {
-        public void Execute(QuantifyDataSetArgs args)
+        public void Execute(GetCategoriesArgs args)
         {
-            var classifier = new NestedMeansClassifier(args.Depth);
-            var cmd = new QuantifyDataSetCommand<double>(classifier);
-            var req = Mapper.Map<QuantifyDataSetRequest>(args);
+            var classifier = new CategorizingClassifier();
+            var cmd = new GetCategoriesCommand(classifier);
+            var req = Mapper.Map<GetCategoriesRequest>(args);
             var res = cmd.Execute(req);
 
             res.MatchSome(x =>
             {
-                var json = JsonConvert.SerializeObject(x);
+                var json = JsonConvert.SerializeObject(x.Result);
                 Console.WriteLine(json);
             });
 
@@ -29,7 +29,7 @@ namespace Calico.Cmd
             {
                 Log.Error(
                     x,
-                    "Failed to quantify data set from shapefile {Shapefile}",
+                    "Failed to categorize data set from shapefile {Shapefile",
                     args.PathToShapefile);
             });
         }

@@ -1,4 +1,4 @@
-﻿// <copyright file="CategorizeDataSetCommand.cs" company="TMG">
+﻿// <copyright file="GetCategoriesCommand.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -12,14 +12,14 @@ namespace Calico
 
     using static Optional.Option;
 
-    using Req = CategorizeDataSetRequest;
-    using Res = CategorizeDataSetResponse;
+    using Req = GetCategoriesRequest;
+    using Res = GetCategoriesResponse;
 
-    public class CategorizeDataSetCommand : ICommand<Req, Res, Exception>
+    public class GetCategoriesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IClassifier<string> classifier;
 
-        public CategorizeDataSetCommand(IClassifier<string> classifier)
+        public GetCategoriesCommand(IClassifier<string> classifier)
         {
             this.classifier = classifier;
         }
