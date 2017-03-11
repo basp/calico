@@ -9,10 +9,12 @@ namespace Calico.Cmd
     public class NewFeatureTypeArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.ClientId)]
         public int ClientId { get; set; }
 
         [ArgRequired]
+        [ArgPosition(2)]
         [ArgDescription("The name of the feature type")]
         public string Name { get; set; }
     }

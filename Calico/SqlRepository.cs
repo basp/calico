@@ -12,7 +12,6 @@ namespace Calico
     using System.Linq;
     using Dapper;
     using Microsoft.SqlServer.Types;
-    using Serilog;
 
     public class SqlRepository : IRepository
     {
@@ -254,6 +253,34 @@ namespace Calico
                 transaction: this.transaction);
         }
 
+        public IEnumerable<StyleClassRecord> GetStyleClasses(int styleId)
+        {
+            var @param = new { StyleId = styleId };
+            return this.connection.Query<StyleClassRecord>(
+                nameof(this.GetStyleClasses),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public IEnumerable<StyleRecord> GetStyles(int featureTypeId)
+        {
+            var @param = new { FeatureTypeId = featureTypeId };
+            return this.connection.Query<StyleRecord>(
+                nameof(this.GetStyles),
+                @param,
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
+        public IEnumerable<StyleTypeRecord> GetStyleTypes()
+        {
+            return this.connection.Query<StyleTypeRecord>(
+                nameof(this.GetStyleTypes),
+                commandType: CommandType.StoredProcedure,
+                transaction: this.transaction);
+        }
+
         public int InsertClient(ClientRecord rec)
         {
             var @param = new { rec.Name };
@@ -292,6 +319,33 @@ namespace Calico
             };
 
             return this.Insert(nameof(this.InsertPlot), @param);
+        }
+
+        public int InsertStyle(StyleRecord rec)
+        {
+            var @param = new
+            {
+                rec.FeatureTypeId,
+                rec.AttributeIndex,
+                rec.StyleTypeId,
+                rec.Name,
+            };
+
+            return this.Insert(nameof(this.InsertStyle), @param);
+        }
+
+        public int InsertStyleClass(StyleClassRecord rec)
+        {
+            var @param = new
+            {
+                rec.StyleId,
+                rec.Legend,
+                rec.Category,
+                rec.MinValue,
+                rec.MaxValue,
+            };
+
+            return this.Insert(nameof(this.InsertStyleClass), @param);
         }
 
         private static DataTable CreateAttributeTable()

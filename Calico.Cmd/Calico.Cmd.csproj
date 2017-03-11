@@ -104,6 +104,10 @@
     <Compile Include="Actions\GetFeatureTypes\GetFeatureTypesArgs.cs" />
     <Compile Include="Actions\GetPlots\GetPlotsAction.cs" />
     <Compile Include="Actions\GetPlots\GetPlotsArgs.cs" />
+    <Compile Include="Actions\GetStyles\GetStylesAction.cs" />
+    <Compile Include="Actions\GetStyles\GetStylesArgs.cs" />
+    <Compile Include="Actions\GetStyleTypes\GetStyleTypesAction.cs" />
+    <Compile Include="Actions\GetStyleTypes\GetStyleTypesArgs.cs" />
     <Compile Include="Actions\ImportAttributes\ImportAttributesAction.cs" />
     <Compile Include="Actions\ImportAttributes\ImportAttributesArgs.cs" />
     <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesAction.cs" />
@@ -116,6 +120,8 @@
     <Compile Include="Actions\ImportFeatureType\ImportFeatureTypeAction.cs" />
     <Compile Include="Actions\ImportPlot\ImportPlotAction.cs" />
     <Compile Include="Actions\ImportPlot\ImportPlotArgs.cs" />
+    <Compile Include="Actions\ImportStyle\ImportStyleAction.cs" />
+    <Compile Include="Actions\ImportStyle\ImportStyleArgs.cs" />
     <Compile Include="Actions\NewClient\NewClientAction.cs" />
     <Compile Include="Actions\NewClient\NewClientArgs.cs" />
     <Compile Include="Actions\NewDataSet\NewDataSetAction.cs" />
@@ -126,6 +132,8 @@
     <Compile Include="Actions\NewFeatureType\NewFeatureTypeArgs.cs" />
     <Compile Include="Actions\NewPlot\NewPlotAction.cs" />
     <Compile Include="Actions\NewPlot\NewPlotArgs.cs" />
+    <Compile Include="Actions\NewStyle\NewStyleAction.cs" />
+    <Compile Include="Actions\NewStyle\NewStyleArgs.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileAction.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileArgs.cs" />
     <Compile Include="IAction.cs" />

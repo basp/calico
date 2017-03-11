@@ -99,6 +99,11 @@
     <Build Include="Tables\Styles.sql" />
     <Build Include="Tables\StyleTypes.sql" />
     <Build Include="Tables\StyleClasses.sql" />
+    <Build Include="Stored Procedures\InsertStyle.sql" />
+    <Build Include="Stored Procedures\GetStyleTypes.sql" />
+    <Build Include="Stored Procedures\InsertStyleClass.sql" />
+    <Build Include="Stored Procedures\GetStyles.sql" />
+    <Build Include="Stored Procedures\GetStyleClasses.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeploy.sql" />

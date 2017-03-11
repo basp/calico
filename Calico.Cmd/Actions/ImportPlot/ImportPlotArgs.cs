@@ -9,14 +9,17 @@ namespace Calico.Cmd
     public class ImportPlotArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.ClientId)]
         public int ClientId { get; set; }
 
         [ArgRequired]
+        [ArgPosition(2)]
         [ArgDescription(DefaultArgDescriptions.FeatureTypeId)]
         public int FeatureTypeId { get; set; }
 
         [ArgRequired]
+        [ArgPosition(3)]
         [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
 
@@ -24,6 +27,7 @@ namespace Calico.Cmd
         [ArgDescription(DefaultArgDescriptions.SpatialReferenceSystem)]
         public int SRID { get; set; }
 
+        [ArgDescription("The name for the plot")]
         public string Name { get; set; }
     }
 }

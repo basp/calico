@@ -84,6 +84,16 @@ namespace Calico.Cmd
             new GetStatisticsAction().Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Get a list of styles for a particular feature type")]
+        public void GetStyles(GetStylesArgs args) =>
+            new GetStylesAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
+        [ArgDescription("Get a list of style types")]
+        public void GetStyleTypes(GetStyleTypesArgs args) =>
+            new GetStyleTypesAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Imports attributes from a shapefile")]
         public void ImportAttributes(ImportAttributesArgs args) =>
             new ImportAttributesAction(ConnectionFactory).Execute(args);
@@ -114,6 +124,11 @@ namespace Calico.Cmd
             new ImportPlotAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Import a style from an attribute in a shapefile")]
+        public void ImportStyle(ImportStyleArgs args) =>
+            new ImportStyleAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Creates a new client")]
         public void NewClient(NewClientArgs args) =>
             new NewClientAction(ConnectionFactory).Execute(args);
@@ -139,6 +154,11 @@ namespace Calico.Cmd
             new NewPlotAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Creates a new style")]
+        public void NewStyle(NewStyleArgs args) =>
+            new NewStyleAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Scans a shapefile for information")]
         public void ScanShapefile(ScanShapefileArgs args) =>
             new ScanShapefileAction(ConnectionFactory).Execute(args);
@@ -160,18 +180,22 @@ namespace Calico.Cmd
                 x.CreateMap<DeleteFeatureTypeArgs, DeleteFeatureTypeRequest>();
                 x.CreateMap<DeletePlotArgs, DeletePlotRequest>();
                 x.CreateMap<GetAttributesArgs, GetAttributesRequest>();
+                x.CreateMap<GetClassesArgs, GetClassesRequest>();
                 x.CreateMap<GetClientsArgs, GetClientsRequest>();
                 x.CreateMap<GetDataSetsArgs, GetDataSetsRequest>();
                 x.CreateMap<GetDataTypesArgs, GetDataTypesRequest>();
                 x.CreateMap<GetFeatureTypesArgs, GetFeatureTypesRequest>();
                 x.CreateMap<GetPlotsArgs, GetPlotsRequest>();
                 x.CreateMap<GetStatisticsArgs, GetStatisticsRequest>();
-                x.CreateMap<NewPlotArgs, NewPlotRequest>();
+                x.CreateMap<GetStylesArgs, GetStylesRequest>();
+                x.CreateMap<GetStyleTypesArgs, GetStyleTypesRequest>();
                 x.CreateMap<NewClientArgs, NewClientRequest>();
                 x.CreateMap<NewDataSetArgs, NewDataSetRequest>()
                     .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<NewDataTypeArgs, NewDataTypeRequest>();
                 x.CreateMap<NewFeatureTypeArgs, NewFeatureTypeRequest>();
+                x.CreateMap<NewPlotArgs, NewPlotRequest>();
+                x.CreateMap<NewStyleArgs, NewStyleRequest>();
                 x.CreateMap<ImportAttributesArgs, ImportAttributesRequest>();
                 x.CreateMap<ImportAttributeValuesArgs, ImportAttributeValuesRequest>();
                 x.CreateMap<ImportDataSetArgs, ImportDataSetRequest>()
@@ -180,7 +204,7 @@ namespace Calico.Cmd
                 x.CreateMap<ImportFeatureTypeArgs, ImportFeatureTypeRequest>();
                 x.CreateMap<ImportPlotArgs, ImportPlotRequest>()
                     .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
-                x.CreateMap<GetClassesArgs, GetClassesRequest>();
+                x.CreateMap<ImportStyleArgs, ImportStyleRequest>();
                 x.CreateMap<ScanShapefileArgs, ScanShapefileRequest>();
             });
 

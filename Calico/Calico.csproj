@@ -73,7 +73,20 @@
     <Compile Include="Commands\GetStatistics\GetStatisticsCommand.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsRequest.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsResponse.cs" />
+    <Compile Include="Commands\GetStyles\GetStylesCommand.cs" />
+    <Compile Include="Commands\GetStyles\GetStylesRequest.cs" />
+    <Compile Include="Commands\GetStyles\GetStylesResponse.cs" />
+    <Compile Include="Commands\GetStyleTypes\GetStyleTypesCommand.cs" />
+    <Compile Include="Commands\GetStyleTypes\GetStyleTypesRequest.cs" />
+    <Compile Include="Commands\GetStyleTypes\GetStyleTypesResponse.cs" />
+    <Compile Include="Commands\ImportStyle\ImportStyleCommand.cs" />
+    <Compile Include="Commands\ImportStyle\ImportStyleRequest.cs" />
+    <Compile Include="Commands\ImportStyle\ImportStyleResponse.cs" />
+    <Compile Include="Commands\NewStyle\NewStyleCommand.cs" />
+    <Compile Include="Commands\NewStyle\NewStyleRequest.cs" />
+    <Compile Include="Commands\NewStyle\NewStyleResponse.cs" />
     <Compile Include="StyleRecord.cs" />
+    <Compile Include="StyleTypeRecord.cs" />
     <Compile Include="Visualization\Chauvenet.cs" />
     <Compile Include="Visualization\IColorRamp.cs" />
     <Compile Include="Visualization\NestedMeansClassifier.cs" />
@@ -169,7 +182,6 @@
     <Compile Include="AttributeValueRecord.cs" />
     <Compile Include="SqlRepository.cs" />
     <Compile Include="StyleClassRecord.cs" />
-    <Compile Include="StyleType.cs" />
     <Compile Include="Visualization\RandomColors.cs" />
     <Compile Include="Visualization\SingleSymbolClassifier.cs" />
   </ItemGroup>

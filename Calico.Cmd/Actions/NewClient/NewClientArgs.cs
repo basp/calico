@@ -9,6 +9,7 @@ namespace Calico.Cmd
     public class NewClientArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription("The name of the new client")]
         public string Name { get; set; }
     }

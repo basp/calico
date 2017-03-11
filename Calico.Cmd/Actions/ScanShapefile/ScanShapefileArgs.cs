@@ -9,14 +9,17 @@ namespace Calico.Cmd
     public class ScanShapefileArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.ClientId)]
         public int ClientId { get; set; }
 
         [ArgRequired]
+        [ArgPosition(2)]
         [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
 
         [ArgDefaultValue(4326)]
+        [ArgPosition(3)]
         [ArgDescription(DefaultArgDescriptions.SpatialReferenceSystem)]
         public int SRID { get; set; }
     }

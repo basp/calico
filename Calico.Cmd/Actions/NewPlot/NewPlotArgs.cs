@@ -9,18 +9,22 @@ namespace Calico.Cmd
     public class NewPlotArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.PlotId)]
         public int ClientId { get; set; }
 
         [ArgRequired]
+        [ArgPosition(2)]
         [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
 
         [ArgRequired]
+        [ArgPosition(3)]
         [ArgDescription("The name of the plot")]
         public string Name { get; set; }
 
         [ArgDefaultValue(4326)]
+        [ArgPosition(4)]
         [ArgDescription(DefaultArgDescriptions.SpatialReferenceSystem)]
         public int SRID { get; set; }
     }

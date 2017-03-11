@@ -43,6 +43,12 @@ namespace Calico
 
         IEnumerable<PlotRecord> GetPlotsContainingGeometry(int clientId, string wkt, int srid);
 
+        IEnumerable<StyleClassRecord> GetStyleClasses(int styleId);
+
+        IEnumerable<StyleRecord> GetStyles(int featureTypeId);
+
+        IEnumerable<StyleTypeRecord> GetStyleTypes();
+
         int InsertClient(ClientRecord rec);
 
         int InsertDataSet(DataSetRecord rec);
@@ -52,5 +58,9 @@ namespace Calico
         int InsertFeatureType(FeatureTypeRecord rec);
 
         int InsertPlot(PlotRecord rec);
+
+        int InsertStyle(StyleRecord rec);
+
+        int InsertStyleClass(StyleClassRecord rec);
     }
 }
