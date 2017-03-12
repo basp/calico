@@ -6,7 +6,6 @@ namespace Calico
 {
     using System;
     using System.Linq;
-    using DotSpatial.Data;
     using Optional;
 
     using static Optional.Option;
@@ -17,20 +16,22 @@ namespace Calico
     public class NewPlotCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection featureCollection;
 
-        public NewPlotCommand(IRepository repository)
+        public NewPlotCommand(
+            IRepository repository,
+            IFeatureCollection featureCollection)
         {
             this.repository = repository;
+            this.featureCollection = featureCollection;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
-                var feature = shapefile.GetFeature(0);
-                var wkt = feature.BasicGeometry.ToString();
-                var rec = this.InsertPlot(req.ClientId, req.Name, wkt, req.SRID);
+                var feature = this.featureCollection.GetFeatures().First();
+                var rec = this.InsertPlot(req.ClientId, req.Name, feature.Wkt, req.SRID);
                 var res = new Res { Plot = rec };
                 return Some<Res, Exception>(res);
             }

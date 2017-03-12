@@ -22,20 +22,23 @@ namespace Calico.Cmd
         public void Execute(GetFeatureTypesArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                var repo = new SqlRepository(conn);
+                var repo = new SqlRepository(session);
                 var cmd = new GetFeatureTypesCommand(repo);
                 var req = Mapper.Map<GetFeatureTypesRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
+                    session.Commit();
                     var json = JsonConvert.SerializeObject(x.FeatureTypes);
                     Console.WriteLine(json);
                 });
 
                 res.MatchNone(x =>
                 {
+                    session.Rollback();
                     Log.Error(x, "Could not get feature types");
                 });
             }

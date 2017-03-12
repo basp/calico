@@ -22,20 +22,23 @@ namespace Calico.Cmd
         public void Execute(GetClientsArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                var repo = new SqlRepository(conn);
+                var repo = new SqlRepository(session);
                 var cmd = new GetClientsCommand(repo);
                 var req = Mapper.Map<GetClientsRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
+                    session.Commit();
                     var json = JsonConvert.SerializeObject(x.Clients);
                     Console.WriteLine(json);
                 });
 
                 res.MatchNone(x =>
                 {
+                    session.Rollback();
                     Log.Error(x, "Could not get clients");
                 });
             }

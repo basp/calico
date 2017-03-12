@@ -21,34 +21,31 @@ namespace Calico.Cmd
         public void Execute(NewDataSetArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var cmd = new NewDataSetCommand(repo);
+                var req = Mapper.Map<NewDataSetRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewDataSetCommand(repo);
-                    var req = Mapper.Map<NewDataSetRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Created data set {DataSetName} with id {DataSetId}",
+                        x.DataSet.Name,
+                        x.DataSet.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Created data set {DataSetName} with id {DataSetId}",
-                            x.DataSet.Name,
-                            x.DataSet.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to create data set {DataSetName} for plot {PlotId}",
-                            req.Name,
-                            req.PlotId);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to create data set {DataSetName} for plot {PlotId}",
+                        req.Name,
+                        req.PlotId);
+                });
             }
         }
     }

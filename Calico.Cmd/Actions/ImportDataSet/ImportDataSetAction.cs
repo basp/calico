@@ -26,35 +26,33 @@ namespace Calico.Cmd
                 : args.Name;
 
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ImportDataSetCommand(repo, features);
+                var req = Mapper.Map<ImportDataSetRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportDataSetCommand(repo);
-                    var req = Mapper.Map<ImportDataSetRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Imported {DataSetName} ({DataSetId}) for plot {PlotName} ({PlotId})",
+                        x.DataSet.Name,
+                        x.DataSet.Id,
+                        x.Plot.Name,
+                        x.Plot.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Imported {DataSetName} ({DataSetId}) for plot {PlotName} ({PlotId})",
-                            x.DataSet.Name,
-                            x.DataSet.Id,
-                            x.Plot.Name,
-                            x.Plot.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to import data set from shapefile {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to import data set from shapefile {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }

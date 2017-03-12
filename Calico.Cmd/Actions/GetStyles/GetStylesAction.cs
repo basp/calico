@@ -22,20 +22,23 @@ namespace Calico.Cmd
         public void Execute(GetStylesArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                var repo = new SqlRepository(conn);
+                var repo = new SqlRepository(session);
                 var cmd = new GetStylesCommand(repo);
                 var req = Mapper.Map<GetStylesRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
+                    session.Commit();
                     var json = JsonConvert.SerializeObject(x.Styles);
                     Console.WriteLine(json);
                 });
 
                 res.MatchNone(x =>
                 {
+                    session.Rollback();
                     Log.Error(
                         x,
                         "Could not get styles for feature type {FeatureTypeId}",

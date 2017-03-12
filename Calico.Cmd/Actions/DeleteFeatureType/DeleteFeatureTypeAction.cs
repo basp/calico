@@ -22,17 +22,16 @@ namespace Calico.Cmd
         {
             using (var conn = this.connectionFactory())
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                using (var session = SqlSession.Open(conn))
                 {
-                    var repo = new SqlRepository(conn, tx);
+                    var repo = new SqlRepository(session);
                     var cmd = new DeleteFeatureTypeCommand(repo);
                     var req = Mapper.Map<DeleteFeatureTypeRequest>(args);
                     var res = cmd.Execute(req);
 
                     res.MatchSome(x =>
                     {
-                        tx.Commit();
+                        session.Commit();
                         Log.Information(
                             "Deleted feature type {FeatureTypeName} with id {FeatureTypeId}",
                             x.FeatureType.Name,
@@ -41,7 +40,7 @@ namespace Calico.Cmd
 
                     res.MatchNone(x =>
                     {
-                        tx.Rollback();
+                        session.Rollback();
                         Log.Error(
                             x,
                             "Failed to delete feature type {FeatureTypeId}",

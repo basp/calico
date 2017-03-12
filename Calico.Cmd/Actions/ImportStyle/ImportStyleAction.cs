@@ -20,25 +20,22 @@ namespace Calico.Cmd
         public void Execute(ImportStyleArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var cmd = new ImportStyleCommand(repo);
+                var req = Mapper.Map<ImportStyleRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportStyleCommand(repo);
-                    var req = Mapper.Map<ImportStyleRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                });
             }
         }
     }

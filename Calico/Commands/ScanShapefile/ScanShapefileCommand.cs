@@ -10,7 +10,6 @@ namespace Calico
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-    using DotSpatial.Data;
     using Optional;
 
     using static Optional.Option;
@@ -21,37 +20,38 @@ namespace Calico
     public class ScanShapefileCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection features;
 
-        public ScanShapefileCommand(IRepository repository)
+        public ScanShapefileCommand(IRepository repository, IFeatureCollection features)
         {
             this.repository = repository;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
+                var table = this.features.GetDataTable();
                 var featureTypes = this.GetMatchingFeatureTypes(
                     req.ClientId,
-                    shapefile.DataTable);
+                    table);
 
-                var numberOfFeatures = shapefile.Features.Count;
+                var numberOfFeatures = this.features.GetFeatures().Count();
 
-                var t = shapefile.DataTable;
-                var cols = t.Columns.Cast<DataColumn>();
+                var cols = table.Columns.Cast<DataColumn>();
                 var attributes = cols
-                    .Select(x => GetStatisticsCommand.GetStatistics(t, x))
+                    .Select(x => GetStatisticsCommand.GetStatistics(table, x))
                     .ToList();
 
-                var feature = shapefile.Features[0].BasicGeometry.ToString();
+                var feature = this.features.GetFeatures().First();
                 var res = new Res
                 {
                     PathToShapefile = req.PathToShapefile,
                     NumberOfFeatures = numberOfFeatures,
                     Attributes = attributes,
                     FeatureTypes = featureTypes,
-                    Plots = this.GetMatchingPlots(req.ClientId, feature, req.SRID),
+                    Plots = this.GetMatchingPlots(req.ClientId, feature.Wkt, req.SRID),
                 };
 
                 return Some<Res, Exception>(res);

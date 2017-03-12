@@ -16,10 +16,14 @@ namespace Calico
     public class ImportPlotCommand : ICommand<Req, Res, Exception>
     {
         private IRepository repository;
+        private IFeatureCollection features;
 
-        public ImportPlotCommand(IRepository repository)
+        public ImportPlotCommand(
+            IRepository repository,
+            IFeatureCollection features)
         {
             this.repository = repository;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -39,7 +43,7 @@ namespace Calico
 
         private Option<PlotRecord, Exception> NewPlot(Req req)
         {
-            var cmd = new NewPlotCommand(this.repository);
+            var cmd = new NewPlotCommand(this.repository, this.features);
             var res = cmd.Execute(new NewPlotRequest
             {
                 ClientId = req.ClientId,
@@ -87,7 +91,7 @@ namespace Calico
             int dataSetId,
             string pathToShapefile)
         {
-            var cmd = new ImportAttributeValuesCommand(this.repository);
+            var cmd = new ImportAttributeValuesCommand(this.repository, this.features);
             var res = cmd.Execute(new ImportAttributeValuesRequest
             {
                 DataSetId = dataSetId,

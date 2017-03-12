@@ -21,34 +21,32 @@ namespace Calico.Cmd
         public void Execute(ImportAttributeValuesArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ImportAttributeValuesCommand(repo, features);
+                var req = Mapper.Map<ImportAttributeValuesRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportAttributeValuesCommand(repo);
-                    var req = Mapper.Map<ImportAttributeValuesRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Imported {RowCount} values from {Shapefile} into data set {DataSetId}",
+                        x.RowCount,
+                        req.PathToShapefile,
+                        req.DataSetId);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Imported {RowCount} values from {Shapefile} into data set {DataSetId}",
-                            x.RowCount,
-                            req.PathToShapefile,
-                            req.DataSetId);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to import attribute values from {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to import attribute values from {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }

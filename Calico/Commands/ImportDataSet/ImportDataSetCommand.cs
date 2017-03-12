@@ -16,10 +16,12 @@ namespace Calico
     public class ImportDataSetCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection features;
 
-        public ImportDataSetCommand(IRepository repository)
+        public ImportDataSetCommand(IRepository repository, IFeatureCollection features)
         {
             this.repository = repository;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -68,7 +70,7 @@ namespace Calico
             int dataSetId,
             string pathToShapefile)
         {
-            var cmd = new ImportAttributeValuesCommand(this.repository);
+            var cmd = new ImportAttributeValuesCommand(this.repository, this.features);
             var res = cmd.Execute(new ImportAttributeValuesRequest
             {
                 DataSetId = dataSetId,

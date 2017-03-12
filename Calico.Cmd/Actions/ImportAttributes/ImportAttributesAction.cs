@@ -22,33 +22,31 @@ namespace Calico.Cmd
         public void Execute(ImportAttributesArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ImportAttributesCommand(repo, features);
+                var req = Mapper.Map<ImportAttributesRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportAttributesCommand(repo);
-                    var req = Mapper.Map<ImportAttributesRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Imported {RowCount} attributes from {Shapefile}",
+                        x.Attributes.Count(),
+                        req.PathToShapefile);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Imported {RowCount} attributes from {Shapefile}",
-                            x.Attributes.Count(),
-                            req.PathToShapefile);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to import attributes from {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to import attributes from {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }

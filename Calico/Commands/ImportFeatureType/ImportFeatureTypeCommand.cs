@@ -17,10 +17,12 @@ namespace Calico
     public class ImportFeatureTypeCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection featureCollection;
 
-        public ImportFeatureTypeCommand(IRepository repository)
+        public ImportFeatureTypeCommand(IRepository repository, IFeatureCollection featureCollection)
         {
             this.repository = repository;
+            this.featureCollection = featureCollection;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -52,7 +54,7 @@ namespace Calico
             int featureTypeId,
             Req req)
         {
-            var cmd = new ImportAttributesCommand(this.repository);
+            var cmd = new ImportAttributesCommand(this.repository, this.featureCollection);
             var res = cmd.Execute(new ImportAttributesRequest
             {
                 FeatureTypeId = featureTypeId,

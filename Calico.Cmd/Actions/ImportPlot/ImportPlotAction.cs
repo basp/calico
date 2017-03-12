@@ -26,35 +26,33 @@ namespace Calico.Cmd
                 : args.Name;
 
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var featureCollection = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ImportPlotCommand(repo, featureCollection);
+                var req = Mapper.Map<ImportPlotRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportPlotCommand(repo);
-                    var req = Mapper.Map<ImportPlotRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Imported plot {PlotName} ({PlotId}) into dataset {DataSetName} ({DataSetId})",
+                        x.Plot.Name,
+                        x.Plot.Id,
+                        x.DataSet.Name,
+                        x.DataSet.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Imported plot {PlotName} ({PlotId}) into dataset {DataSetName} ({DataSetId})",
-                            x.Plot.Name,
-                            x.Plot.Id,
-                            x.DataSet.Name,
-                            x.DataSet.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to import plot from shapefile {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to import plot from shapefile {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }

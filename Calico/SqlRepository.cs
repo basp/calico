@@ -15,15 +15,16 @@ namespace Calico
 
     public class SqlRepository : IRepository
     {
-        private readonly SqlConnection connection;
-        private readonly SqlTransaction transaction;
+        private readonly SqlSession session;
 
-        public SqlRepository(
-            SqlConnection connection,
-            SqlTransaction transaction = null)
+        public SqlRepository(SqlSession session)
         {
-            this.connection = connection;
-            this.transaction = transaction;
+            this.session = session;
+        }
+
+        public static SqlRepository Create(SqlConnection conn)
+        {
+            return new SqlRepository(SqlSession.Open(conn));
         }
 
         public int BulkCopyAttributes(IEnumerable<AttributeRecord> recs)
@@ -39,14 +40,7 @@ namespace Calico
                 table.Rows.Add(row);
             }
 
-            var opts = SqlBulkCopyOptions.Default;
-            using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
-            {
-                copy.DestinationTableName = "Attributes";
-                copy.WriteToServer(table);
-            }
-
-            return table.Rows.Count;
+            return this.session.BulkCopy("Attributes", table);
         }
 
         public int BulkCopyAttributeValues(IEnumerable<AttributeValueRecord> recs)
@@ -77,14 +71,7 @@ namespace Calico
                 table.Rows.Add(row);
             }
 
-            var opts = SqlBulkCopyOptions.Default;
-            using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
-            {
-                copy.DestinationTableName = "AttributeValues";
-                copy.WriteToServer(table);
-            }
-
-            return table.Rows.Count;
+            return this.session.BulkCopy("AttributeValues", table);
         }
 
         public int BulkCopyFeatures(IEnumerable<FeatureRecord> recs)
@@ -101,142 +88,109 @@ namespace Calico
                 table.Rows.Add(row);
             }
 
-            var opts = SqlBulkCopyOptions.Default;
-            using (var copy = new SqlBulkCopy(this.connection, opts, this.transaction))
-            {
-                copy.DestinationTableName = "Features";
-                copy.WriteToServer(table);
-            }
-
-            return table.Rows.Count;
+            return this.session.BulkCopy("Features", table);
         }
 
         public int DeleteDataSet(int id)
         {
             var @param = new { Id = id };
-            return this.connection.Execute(
+            return this.session.Execute(
                 nameof(this.DeleteDataSet),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public int DeleteFeatureType(int id)
         {
             var @param = new { Id = id };
-            return this.connection.Execute(
+            return this.session.Execute(
                 nameof(this.DeleteFeatureType),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public int DeletePlot(int id)
         {
             var @param = new { Id = id };
-            return this.connection.Execute(
+            return this.session.Execute(
                 nameof(this.DeletePlot),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<AttributeRecord> GetAttributes(int featureTypeId)
         {
             var @param = new { FeatureTypeId = featureTypeId };
-            return this.connection.Query<AttributeRecord>(
+            return this.session.Query<AttributeRecord>(
                 nameof(this.GetAttributes),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public ClientRecord GetClient(int id)
         {
             var @param = new { Id = id };
-            return this.connection.QuerySingle<ClientRecord>(
+            return this.session.QuerySingle<ClientRecord>(
                 nameof(this.GetClient),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<ClientRecord> GetClients(int top)
         {
             var @param = new { Top = top };
-            return this.connection.Query<ClientRecord>(
+            return this.session.Query<ClientRecord>(
                 nameof(this.GetClients),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public DataSetRecord GetDataSet(int id)
         {
             var @param = new { Id = id };
-            return this.connection.QuerySingle<DataSetRecord>(
+            return this.session.QuerySingle<DataSetRecord>(
                 nameof(this.GetDataSet),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<DataSetRecord> GetDataSets(int plotId, int top)
         {
             var @param = new { PlotId = plotId, Top = top };
-            return this.connection.Query<DataSetRecord>(
+            return this.session.Query<DataSetRecord>(
                 nameof(this.GetDataSets),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<DataTypeRecord> GetDataTypes()
         {
-            return this.connection.Query<DataTypeRecord>(
-                nameof(this.GetDataTypes),
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+            return this.session.Query<DataTypeRecord>(
+                nameof(this.GetDataTypes));
         }
 
         public FeatureTypeRecord GetFeatureType(int id)
         {
             var @param = new { Id = id };
-            return this.connection.QuerySingle<FeatureTypeRecord>(
+            return this.session.QuerySingle<FeatureTypeRecord>(
                 nameof(this.GetFeatureType),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top)
         {
             var @param = new { ClientId = clientId, Top = top };
-            return this.connection.Query<FeatureTypeRecord>(
+            return this.session.Query<FeatureTypeRecord>(
                 nameof(this.GetFeatureTypes),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public PlotRecord GetPlot(int plotId)
         {
             var @param = new { PlotId = plotId };
-            return this.connection.QuerySingle<PlotRecord>(
+            return this.session.QuerySingle<PlotRecord>(
                 nameof(this.GetPlot),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
         {
             var @param = new { ClientId = clientId, Top = top };
-            return this.connection.Query<PlotRecord>(
+            return this.session.Query<PlotRecord>(
                 nameof(this.GetPlots),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<PlotRecord> GetPlotsContainingGeometry(
@@ -246,63 +200,63 @@ namespace Calico
         {
             var geometry = ValidSqlGeometryFromWkt(wkt, srid);
             var @param = new { ClientId = clientId, Geometry = geometry };
-            return this.connection.Query<PlotRecord>(
+            return this.session.Query<PlotRecord>(
                 nameof(this.GetPlotsContainingGeometry),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<StyleClassRecord> GetStyleClasses(int styleId)
         {
             var @param = new { StyleId = styleId };
-            return this.connection.Query<StyleClassRecord>(
+            return this.session.Query<StyleClassRecord>(
                 nameof(this.GetStyleClasses),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<StyleRecord> GetStyles(int featureTypeId)
         {
             var @param = new { FeatureTypeId = featureTypeId };
-            return this.connection.Query<StyleRecord>(
+            return this.session.Query<StyleRecord>(
                 nameof(this.GetStyles),
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+                @param);
         }
 
         public IEnumerable<StyleTypeRecord> GetStyleTypes()
         {
-            return this.connection.Query<StyleTypeRecord>(
-                nameof(this.GetStyleTypes),
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
+            return this.session.Query<StyleTypeRecord>(
+                nameof(this.GetStyleTypes));
         }
 
         public int InsertClient(ClientRecord rec)
         {
             var @param = new { rec.Name };
-            return this.Insert(nameof(this.InsertClient), @param);
+            return this.session.Insert(
+                nameof(this.InsertClient),
+                @param);
         }
 
         public int InsertDataSet(DataSetRecord rec)
         {
             var @param = new { rec.PlotId, rec.FeatureTypeId, rec.Name, rec.DateCreated };
-            return this.Insert(nameof(this.InsertDataSet), @param);
+            return this.session.Insert(
+                nameof(this.InsertDataSet),
+                @param);
         }
 
         public int InsertDataType(DataTypeRecord rec)
         {
             var @param = new { rec.Name, rec.SqlType, rec.BclType };
-            return this.Insert(nameof(this.InsertDataType), @param);
+            return this.session.Insert(
+                nameof(this.InsertDataType),
+                @param);
         }
 
         public int InsertFeatureType(FeatureTypeRecord rec)
         {
             var @param = new { rec.ClientId, rec.Name };
-            return this.Insert(nameof(this.InsertFeatureType), @param);
+            return this.session.Insert(
+                nameof(this.InsertFeatureType),
+                @param);
         }
 
         public int InsertPlot(PlotRecord rec)
@@ -318,7 +272,9 @@ namespace Calico
                 rec.SRID,
             };
 
-            return this.Insert(nameof(this.InsertPlot), @param);
+            return this.session.Insert(
+                nameof(this.InsertPlot),
+                @param);
         }
 
         public int InsertStyle(StyleRecord rec)
@@ -331,7 +287,9 @@ namespace Calico
                 rec.Name,
             };
 
-            return this.Insert(nameof(this.InsertStyle), @param);
+            return this.session.Insert(
+                nameof(this.InsertStyle),
+                @param);
         }
 
         public int InsertStyleClass(StyleClassRecord rec)
@@ -345,7 +303,9 @@ namespace Calico
                 rec.MaxValue,
             };
 
-            return this.Insert(nameof(this.InsertStyleClass), @param);
+            return this.session.Insert(
+                nameof(this.InsertStyleClass),
+                @param);
         }
 
         private static DataTable CreateAttributeTable()
@@ -418,15 +378,6 @@ namespace Calico
             return SqlGeography.STGeomFromText(text, srid)
                 .MakeValid()
                 .ReorientObject();
-        }
-
-        private int Insert(string sproc, object @param)
-        {
-            return this.connection.QueryFirst<int>(
-                sproc,
-                @param,
-                commandType: CommandType.StoredProcedure,
-                transaction: this.transaction);
         }
     }
 }

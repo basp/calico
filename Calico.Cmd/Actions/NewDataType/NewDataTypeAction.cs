@@ -21,33 +21,30 @@ namespace Calico.Cmd
         public void Execute(NewDataTypeArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var cmd = new NewDataTypeCommand(repo);
+                var req = Mapper.Map<NewDataTypeRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewDataTypeCommand(repo);
-                    var req = Mapper.Map<NewDataTypeRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Created data type {DataTypeName} with id {DataTypeId}",
+                        x.DataType.Name,
+                        x.DataType.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Created data type {DataTypeName} with id {DataTypeId}",
-                            x.DataType.Name,
-                            x.DataType.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Could not create data type {DataTypeName}",
-                            req.Name);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Could not create data type {DataTypeName}",
+                        req.Name);
+                });
             }
         }
     }

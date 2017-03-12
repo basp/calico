@@ -21,35 +21,33 @@ namespace Calico.Cmd
         public void Execute(ImportFeatureTypeArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ImportFeatureTypeCommand(repo, features);
+                var req = Mapper.Map<ImportFeatureTypeRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportFeatureTypeCommand(repo);
-                    var req = Mapper.Map<ImportFeatureTypeRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Imported feature type {FeatureTypeName} ({FeatureTypeId}) for client {ClientName} ({ClientId})",
+                        x.FeatureType.Name,
+                        x.FeatureType.Id,
+                        x.Client.Name,
+                        x.Client.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Imported feature type {FeatureTypeName} ({FeatureTypeId}) for client {ClientName} ({ClientId})",
-                            x.FeatureType.Name,
-                            x.FeatureType.Id,
-                            x.Client.Name,
-                            x.Client.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to import feature type from shapefile {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to import feature type from shapefile {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }

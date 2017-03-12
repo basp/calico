@@ -21,33 +21,30 @@ namespace Calico.Cmd
         public void Execute(ImportFeaturesArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var cmd = new ImportFeaturesCommand(repo);
+                var req = Mapper.Map<ImportFeaturesRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new ImportFeaturesCommand(repo);
-                    var req = Mapper.Map<ImportFeaturesRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Imported {FeatureCount} features from {Shapefile}",
+                        x.RowCount,
+                        req.PathToShapefile);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Imported {FeatureCount} features from {Shapefile}",
-                            x.RowCount,
-                            req.PathToShapefile);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Could not import features from shapefile {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Could not import features from shapefile {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }

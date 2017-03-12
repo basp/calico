@@ -22,20 +22,23 @@ namespace Calico.Cmd
         public void Execute(GetStyleTypesArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                var repo = new SqlRepository(conn);
+                var repo = new SqlRepository(session);
                 var cmd = new GetStyleTypesCommand(repo);
                 var req = Mapper.Map<GetStyleTypesRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
+                    session.Commit();
                     var json = JsonConvert.SerializeObject(x.StyleTypes);
                     Console.WriteLine(json);
                 });
 
                 res.MatchNone(x =>
                 {
+                    session.Rollback();
                     Log.Error(x, "Could not get style types");
                 });
             }

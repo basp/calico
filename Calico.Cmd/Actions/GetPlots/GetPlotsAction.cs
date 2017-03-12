@@ -23,14 +23,16 @@ namespace Calico.Cmd
         public void Execute(GetPlotsArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                var repo = new SqlRepository(conn);
+                var repo = new SqlRepository(session);
                 var cmd = new GetPlotsCommand(repo);
                 var req = Mapper.Map<GetPlotsRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
+                    session.Commit();
                     var plots = x.Plots.Select(y => new
                     {
                         y.Id,
@@ -46,6 +48,7 @@ namespace Calico.Cmd
 
                 res.MatchNone(x =>
                 {
+                    session.Rollback();
                     Log.Error(
                         x,
                         "Could not get plots for client {ClientId}",

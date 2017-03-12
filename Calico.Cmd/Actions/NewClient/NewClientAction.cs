@@ -21,30 +21,27 @@ namespace Calico.Cmd
         public void Execute(NewClientArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var cmd = new NewClientCommand(repo);
+                var req = Mapper.Map<NewClientRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewClientCommand(repo);
-                    var req = Mapper.Map<NewClientRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Created client {ClientName} with id {ClientId}",
+                        x.Client.Name,
+                        x.Client.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Created client {ClientName} with id {ClientId}",
-                            x.Client.Name,
-                            x.Client.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(x, "Failed to create client");
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(x, "Failed to create client");
+                });
             }
         }
     }

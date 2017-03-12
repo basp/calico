@@ -22,20 +22,24 @@ namespace Calico.Cmd
         public void Execute(ScanShapefileArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                var repo = new SqlRepository(conn);
-                var cmd = new ScanShapefileCommand(repo);
+                var repo = new SqlRepository(session);
+                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ScanShapefileCommand(repo, features);
                 var req = Mapper.Map<ScanShapefileRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
+                    session.Commit();
                     var json = JsonConvert.SerializeObject(x);
                     Console.WriteLine(json);
                 });
 
                 res.MatchNone(x =>
                 {
+                    session.Rollback();
                     Log.Error(x, "Could not scan shapefile {Shapefile}", req.PathToShapefile);
                 });
             }

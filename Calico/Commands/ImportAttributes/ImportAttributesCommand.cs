@@ -7,7 +7,6 @@ namespace Calico
     using System;
     using System.Data;
     using System.Linq;
-    using DotSpatial.Data;
     using Optional;
     using Serilog;
 
@@ -19,17 +18,18 @@ namespace Calico
     public class ImportAttributesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection featureCollection;
 
-        public ImportAttributesCommand(IRepository repository)
+        public ImportAttributesCommand(IRepository repository, IFeatureCollection featureCollection)
         {
             this.repository = repository;
+            this.featureCollection = featureCollection;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
                 var featureType = this.repository.GetFeatureType(req.FeatureTypeId);
                 Log.Information(
                     "Importing attributes for feature type {FeatureTypeName}",
@@ -39,7 +39,9 @@ namespace Calico
                     .GetDataTypes()
                     .ToDictionary(x => x.BclType, x => x);
 
-                var recs = shapefile.GetColumns()
+                var table = this.featureCollection.GetDataTable();
+                var recs = table.Columns
+                    .Cast<DataColumn>()
                     .Select((x, i) => new AttributeRecord
                     {
                         FeatureTypeId = req.FeatureTypeId,

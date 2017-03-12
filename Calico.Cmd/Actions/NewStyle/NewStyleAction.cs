@@ -20,33 +20,30 @@ namespace Calico.Cmd
         public void Execute(NewStyleArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var cmd = new NewStyleCommand(repo);
+                var req = Mapper.Map<NewStyleRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewStyleCommand(repo);
-                    var req = Mapper.Map<NewStyleRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Created style {StyleName} with id {StyleId}",
+                        x.Style.Name,
+                        x.Style.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Created style {StyleName} with id {StyleId}",
-                            x.Style.Name,
-                            x.Style.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to create style {StyleName}",
-                            args.Name);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to create style {StyleName}",
+                        args.Name);
+                });
             }
         }
     }

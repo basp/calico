@@ -13,7 +13,8 @@ namespace Calico.Cmd
     {
         private readonly Func<SqlConnection> connectionFactory;
 
-        public NewPlotAction(Func<SqlConnection> connectionFactory)
+        public NewPlotAction(
+            Func<SqlConnection> connectionFactory)
         {
             this.connectionFactory = connectionFactory;
         }
@@ -21,33 +22,31 @@ namespace Calico.Cmd
         public void Execute(NewPlotArgs args)
         {
             using (var conn = this.connectionFactory())
+            using (var session = SqlSession.Open(conn))
             {
-                conn.Open();
-                using (var tx = conn.BeginTransaction())
+                var repo = new SqlRepository(session);
+                var featureCollection = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new NewPlotCommand(repo, featureCollection);
+                var req = Mapper.Map<NewPlotRequest>(args);
+                var res = cmd.Execute(req);
+
+                res.MatchSome(x =>
                 {
-                    var repo = new SqlRepository(conn, tx);
-                    var cmd = new NewPlotCommand(repo);
-                    var req = Mapper.Map<NewPlotRequest>(args);
-                    var res = cmd.Execute(req);
+                    session.Commit();
+                    Log.Information(
+                        "Created plot {PlotName} with id {PlotId}",
+                        x.Plot.Name,
+                        x.Plot.Id);
+                });
 
-                    res.MatchSome(x =>
-                    {
-                        tx.Commit();
-                        Log.Information(
-                            "Created plot {PlotName} with id {PlotId}",
-                            x.Plot.Name,
-                            x.Plot.Id);
-                    });
-
-                    res.MatchNone(x =>
-                    {
-                        tx.Rollback();
-                        Log.Error(
-                            x,
-                            "Failed to create plot from shapefile {Shapefile}",
-                            req.PathToShapefile);
-                    });
-                }
+                res.MatchNone(x =>
+                {
+                    session.Rollback();
+                    Log.Error(
+                        x,
+                        "Failed to create plot from shapefile {Shapefile}",
+                        req.PathToShapefile);
+                });
             }
         }
     }
