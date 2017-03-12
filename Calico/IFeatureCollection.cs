@@ -6,6 +6,7 @@ namespace Calico
 {
     using System.Collections.Generic;
     using System.Data;
+    using System.IO;
 
     public interface IFeatureCollection
     {

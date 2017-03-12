@@ -15,9 +15,9 @@ namespace Calico
 
     public class SqlRepository : IRepository
     {
-        private readonly SqlSession session;
+        private readonly ISession session;
 
-        public SqlRepository(SqlSession session)
+        public SqlRepository(ISession session)
         {
             this.session = session;
         }
@@ -297,6 +297,7 @@ namespace Calico
             var @param = new
             {
                 rec.StyleId,
+                rec.Symbol,
                 rec.Legend,
                 rec.Category,
                 rec.MinValue,

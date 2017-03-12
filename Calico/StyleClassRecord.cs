@@ -10,12 +10,14 @@ namespace Calico
 
         public int StyleId { get; set; }
 
+        public string Symbol { get; set; }
+
+        public string Legend { get; set; }
+
         public string Category { get; set; }
 
         public double? MinValue { get; set; }
 
         public double? MaxValue { get; set; }
-
-        public string Legend { get; set; }
     }
 }

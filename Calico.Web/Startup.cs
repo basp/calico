@@ -66,12 +66,8 @@ namespace Calico.Web
                 () => new SqlConnection(connectionString),
                 Lifestyle.Scoped);
 
-            this.container.Register(
-                () =>
-                {
-                    var conn = this.container.GetInstance<SqlConnection>();
-                    return SqlSession.Open(conn);
-                },
+            this.container.Register<ISession>(
+                () => SqlSession.Open(this.container.GetInstance<SqlConnection>()),
                 Lifestyle.Scoped);
 
             this.container.Register<IRepository, SqlRepository>(

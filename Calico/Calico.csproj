@@ -73,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeStatistics.cs" />
+    <Compile Include="Commands\GetGeoJson\GetGeoJsonCommand.cs" />
+    <Compile Include="Commands\GetGeoJson\GetGeoJsonRequest.cs" />
+    <Compile Include="Commands\GetGeoJson\GetGeoJsonResponse.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsCommand.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsRequest.cs" />
     <Compile Include="Commands\GetStatistics\GetStatisticsResponse.cs" />
