@@ -6,5 +6,6 @@ namespace Calico
 {
     public class GetDataSetRequest
     {
+        public int DataSetId { get; set; }
     }
 }

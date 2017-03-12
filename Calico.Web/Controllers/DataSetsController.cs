@@ -34,8 +34,21 @@ namespace Calico.Web.Controllers
         }
 
         [HttpGet]
-        [Route("plot/{id}")]
-        public IEnumerable<DataSetModel> Get(int plotId)
+        [Route("{id}")]
+        public IEnumerable<DataSetModel> Get(int dataSetId)
+        {
+            var cmd = new GetDataSetCommand(this.repository);
+            var req = new GetDataSetRequest
+            {
+                DataSetId = dataSetId,
+            };
+
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("plot/{plotId}")]
+        public IEnumerable<DataSetModel> GetByPlot(int plotId)
         {
             var cmd = new GetDataSetsCommand(this.repository);
             var req = new GetDataSetsRequest
