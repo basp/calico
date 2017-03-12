@@ -9,19 +9,18 @@ namespace Calico
     using System.Linq;
     using MathNet.Numerics.Statistics;
     using Optional;
-
-    using static Optional.Option;
+    using Optional.Linq;
 
     using Req = GetStatisticsRequest;
     using Res = GetStatisticsResponse;
 
     public class GetStatisticsCommand : ICommand<Req, Res, Exception>
     {
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
-        public GetStatisticsCommand(IFeatureCollection features)
+        public GetStatisticsCommand(Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public static AttributeStatistics GetStatistics(DataTable table, DataColumn column)
@@ -49,21 +48,11 @@ namespace Calico
 
         public Option<Res, Exception> Execute(Req req)
         {
-            try
-            {
-                var table = this.features.GetDataTable();
-                var stats = table.Columns
-                    .Cast<DataColumn>()
-                    .Select(x => GetStatistics(table, x))
-                    .ToList();
-
-                var res = new Res { Result = stats };
-                return Some<Res, Exception>(res);
-            }
-            catch (Exception ex)
-            {
-                return None<Res, Exception>(ex);
-            }
+            return from features in this.featureCollectionProvider()
+                   let table = features.DataTable
+                   let cols = table.Columns.Cast<DataColumn>()
+                   let stats = cols.Select(x => GetStatistics(table, x))
+                   select new Res { Result = stats.ToList() };
         }
     }
 }

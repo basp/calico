@@ -23,8 +23,8 @@ namespace Calico.Cmd
             using (var session = SqlSession.Open(conn))
             {
                 var repo = new SqlRepository(session);
-                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
-                var cmd = new ImportStyleCommand(repo, features);
+                var provider = new ShapefileFeatureCollectionProvider(args.PathToShapefile);
+                var cmd = new ImportStyleCommand(repo, provider.Get);
                 var req = Mapper.Map<ImportStyleRequest>(args);
                 var res = cmd.Execute(req);
 

@@ -8,6 +8,7 @@ namespace Calico
     using System.Data;
     using System.Linq;
     using Optional;
+    using Optional.Linq;
     using Serilog;
 
     using static Optional.Option;
@@ -18,12 +19,14 @@ namespace Calico
     public class ImportAttributesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection featureCollection;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
-        public ImportAttributesCommand(IRepository repository, IFeatureCollection featureCollection)
+        public ImportAttributesCommand(
+            IRepository repository,
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.featureCollection = featureCollection;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -39,20 +42,18 @@ namespace Calico
                     .GetDataTypes()
                     .ToDictionary(x => x.BclType, x => x);
 
-                var table = this.featureCollection.GetDataTable();
-                var recs = table.Columns
-                    .Cast<DataColumn>()
-                    .Select((x, i) => new AttributeRecord
-                    {
-                        FeatureTypeId = req.FeatureTypeId,
-                        DataTypeId = dataTypes[x.DataType.FullName].Id,
-                        Index = i,
-                        Name = x.ColumnName,
-                    });
-
-                var c = this.repository.BulkCopyAttributes(recs);
-                var res = new Res { Attributes = recs };
-                return Some<Res, Exception>(res);
+                return from features in this.featureCollectionProvider()
+                       let table = features.DataTable
+                       let cols = table.Columns.Cast<DataColumn>()
+                       let recs = cols.Select((x, i) => new AttributeRecord
+                       {
+                           FeatureTypeId = req.FeatureTypeId,
+                           DataTypeId = dataTypes[x.DataType.FullName].Id,
+                           Index = i,
+                           Name = x.ColumnName,
+                       })
+                       let c = this.repository.BulkCopyAttributes(recs)
+                       select new Res { Attributes = recs };
             }
             catch (Exception ex)
             {

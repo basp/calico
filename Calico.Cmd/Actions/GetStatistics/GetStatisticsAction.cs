@@ -13,8 +13,8 @@ namespace Calico.Cmd
     {
         public void Execute(GetStatisticsArgs args)
         {
-            var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
-            var cmd = new GetStatisticsCommand(features);
+            var provider = new ShapefileFeatureCollectionProvider(args.PathToShapefile);
+            var cmd = new GetStatisticsCommand(provider.Get);
             var req = Mapper.Map<GetStatisticsRequest>(args);
             var res = cmd.Execute(req);
 

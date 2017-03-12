@@ -8,20 +8,20 @@ namespace Calico
     using Optional;
     using Optional.Linq;
 
-    using static Optional.Option;
-
     using Req = ImportDataSetRequest;
     using Res = ImportDataSetResponse;
 
     public class ImportDataSetCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
-        public ImportDataSetCommand(IRepository repository, IFeatureCollection features)
+        public ImportDataSetCommand(
+            IRepository repository,
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -55,7 +55,7 @@ namespace Calico
 
         private Option<int, Exception> ImportFeatures(int dataSetId, Req req)
         {
-            var cmd = new ImportFeaturesCommand(this.repository, this.features);
+            var cmd = new ImportFeaturesCommand(this.repository, this.featureCollectionProvider);
             var res = cmd.Execute(new ImportFeaturesRequest
             {
                 DataSetId = dataSetId,
@@ -67,7 +67,7 @@ namespace Calico
 
         private Option<int, Exception> ImportAttributeValues(int dataSetId)
         {
-            var cmd = new ImportAttributeValuesCommand(this.repository, this.features);
+            var cmd = new ImportAttributeValuesCommand(this.repository, this.featureCollectionProvider);
             var res = cmd.Execute(new ImportAttributeValuesRequest
             {
                 DataSetId = dataSetId,

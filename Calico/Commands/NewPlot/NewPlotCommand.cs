@@ -7,6 +7,7 @@ namespace Calico
     using System;
     using System.Linq;
     using Optional;
+    using Optional.Linq;
 
     using static Optional.Option;
 
@@ -16,24 +17,24 @@ namespace Calico
     public class NewPlotCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection featureCollection;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
         public NewPlotCommand(
             IRepository repository,
-            IFeatureCollection featureCollection)
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.featureCollection = featureCollection;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var feature = this.featureCollection.GetFeatures().First();
-                var rec = this.InsertPlot(req.ClientId, req.Name, feature.Wkt, req.SRID);
-                var res = new Res { Plot = rec };
-                return Some<Res, Exception>(res);
+                return from features in this.featureCollectionProvider()
+                       let first = features.Features.First()
+                       let rec = this.InsertPlot(req.ClientId, req.Name, first.Wkt, req.SRID)
+                       select new Res { Plot = rec };
             }
             catch (Exception ex)
             {

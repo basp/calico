@@ -25,8 +25,8 @@ namespace Calico.Cmd
             using (var session = SqlSession.Open(conn))
             {
                 var repo = new SqlRepository(session);
-                var featureCollection = ShapefileFeatureCollection.Create(args.PathToShapefile);
-                var cmd = new NewPlotCommand(repo, featureCollection);
+                var provider = new ShapefileFeatureCollectionProvider(args.PathToShapefile);
+                var cmd = new NewPlotCommand(repo, provider.Get);
                 var req = Mapper.Map<NewPlotRequest>(args);
                 var res = cmd.Execute(req);
 

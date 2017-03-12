@@ -11,6 +11,7 @@ namespace Calico
     using System.Security.Cryptography;
     using System.Text;
     using Optional;
+    using Optional.Linq;
 
     using static Optional.Option;
 
@@ -20,41 +21,34 @@ namespace Calico
     public class ScanShapefileCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
-        public ScanShapefileCommand(IRepository repository, IFeatureCollection features)
+        public ScanShapefileCommand(
+            IRepository repository,
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var table = this.features.GetDataTable();
-                var featureTypes = this.GetMatchingFeatureTypes(
-                    req.ClientId,
-                    table);
-
-                var numberOfFeatures = this.features.GetFeatures().Count();
-
-                var cols = table.Columns.Cast<DataColumn>();
-                var attributes = cols
-                    .Select(x => GetStatisticsCommand.GetStatistics(table, x))
-                    .ToList();
-
-                var feature = this.features.GetFeatures().First();
-                var res = new Res
-                {
-                    PathToShapefile = req.PathToShapefile,
-                    NumberOfFeatures = numberOfFeatures,
-                    Attributes = attributes,
-                    FeatureTypes = featureTypes,
-                    Plots = this.GetMatchingPlots(req.ClientId, feature.Wkt, req.SRID),
-                };
-
-                return Some<Res, Exception>(res);
+                return from features in this.featureCollectionProvider()
+                       let featureTypes = this.GetMatchingFeatureTypes(req.ClientId, features.DataTable)
+                       let numberOfFeatures = features.Features.Count()
+                       let cols = features.DataTable.Columns.Cast<DataColumn>()
+                       let attributes = cols.Select(x => GetStatisticsCommand.GetStatistics(features.DataTable, x))
+                       let feature = features.Features.First()
+                       select new Res
+                       {
+                           PathToShapefile = req.PathToShapefile,
+                           NumberOfFeatures = numberOfFeatures,
+                           Attributes = attributes,
+                           FeatureTypes = featureTypes,
+                           Plots = this.GetMatchingPlots(req.ClientId, feature.Wkt, req.SRID),
+                       };
             }
             catch (Exception ex)
             {

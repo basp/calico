@@ -7,20 +7,20 @@ namespace Calico
     using System;
     using Optional;
 
-    using static Optional.Option;
-
     using Req = ImportStyleRequest;
     using Res = ImportStyleResponse;
 
     public class ImportStyleCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
-        public ImportStyleCommand(IRepository repository, IFeatureCollection features)
+        public ImportStyleCommand(
+            IRepository repository,
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)

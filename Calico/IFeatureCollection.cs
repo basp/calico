@@ -9,8 +9,8 @@ namespace Calico
 
     public interface IFeatureCollection
     {
-        IEnumerable<FeatureRecord> GetFeatures();
+        IEnumerable<FeatureRecord> Features { get; }
 
-        DataTable GetDataTable();
+        DataTable DataTable { get; }
     }
 }

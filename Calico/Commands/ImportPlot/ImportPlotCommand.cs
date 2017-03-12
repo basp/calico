@@ -8,22 +8,20 @@ namespace Calico
     using Optional;
     using Optional.Linq;
 
-    using static Optional.Option;
-
     using Req = ImportPlotRequest;
     using Res = ImportPlotResponse;
 
     public class ImportPlotCommand : ICommand<Req, Res, Exception>
     {
         private IRepository repository;
-        private IFeatureCollection features;
+        private Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
         public ImportPlotCommand(
             IRepository repository,
-            IFeatureCollection features)
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -43,7 +41,7 @@ namespace Calico
 
         private Option<PlotRecord, Exception> NewPlot(Req req)
         {
-            var cmd = new NewPlotCommand(this.repository, this.features);
+            var cmd = new NewPlotCommand(this.repository, this.featureCollectionProvider);
             var res = cmd.Execute(new NewPlotRequest
             {
                 ClientId = req.ClientId,
@@ -74,7 +72,7 @@ namespace Calico
             int dataSetId,
             int srid)
         {
-            var cmd = new ImportFeaturesCommand(this.repository, this.features);
+            var cmd = new ImportFeaturesCommand(this.repository, this.featureCollectionProvider);
             var res = cmd.Execute(new ImportFeaturesRequest
             {
                 DataSetId = dataSetId,
@@ -87,7 +85,7 @@ namespace Calico
         private Option<int, Exception> ImportAttributeValues(
             int dataSetId)
         {
-            var cmd = new ImportAttributeValuesCommand(this.repository, this.features);
+            var cmd = new ImportAttributeValuesCommand(this.repository, this.featureCollectionProvider);
             var res = cmd.Execute(new ImportAttributeValuesRequest
             {
                 DataSetId = dataSetId,

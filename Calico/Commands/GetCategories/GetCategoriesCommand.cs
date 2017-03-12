@@ -5,9 +5,11 @@
 namespace Calico
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using Optional;
+    using Optional.Linq;
 
     using static Optional.Option;
 
@@ -17,37 +19,34 @@ namespace Calico
     public class GetCategoriesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IClassifier<string> classifier;
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
         public GetCategoriesCommand(
             IClassifier<string> classifier,
-            IFeatureCollection features)
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.classifier = classifier;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var table = this.features.GetDataTable();
-                var data = table.Rows.Cast<DataRow>()
-                    .Select(x => x[req.ColumnName])
-                    .Select(x => x.ToString());
-
-                var buckets = this.classifier.Classify(data);
-                var res = new Res
-                {
-                    Result = buckets,
-                };
-
-                return Some<Res, Exception>(res);
+                return from features in this.featureCollectionProvider()
+                       let data = GetData(features.DataTable, req.ColumnName)
+                       let buckets = this.classifier.Classify(data)
+                       select new Res { Result = buckets };
             }
             catch (Exception ex)
             {
                 return None<Res, Exception>(ex);
             }
+        }
+
+        private static IEnumerable<string> GetData(DataTable table, string columnName)
+        {
+            return table.Rows.Cast<DataRow>().Select(x => x[columnName].ToString());
         }
     }
 }

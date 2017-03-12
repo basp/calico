@@ -15,8 +15,8 @@ namespace Calico.Cmd
         public void Execute(GetCategoriesArgs args)
         {
             var classifier = new CategorizingClassifier();
-            var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
-            var cmd = new GetCategoriesCommand(classifier, features);
+            var provider = new ShapefileFeatureCollectionProvider(args.PathToShapefile);
+            var cmd = new GetCategoriesCommand(classifier, provider.Get);
             var req = Mapper.Map<GetCategoriesRequest>(args);
             var res = cmd.Execute(req);
 

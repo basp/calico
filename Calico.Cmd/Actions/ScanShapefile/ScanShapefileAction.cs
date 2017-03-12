@@ -25,8 +25,8 @@ namespace Calico.Cmd
             using (var session = SqlSession.Open(conn))
             {
                 var repo = new SqlRepository(session);
-                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
-                var cmd = new ScanShapefileCommand(repo, features);
+                var provider = new ShapefileFeatureCollectionProvider(args.PathToShapefile);
+                var cmd = new ScanShapefileCommand(repo, provider.Get);
                 var req = Mapper.Map<ScanShapefileRequest>(args);
                 var res = cmd.Execute(req);
 

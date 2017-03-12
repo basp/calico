@@ -90,7 +90,8 @@
     <Compile Include="Commands\NewStyle\NewStyleResponse.cs" />
     <Compile Include="IFeatureCollection.cs" />
     <Compile Include="ISession.cs" />
-    <Compile Include="ShapefileFeatureCollection.cs" />
+    <Compile Include="FeatureCollection.cs" />
+    <Compile Include="ShapefileFeatureCollectionProvider.cs" />
     <Compile Include="SqlSession.cs" />
     <Compile Include="StyleRecord.cs" />
     <Compile Include="StyleTypeRecord.cs" />

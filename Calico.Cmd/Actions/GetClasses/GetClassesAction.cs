@@ -15,8 +15,8 @@ namespace Calico.Cmd
         public void Execute(GetClassesArgs args)
         {
             var classifier = new NestedMeansClassifier(args.Depth);
-            var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
-            var cmd = new GetClassesCommand<double>(classifier, features);
+            var provider = new ShapefileFeatureCollectionProvider(args.PathToShapefile);
+            var cmd = new GetClassesCommand<double>(classifier, provider.Get);
             var req = Mapper.Map<GetClassesRequest>(args);
             var res = cmd.Execute(req);
 

@@ -7,6 +7,7 @@ namespace Calico
     using System;
     using System.Linq;
     using Optional;
+    using Optional.Linq;
     using Serilog;
 
     using static Optional.Option;
@@ -17,12 +18,14 @@ namespace Calico
     public class ImportFeaturesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
-        public ImportFeaturesCommand(IRepository repository, IFeatureCollection features)
+        public ImportFeaturesCommand(
+            IRepository repository,
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -36,13 +39,10 @@ namespace Calico
                     dataSet.Name,
                     featureType.Name);
 
-                var recs = this.features
-                    .GetFeatures()
-                    .Select((x, i) => CreateFeatureRecord(req.DataSetId, i, x.Wkt, req.SRID));
-
-                var c = this.repository.BulkCopyFeatures(recs);
-                var res = new Res { RowCount = c };
-                return Some<Res, Exception>(res);
+                return from features in this.featureCollectionProvider()
+                       let recs = features.Features.Select((x, i) => CreateFeatureRecord(req.DataSetId, i, x.Wkt, req.SRID))
+                       let count = this.repository.BulkCopyFeatures(recs)
+                       select new Res { RowCount = count };
             }
             catch (Exception ex)
             {

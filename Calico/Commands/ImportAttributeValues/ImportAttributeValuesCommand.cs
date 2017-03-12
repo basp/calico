@@ -9,6 +9,7 @@ namespace Calico
     using System.Data;
     using System.Linq;
     using Optional;
+    using Optional.Linq;
     using Serilog;
 
     using static Optional.Option;
@@ -19,14 +20,14 @@ namespace Calico
     public class ImportAttributeValuesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
-        private readonly IFeatureCollection features;
+        private readonly Func<Option<IFeatureCollection, Exception>> featureCollectionProvider;
 
         public ImportAttributeValuesCommand(
             IRepository repository,
-            IFeatureCollection features)
+            Func<Option<IFeatureCollection, Exception>> featureCollectionProvider)
         {
             this.repository = repository;
-            this.features = features;
+            this.featureCollectionProvider = featureCollectionProvider;
         }
 
         public Option<Res, Exception> Execute(Req req)
@@ -47,29 +48,12 @@ namespace Calico
                 var attributes = this.repository.GetAttributes(dataSet.FeatureTypeId);
                 var mapping = attributes.ToDictionary(x => x.Name, x => x);
 
-                var table = this.features.GetDataTable();
-                var columns = table.Columns.Cast<DataColumn>();
-                foreach (var col in columns)
-                {
-                    if (!mapping.ContainsKey(col.ColumnName))
-                    {
-                        var msg = string.Format(
-                            "Column {0} is not suppored by feature type {1}",
-                            col.ColumnName,
-                            featureType.Name);
-
-                        return None<Res, Exception>(new Exception(msg));
-                    }
-                }
-
-                var recs = this.GetAttributeValues(
-                    dataSet.Id,
-                    featureType.Id,
-                    table);
-
-                var c = this.repository.BulkCopyAttributeValues(recs);
-                var res = new Res { RowCount = c };
-                return Some<Res, Exception>(res);
+                return from features in this.featureCollectionProvider()
+                       let table = features.DataTable
+                       let cols = table.Columns.Cast<DataColumn>()
+                       let recs = this.GetAttributeValues(dataSet.Id, featureType.Id, table)
+                       let count = this.repository.BulkCopyAttributeValues(recs)
+                       select new Res { RowCount = count };
             }
             catch (Exception ex)
             {
