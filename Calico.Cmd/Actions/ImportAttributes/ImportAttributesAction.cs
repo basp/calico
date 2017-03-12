@@ -36,7 +36,7 @@ namespace Calico.Cmd
                     Log.Information(
                         "Imported {RowCount} attributes from {Shapefile}",
                         x.Attributes.Count(),
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
 
                 res.MatchNone(x =>
@@ -45,7 +45,7 @@ namespace Calico.Cmd
                     Log.Error(
                         x,
                         "Failed to import attributes from {Shapefile}",
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
             }
         }

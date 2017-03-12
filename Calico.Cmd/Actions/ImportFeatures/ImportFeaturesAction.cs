@@ -24,7 +24,8 @@ namespace Calico.Cmd
             using (var session = SqlSession.Open(conn))
             {
                 var repo = new SqlRepository(session);
-                var cmd = new ImportFeaturesCommand(repo);
+                var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+                var cmd = new ImportFeaturesCommand(repo, features);
                 var req = Mapper.Map<ImportFeaturesRequest>(args);
                 var res = cmd.Execute(req);
 
@@ -34,7 +35,7 @@ namespace Calico.Cmd
                     Log.Information(
                         "Imported {FeatureCount} features from {Shapefile}",
                         x.RowCount,
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
 
                 res.MatchNone(x =>
@@ -43,7 +44,7 @@ namespace Calico.Cmd
                     Log.Error(
                         x,
                         "Could not import features from shapefile {Shapefile}",
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
             }
         }

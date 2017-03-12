@@ -5,10 +5,8 @@
 namespace Calico
 {
     using System;
-    using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using DotSpatial.Data;
     using MathNet.Numerics.Statistics;
     using Optional;
 
@@ -19,6 +17,13 @@ namespace Calico
 
     public class GetStatisticsCommand : ICommand<Req, Res, Exception>
     {
+        private readonly IFeatureCollection features;
+
+        public GetStatisticsCommand(IFeatureCollection features)
+        {
+            this.features = features;
+        }
+
         public static AttributeStatistics GetStatistics(DataTable table, DataColumn column)
         {
             var data = table.Rows
@@ -46,11 +51,10 @@ namespace Calico
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
-                var t = shapefile.DataTable;
-                var stats = t.Columns
+                var table = this.features.GetDataTable();
+                var stats = table.Columns
                     .Cast<DataColumn>()
-                    .Select(x => GetStatistics(t, x))
+                    .Select(x => GetStatistics(table, x))
                     .ToList();
 
                 var res = new Res { Result = stats };

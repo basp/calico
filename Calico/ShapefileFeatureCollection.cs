@@ -42,7 +42,7 @@ namespace Calico
             return new FeatureRecord
             {
                 Index = index,
-                Wkt = feature.BasicGeometry.ToString(),
+                Wkt = feature.Geometry.ToString(),
                 SRID = this.srid,
             };
         }

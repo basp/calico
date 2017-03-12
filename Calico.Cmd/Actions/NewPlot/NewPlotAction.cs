@@ -45,7 +45,7 @@ namespace Calico.Cmd
                     Log.Error(
                         x,
                         "Failed to create plot from shapefile {Shapefile}",
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
             }
         }

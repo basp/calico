@@ -6,8 +6,6 @@ namespace Calico
 {
     public class ImportStyleRequest
     {
-        public string PathToShapefile { get; set; }
-
         public string ColumnName { get; set; }
     }
 }

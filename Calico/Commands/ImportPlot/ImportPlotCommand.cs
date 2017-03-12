@@ -30,8 +30,8 @@ namespace Calico
         {
             return from plot in this.NewPlot(req)
                    from dataSet in this.NewDataSet(plot.Id, req)
-                   from features in this.ImportFeatures(dataSet.Id, req.PathToShapefile, req.SRID)
-                   from attrs in this.ImportAttributeValues(dataSet.Id, req.PathToShapefile)
+                   from features in this.ImportFeatures(dataSet.Id, req.SRID)
+                   from attrs in this.ImportAttributeValues(dataSet.Id)
                    select new Res
                    {
                        Plot = plot,
@@ -48,7 +48,6 @@ namespace Calico
             {
                 ClientId = req.ClientId,
                 Name = req.Name,
-                PathToShapefile = req.PathToShapefile,
                 SRID = req.SRID,
             });
 
@@ -73,14 +72,12 @@ namespace Calico
 
         private Option<int, Exception> ImportFeatures(
             int dataSetId,
-            string pathToShapefile,
             int srid)
         {
-            var cmd = new ImportFeaturesCommand(this.repository);
+            var cmd = new ImportFeaturesCommand(this.repository, this.features);
             var res = cmd.Execute(new ImportFeaturesRequest
             {
                 DataSetId = dataSetId,
-                PathToShapefile = pathToShapefile,
                 SRID = srid,
             });
 
@@ -88,14 +85,12 @@ namespace Calico
         }
 
         private Option<int, Exception> ImportAttributeValues(
-            int dataSetId,
-            string pathToShapefile)
+            int dataSetId)
         {
             var cmd = new ImportAttributeValuesCommand(this.repository, this.features);
             var res = cmd.Execute(new ImportAttributeValuesRequest
             {
                 DataSetId = dataSetId,
-                PathToShapefile = pathToShapefile,
             });
 
             return res.Map(x => x.RowCount);

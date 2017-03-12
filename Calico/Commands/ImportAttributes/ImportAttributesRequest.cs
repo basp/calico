@@ -7,7 +7,5 @@ namespace Calico
     public class ImportAttributesRequest
     {
         public int FeatureTypeId { get; set; }
-
-        public string PathToShapefile { get; set; }
     }
 }

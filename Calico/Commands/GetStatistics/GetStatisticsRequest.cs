@@ -6,6 +6,5 @@ namespace Calico
 {
     public class GetStatisticsRequest
     {
-        public string PathToShapefile { get; set; }
     }
 }

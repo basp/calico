@@ -8,7 +8,6 @@ namespace Calico
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using DotSpatial.Data;
     using MathNet.Numerics.Statistics;
     using Optional;
     using Visualization;
@@ -23,19 +22,22 @@ namespace Calico
     {
         private readonly IClassifier<double> classifier;
         private readonly Chauvenet chauvenet = new Chauvenet(Normal.Standard);
+        private readonly IFeatureCollection features;
 
-        public GetClassesCommand(IClassifier<double> classifier)
+        public GetClassesCommand(
+            IClassifier<double> classifier,
+            IFeatureCollection features)
         {
             this.classifier = classifier;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
-                var data = shapefile.DataTable.Rows
-                    .Cast<DataRow>()
+                var table = this.features.GetDataTable();
+                var data = table.Rows.Cast<DataRow>()
                     .Select(x => x[req.ColumnName])
                     .Select(x => Convert.ToDouble(x));
 

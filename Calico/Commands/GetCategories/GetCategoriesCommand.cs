@@ -7,7 +7,6 @@ namespace Calico
     using System;
     using System.Data;
     using System.Linq;
-    using DotSpatial.Data;
     using Optional;
 
     using static Optional.Option;
@@ -18,19 +17,22 @@ namespace Calico
     public class GetCategoriesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IClassifier<string> classifier;
+        private readonly IFeatureCollection features;
 
-        public GetCategoriesCommand(IClassifier<string> classifier)
+        public GetCategoriesCommand(
+            IClassifier<string> classifier,
+            IFeatureCollection features)
         {
             this.classifier = classifier;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
-                var data = shapefile.DataTable.Rows
-                    .Cast<DataRow>()
+                var table = this.features.GetDataTable();
+                var data = table.Rows.Cast<DataRow>()
                     .Select(x => x[req.ColumnName])
                     .Select(x => x.ToString());
 

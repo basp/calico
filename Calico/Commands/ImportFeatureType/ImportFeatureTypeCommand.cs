@@ -58,7 +58,6 @@ namespace Calico
             var res = cmd.Execute(new ImportAttributesRequest
             {
                 FeatureTypeId = featureTypeId,
-                PathToShapefile = req.PathToShapefile,
             });
 
             return res.Map(x => x.Attributes);

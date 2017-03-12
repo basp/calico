@@ -51,7 +51,7 @@ namespace Calico.Cmd
                     Log.Error(
                         x,
                         "Failed to import plot from shapefile {Shapefile}",
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
             }
         }

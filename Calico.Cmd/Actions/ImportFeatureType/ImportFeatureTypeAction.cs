@@ -46,7 +46,7 @@ namespace Calico.Cmd
                     Log.Error(
                         x,
                         "Failed to import feature type from shapefile {Shapefile}",
-                        req.PathToShapefile);
+                        args.PathToShapefile);
                 });
             }
         }

@@ -6,7 +6,6 @@ namespace Calico
 {
     using System;
     using System.Linq;
-    using DotSpatial.Data;
     using Optional;
     using Serilog;
 
@@ -18,17 +17,18 @@ namespace Calico
     public class ImportFeaturesCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection features;
 
-        public ImportFeaturesCommand(IRepository repository)
+        public ImportFeaturesCommand(IRepository repository, IFeatureCollection features)
         {
             this.repository = repository;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)
         {
             try
             {
-                var shapefile = Shapefile.OpenFile(req.PathToShapefile);
                 var dataSet = this.repository.GetDataSet(req.DataSetId);
                 var featureType = this.repository.GetFeatureType(dataSet.FeatureTypeId);
                 Log.Information(
@@ -36,8 +36,9 @@ namespace Calico
                     dataSet.Name,
                     featureType.Name);
 
-                var recs = shapefile.Features
-                    .Select((x, i) => CreateFeatureRecord(req.DataSetId, i, x, req.SRID));
+                var recs = this.features
+                    .GetFeatures()
+                    .Select((x, i) => CreateFeatureRecord(req.DataSetId, i, x.Wkt, req.SRID));
 
                 var c = this.repository.BulkCopyFeatures(recs);
                 var res = new Res { RowCount = c };
@@ -52,14 +53,14 @@ namespace Calico
         private static FeatureRecord CreateFeatureRecord(
             int dataSetId,
             int index,
-            IFeature feature,
+            string wkt,
             int srid)
         {
             return new FeatureRecord
             {
                 DataSetId = dataSetId,
                 Index = index,
-                Wkt = feature.BasicGeometry.ToString(),
+                Wkt = wkt,
                 SRID = srid,
             };
         }

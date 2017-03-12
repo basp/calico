@@ -12,8 +12,6 @@ namespace Calico
 
         public int FeatureTypeId { get; set; }
 
-        public string PathToShapefile { get; set; }
-
         public string Name { get; set; }
 
         public DateTime DateCreated { get; set; }

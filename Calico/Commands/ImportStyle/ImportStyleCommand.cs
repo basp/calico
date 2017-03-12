@@ -15,10 +15,12 @@ namespace Calico
     public class ImportStyleCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
+        private readonly IFeatureCollection features;
 
-        public ImportStyleCommand(IRepository repository)
+        public ImportStyleCommand(IRepository repository, IFeatureCollection features)
         {
             this.repository = repository;
+            this.features = features;
         }
 
         public Option<Res, Exception> Execute(Req req)

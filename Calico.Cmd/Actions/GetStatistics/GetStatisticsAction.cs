@@ -5,7 +5,6 @@
 namespace Calico.Cmd
 {
     using System;
-    using System.Data.SqlClient;
     using AutoMapper;
     using Newtonsoft.Json;
     using Serilog;
@@ -14,7 +13,8 @@ namespace Calico.Cmd
     {
         public void Execute(GetStatisticsArgs args)
         {
-            var cmd = new GetStatisticsCommand();
+            var features = ShapefileFeatureCollection.Create(args.PathToShapefile);
+            var cmd = new GetStatisticsCommand(features);
             var req = Mapper.Map<GetStatisticsRequest>(args);
             var res = cmd.Execute(req);
 
