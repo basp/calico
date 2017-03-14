@@ -2,7 +2,6 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-#pragma warning disable SA1401 // Fields must be private
 namespace Calico.Parsers.Wkt
 {
     using System.Collections.Generic;
@@ -10,39 +9,38 @@ namespace Calico.Parsers.Wkt
 
     public static class Grammar
     {
-        public static Parser<double> Double =
+        public static readonly Parser<double> Double =
             from s in Parse.Decimal.Token().Text()
             select double.Parse(s);
 
-        public static Parser<Coordinate> Coordinate =
+        public static readonly Parser<Coordinate> Coordinate =
             from lon in Double.Token()
             from lat in Double.Token()
             select new Coordinate(lon, lat);
 
-        public static Parser<LineString> LineString =
-            from id in Parse.String("LINESTRING").Token()
+        public static readonly Parser<LineString> LineString =
+            from id in Parse.String(Wkt.LineString.Ident).Token()
             from coords in LineStringCoordinates
             select new LineString(coords);
 
-        public static Parser<IEnumerable<Coordinate>> LineStringCoordinates =
+        public static readonly Parser<IEnumerable<Coordinate>> LineStringCoordinates =
             from lparen in Parse.Char('(').Token()
             from coords in Coordinate.DelimitedBy(Parse.Char(',').Token())
             from rparen in Parse.Char(')').Token()
             select coords;
 
-        public static Parser<Point> Point =
-            from id in Parse.String("POINT").Token()
+        public static readonly Parser<Point> Point =
+            from id in Parse.String(Wkt.Point.Ident).Token()
             from lparen in Parse.Char('(').Token()
             from coord in Coordinate
             from rparen in Parse.Char(')').Token()
             select new Point(coord);
 
-        public static Parser<Polygon> Polygon =>
-            from id in Parse.String("POLYGON").Token()
+        public static readonly Parser<Polygon> Polygon =
+            from id in Parse.String(Wkt.Polygon.Ident).Token()
             from lparen in Parse.Char('(').Token()
             from lineStrings in LineStringCoordinates.AtLeastOnce()
             from rparen in Parse.Char(')').Token()
             select new Polygon(lineStrings);
     }
 }
-#pragma warning restore SA1401 // Fields must be private

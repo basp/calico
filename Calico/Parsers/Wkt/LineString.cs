@@ -13,6 +13,8 @@ namespace Calico.Parsers.Wkt
             this.Coordinates = coordinates;
         }
 
+        public static string Ident => nameof(LineString).ToUpperInvariant();
+
         public IEnumerable<Coordinate> Coordinates { get; private set; }
     }
 }

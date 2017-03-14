@@ -13,6 +13,8 @@ namespace Calico.Parsers.Wkt
             this.Lines = lines;
         }
 
+        public static string Ident => nameof(Polygon).ToUpperInvariant();
+
         public IEnumerable<IEnumerable<Coordinate>> Lines { get; private set; }
     }
 }
