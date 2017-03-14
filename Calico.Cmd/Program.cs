@@ -59,6 +59,11 @@ namespace Calico.Cmd
             new GetClientsAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Gets the feature collection for the specified data set")]
+        public void GetDataSet(GetDataSetArgs args) =>
+            new GetDataSetAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Gets a list of data sets")]
         public void GetDataSets(GetDataSetsArgs args) =>
             new GetDataSetsAction(ConnectionFactory).Execute(args);
@@ -182,6 +187,7 @@ namespace Calico.Cmd
                 x.CreateMap<GetAttributesArgs, GetAttributesRequest>();
                 x.CreateMap<GetClassesArgs, GetClassesRequest>();
                 x.CreateMap<GetClientsArgs, GetClientsRequest>();
+                x.CreateMap<GetDataSetArgs, GetDataSetRequest>();
                 x.CreateMap<GetDataSetsArgs, GetDataSetsRequest>();
                 x.CreateMap<GetDataTypesArgs, GetDataTypesRequest>();
                 x.CreateMap<GetFeatureTypesArgs, GetFeatureTypesRequest>();

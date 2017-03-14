@@ -23,6 +23,8 @@ namespace Calico
 
         IEnumerable<AttributeRecord> GetAttributes(int featureTypeId);
 
+        IEnumerable<AttributeValueRecord> GetAttributeValues(int dataSetId);
+
         ClientRecord GetClient(int id);
 
         IEnumerable<ClientRecord> GetClients(int top);
@@ -32,6 +34,8 @@ namespace Calico
         IEnumerable<DataSetRecord> GetDataSets(int plotId, int top);
 
         IEnumerable<DataTypeRecord> GetDataTypes();
+
+        IEnumerable<FeatureRecord> GetFeatures(int dataSetId);
 
         FeatureTypeRecord GetFeatureType(int id);
 

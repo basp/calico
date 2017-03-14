@@ -10,7 +10,6 @@ namespace Calico
     using System.Data.SqlClient;
     using System.Data.SqlTypes;
     using System.Linq;
-    using Dapper;
     using Microsoft.SqlServer.Types;
 
     public class SqlRepository : IRepository
@@ -123,6 +122,14 @@ namespace Calico
                 @param);
         }
 
+        public IEnumerable<AttributeValueRecord> GetAttributeValues(int dataSetId)
+        {
+            var @param = new { DataSetId = dataSetId };
+            return this.session.Query<AttributeValueRecord>(
+                nameof(this.GetAttributeValues),
+                @param);
+        }
+
         public ClientRecord GetClient(int id)
         {
             var @param = new { Id = id };
@@ -159,6 +166,14 @@ namespace Calico
         {
             return this.session.Query<DataTypeRecord>(
                 nameof(this.GetDataTypes));
+        }
+
+        public IEnumerable<FeatureRecord> GetFeatures(int dataSetId)
+        {
+            var @param = new { DataSetId = dataSetId };
+            return this.session.Query<FeatureRecord>(
+                nameof(this.GetFeatures),
+                @param);
         }
 
         public FeatureTypeRecord GetFeatureType(int id)

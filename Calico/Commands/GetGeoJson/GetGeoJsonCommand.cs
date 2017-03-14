@@ -18,7 +18,6 @@ namespace Calico
         {
             try
             {
-                // TODO: Low level shapefile wrangling to get GeoJSON.
                 return None<Res, Exception>(new NotImplementedException());
             }
             catch (Exception ex)

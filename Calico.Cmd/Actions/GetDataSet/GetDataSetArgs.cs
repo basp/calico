@@ -4,7 +4,12 @@
 
 namespace Calico.Cmd
 {
+    using PowerArgs;
+
     public class GetDataSetArgs
     {
+        [ArgRequired]
+        [ArgPosition(1)]
+        public int DataSetId { get; set; }
     }
 }
