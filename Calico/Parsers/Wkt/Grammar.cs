@@ -18,16 +18,16 @@ namespace Calico.Parsers.Wkt
             from lat in Double.Token()
             select new Coordinate(lon, lat);
 
-        public static readonly Parser<LineString> LineString =
-            from id in Parse.String(Wkt.LineString.Ident).Token()
-            from coords in LineStringCoordinates
-            select new LineString(coords);
-
-        public static readonly Parser<IEnumerable<Coordinate>> LineStringCoordinates =
+        public static readonly Parser<IEnumerable<Coordinate>> Coordinates =
             from lparen in Parse.Char('(').Token()
             from coords in Coordinate.DelimitedBy(Parse.Char(',').Token())
             from rparen in Parse.Char(')').Token()
             select coords;
+
+        public static readonly Parser<LineString> LineString =
+            from id in Parse.String(Wkt.LineString.Ident).Token()
+            from coords in Coordinates
+            select new LineString(coords);
 
         public static readonly Parser<Point> Point =
             from id in Parse.String(Wkt.Point.Ident).Token()
@@ -39,7 +39,7 @@ namespace Calico.Parsers.Wkt
         public static readonly Parser<Polygon> Polygon =
             from id in Parse.String(Wkt.Polygon.Ident).Token()
             from lparen in Parse.Char('(').Token()
-            from lineStrings in LineStringCoordinates.AtLeastOnce()
+            from lineStrings in Coordinates.AtLeastOnce()
             from rparen in Parse.Char(')').Token()
             select new Polygon(lineStrings);
     }
