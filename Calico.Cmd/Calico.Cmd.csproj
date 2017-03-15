@@ -140,6 +140,8 @@
     <Compile Include="Actions\NewPlot\NewPlotArgs.cs" />
     <Compile Include="Actions\NewStyle\NewStyleAction.cs" />
     <Compile Include="Actions\NewStyle\NewStyleArgs.cs" />
+    <Compile Include="Actions\Sandbox\SandboxAction.cs" />
+    <Compile Include="Actions\Sandbox\SandboxArgs.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileAction.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileArgs.cs" />
     <Compile Include="IAction.cs" />

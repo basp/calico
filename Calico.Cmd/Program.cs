@@ -164,6 +164,11 @@ namespace Calico.Cmd
             new NewStyleAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("A method to execute experimental commands")]
+        public void Sandbox(SandboxArgs args) =>
+            new SandboxAction(ConnectionFactory).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Scans a shapefile for information")]
         public void ScanShapefile(ScanShapefileArgs args) =>
             new ScanShapefileAction(ConnectionFactory).Execute(args);

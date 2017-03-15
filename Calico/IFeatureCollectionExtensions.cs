@@ -6,28 +6,42 @@ namespace Calico
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using Calico.Parsers.Wkt;
+    using Newtonsoft.Json;
+    using Serilog;
     using Sprache;
 
     public static class IFeatureCollectionExtensions
     {
         public static string ToGeoJson(this IFeatureCollection self)
         {
-            var collection =
-                self.Features.Select(x => CreateFeature(self, x));
+            var features = self.Features
+                .Select(x => CreateFeature(self, x));
 
-            // TODO: Convert to JSON
-            throw new NotImplementedException();
+            var collection = new
+            {
+                type = "FeatureCollection",
+                features = features,
+            };
+
+            return JsonConvert.SerializeObject(collection);
         }
 
         private static Feature CreateFeature(
             IFeatureCollection features,
             FeatureRecord rec)
         {
-            var g = CreateGeometry(rec);
-            var props = new Dictionary<string, object>();
-            return new Feature(g, props);
+            var row = features.DataTable.Rows[rec.Index];
+            var cols = features.DataTable.Columns;
+
+            var geom = CreateGeometry(rec);
+            var props = row.Table.Columns
+                .Cast<DataColumn>()
+                .ToDictionary(x => x.ColumnName, x => row[x]);
+
+            return new Feature(geom, props);
         }
 
         private static Geometry CreateGeometry(
@@ -35,10 +49,10 @@ namespace Calico
         {
             var poly = Grammar.Polygon.Parse(rec.Wkt);
             var coords = poly.Lines
-                .SelectMany(x => x.SelectMany(y => new[] { y.Lon, y.Lat }))
-                .ToArray();
+                .SelectMany(x => x.Select(y => new Coordinate(y.Lon, y.Lat)))
+                .Select(x => new[] { x.Lon, x.Lat });
 
-            return new Geometry(Polygon.Ident, coords);
+            return new Geometry(Polygon.Ident.Capitalize(), coords);
         }
 
         private class Feature
@@ -52,24 +66,29 @@ namespace Calico
                 this.Properties = properties;
             }
 
+            [JsonProperty("type")]
             public string Type { get; private set; }
 
+            [JsonProperty("geometry")]
             public Geometry Geometry { get; private set; }
 
+            [JsonProperty("properties")]
             public IDictionary<string, object> Properties { get; private set; }
         }
 
         private class Geometry
         {
-            public Geometry(string type, double[] coordinates)
+            public Geometry(string type, IEnumerable<double[]> coordinates)
             {
                 this.Type = type;
                 this.Coordinates = coordinates;
             }
 
+            [JsonProperty("type")]
             public string Type { get; private set; }
 
-            public double[] Coordinates { get; private set; }
+            [JsonProperty("coordinates")]
+            public IEnumerable<double[]> Coordinates { get; private set; }
         }
     }
 }

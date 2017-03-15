@@ -38,6 +38,8 @@ namespace Calico.Web
             services.AddSingleton<IControllerActivator>(
                 new SimpleInjectorControllerActivator(this.container));
 
+            services.UseSimpleInjectorAspNetRequestScoping(this.container);
+
             services.AddMvc();
         }
 
@@ -46,7 +48,6 @@ namespace Calico.Web
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseSimpleInjectorAspNetRequestScoping(this.container);
             app.UseMvc();
 
             this.container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
