@@ -12,6 +12,7 @@ namespace Calico
 
     using static Optional.Option;
 
+    // TODO: This looks a `ICommand` why is it not a command?
     public class ShapefileFeatureCollectionProvider
     {
         private readonly string pathToShapefile;

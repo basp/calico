@@ -88,6 +88,9 @@ namespace Calico
             [JsonProperty("coordinates")]
             public object Coordinates => this.coordinates;
 
+            // NOTE: 
+            // This is bascially a parser so the switch is
+            // justified (somewhat... not really)
             public static Geometry Create(IGeometry geometry)
             {
                 object coords;
