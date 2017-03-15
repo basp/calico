@@ -9,4 +9,5 @@ SELECT TOP(@Top)
 	[Geometry].ToString() AS Wkt,
 	[SRID]
 FROM [dbo].[Plots]
+WHERE [ClientId] = @ClientId
 ORDER BY [Id]
