@@ -100,14 +100,16 @@
     <Compile Include="ISession.cs" />
     <Compile Include="FeatureCollection.cs" />
     <Compile Include="Parsers\Wkt\Coordinate.cs" />
+    <Compile Include="Parsers\Wkt\GeometryType.cs" />
+    <Compile Include="Parsers\Wkt\IGeometry.cs" />
     <Compile Include="Parsers\Wkt\LineString.cs" />
+    <Compile Include="Parsers\Wkt\MultiPoint.cs" />
     <Compile Include="Parsers\Wkt\MultiPolygon.cs" />
     <Compile Include="Parsers\Wkt\Point.cs" />
     <Compile Include="Parsers\Wkt\Polygon.cs" />
     <Compile Include="Parsers\Wkt\Grammar.cs" />
     <Compile Include="ShapefileFeatureCollectionProvider.cs" />
     <Compile Include="SqlSession.cs" />
-    <Compile Include="StringExtensions.cs" />
     <Compile Include="StyleRecord.cs" />
     <Compile Include="StyleTypeRecord.cs" />
     <Compile Include="Visualization\Chauvenet.cs" />

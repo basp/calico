@@ -7,7 +7,6 @@ namespace Calico.Cmd
     using System;
     using System.Data.SqlClient;
     using AutoMapper;
-    using Newtonsoft.Json;
     using Serilog;
 
     public class GetDataSetAction : IAction<GetDataSetArgs>
@@ -32,7 +31,7 @@ namespace Calico.Cmd
                 res.MatchSome(x =>
                 {
                     session.Commit();
-                    var json = JsonConvert.SerializeObject(x);
+                    var json = x.GetFeatureCollection().ToGeoJson();
                     Console.WriteLine(json);
                 });
 

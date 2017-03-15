@@ -4,7 +4,7 @@
 
 namespace Calico.Parsers.Wkt
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using Sprache;
 
@@ -19,41 +19,80 @@ namespace Calico.Parsers.Wkt
             from lat in Double.Token()
             select new Coordinate(lon, lat);
 
-        public static readonly Parser<IEnumerable<Coordinate>> Coordinates =
-            from lparen in Parse.Char(LPAREN).Token()
-            from coords in Coordinate.DelimitedBy(Parse.Char(COMMA).Token())
-            from rparen in Parse.Char(RPAREN).Token()
-            select coords;
-
-        public static readonly Parser<LineString> LineString =
-            from id in Parse.String(Wkt.LineString.Ident).Token()
-            from coords in Coordinates.AtLeastOnce()
-            select new LineString(coords.SelectMany(x => x));
-
-        public static readonly Parser<Point> Point =
-            from id in Parse.String(Wkt.Point.Ident).Token()
-            from lparen in Parse.Char(LPAREN).Token()
-            from coord in Coordinate
-            from rparen in Parse.Char(RPAREN).Token()
-            select new Point(coord);
-
-        public static readonly Parser<Polygon> Polygon =
-            from id in Parse.String(Wkt.Polygon.Ident).Token()
-            from lparen in Parse.Char(LPAREN).Token()
-            from lineStrings in Coordinates.AtLeastOnce()
-            from rparen in Parse.Char(RPAREN).Token()
-            select new Polygon(lineStrings);
-
-        public static readonly Parser<MultiPolygon> MultiPolygon =
-            from id in Parse.String(Wkt.MultiPolygon.Ident).Token()
-            from lparen in Parse.Char(LPAREN).Token()
-            from stuff in Coordinates.AtLeastOnce()
-            from rparen in Parse.Char(RPAREN).Token()
-            let polygons = new List<Polygon>()
-            select new MultiPolygon(polygons);
-
         private const char LPAREN = '(';
         private const char RPAREN = ')';
         private const char COMMA = ',';
+
+        private static readonly Parser<char> Comma = Parse.Char(COMMA).Token();
+
+        private static readonly Parser<char> Lparen = Parse.Char(LPAREN).Token();
+
+        private static readonly Parser<char> Rparen = Parse.Char(RPAREN).Token();
+
+        public static Parser<Point> Point() => Point(Lparen, Rparen);
+
+        public static Parser<Point> Point(Parser<string> ident) =>
+            Point(ident, Lparen, Rparen);
+
+        public static Parser<Point> Point(
+            Parser<char> lparen,
+            Parser<char> rparen) =>
+            Point(Parse.String(Wkt.Point.Ident).Text(), lparen, rparen);
+
+        public static Parser<Point> Point(
+            Parser<string> ident,
+            Parser<char> lparen,
+            Parser<char> rparen) =>
+            from id in ident.Token()
+            from lp in lparen
+            from coord in Coordinate
+            from rp in rparen
+            select new Point(coord);
+
+        public static Parser<MultiPoint> MultiPoint() =>
+            MultiPoint(Parse.String(Wkt.MultiPoint.Ident).Text());
+
+        public static Parser<MultiPoint> MultiPoint(Parser<string> ident) =>
+            from id in ident.Token()
+            from lp in Lparen
+            from points in Point(Parse.Return(Wkt.Point.Ident)).DelimitedBy(Comma)
+            from rp in Rparen
+            select new MultiPoint(points);
+
+        public static Parser<LineString> LineString() =>
+            LineString(Parse.String(Wkt.LineString.Ident).Text());
+
+        public static Parser<LineString> LineString(Parser<string> ident) =>
+            from id in ident.Token()
+            from lparen in Lparen
+            from coords in Coordinate.DelimitedBy(Comma)
+            from rparen in Rparen
+            select new LineString(coords);
+
+        public static Parser<Polygon> Polygon() =>
+            Polygon(Parse.String(Wkt.Polygon.Ident).Text());
+
+        public static Parser<Polygon> Polygon(Parser<string> ident) =>
+            from id in ident.Token()
+            from lparen in Lparen
+            from lineStrings in LineString(Parse.Return(Wkt.LineString.Ident)).DelimitedBy(Comma)
+            from rparen in Rparen
+            select new Polygon(lineStrings);
+
+        public static Parser<MultiPolygon> MultiPolygon() =>
+            MultiPolygon(Parse.String(Wkt.MultiPolygon.Ident).Text());
+
+        public static Parser<MultiPolygon> MultiPolygon(Parser<string> ident) =>
+            from id in ident.Token()
+            from lparen in Lparen
+            from polygons in Polygon(Parse.Return(Wkt.Polygon.Ident)).DelimitedBy(Comma)
+            from rparen in Rparen
+            select new MultiPolygon(polygons);
+
+        public static Parser<IGeometry> Geometry() => Point()
+            .Or<IGeometry>(MultiPoint()) // Type hint is only needed once
+            .Or(LineString())
+            .Or(Polygon())
+            .Or(MultiPolygon());
     }
 }

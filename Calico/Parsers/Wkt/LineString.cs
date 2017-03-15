@@ -6,15 +6,21 @@ namespace Calico.Parsers.Wkt
 {
     using System.Collections.Generic;
 
-    public class LineString
+    public class LineString : IGeometry
     {
+        private readonly IEnumerable<Coordinate> coordinates;
+
         public LineString(IEnumerable<Coordinate> coordinates)
         {
-            this.Coordinates = coordinates;
+            this.coordinates = coordinates;
         }
 
         public static string Ident => nameof(LineString).ToUpperInvariant();
 
-        public IEnumerable<Coordinate> Coordinates { get; private set; }
+        public IEnumerable<Coordinate> Coordinates => this.coordinates;
+
+        public GeometryType Type => GeometryType.LineString;
+
+        public IEnumerable<IGeometry> Geometries => new IGeometry[0];
     }
 }

@@ -12,9 +12,9 @@ namespace Calico.Parsers.Wkt
             this.Lat = lat;
         }
 
-        public double Lon { get; private set; }
+        public double Lon { get; }
 
-        public double Lat { get; private set; }
+        public double Lat { get; }
 
         public override string ToString()
         {

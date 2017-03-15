@@ -6,15 +6,21 @@ namespace Calico.Parsers.Wkt
 {
     using System.Collections.Generic;
 
-    public class Polygon
+    public class Polygon : IGeometry
     {
-        public Polygon(IEnumerable<IEnumerable<Coordinate>> lines)
+        private readonly IEnumerable<LineString> lineStrings;
+
+        public Polygon(IEnumerable<LineString> lineStrings)
         {
-            this.Lines = lines;
+            this.lineStrings = lineStrings;
         }
 
         public static string Ident => nameof(Polygon).ToUpperInvariant();
 
-        public IEnumerable<IEnumerable<Coordinate>> Lines { get; private set; }
+        public GeometryType Type => GeometryType.Polygon;
+
+        public IEnumerable<Coordinate> Coordinates => new Coordinate[0];
+
+        public IEnumerable<IGeometry> Geometries => this.lineStrings;
     }
 }

@@ -4,20 +4,30 @@
 
 namespace Calico.Parsers.Wkt
 {
-    public class Point
+    using System.Collections.Generic;
+
+    public class Point : IGeometry
     {
+        private readonly Coordinate coordinate;
+
         public Point(Coordinate coordinate)
         {
-            this.Coordinate = coordinate;
+            this.coordinate = coordinate;
         }
 
         public static string Ident => nameof(Point).ToUpperInvariant();
 
-        public Coordinate Coordinate { get; private set; }
+        public GeometryType Type => GeometryType.Point;
+
+        public IEnumerable<Coordinate> Coordinates =>
+            new[] { this.coordinate };
+
+        public IEnumerable<IGeometry> Geometries =>
+            new IGeometry[0];
 
         public override string ToString()
         {
-            return $"{Ident} ({this.Coordinate.Lon} {this.Coordinate.Lat})";
+            return $"{Ident} ({this.coordinate.Lon} {this.coordinate.Lat})";
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Calico
     using System.Linq;
     using Calico.Parsers.Wkt;
     using Newtonsoft.Json;
-    using Serilog;
     using Sprache;
 
     public static class IFeatureCollectionExtensions
@@ -47,12 +46,8 @@ namespace Calico
         private static Geometry CreateGeometry(
             FeatureRecord rec)
         {
-            var poly = Grammar.Polygon.Parse(rec.Wkt);
-            var coords = poly.Lines
-                .SelectMany(x => x.Select(y => new Coordinate(y.Lon, y.Lat)))
-                .Select(x => new[] { x.Lon, x.Lat });
-
-            return new Geometry(Polygon.Ident.Capitalize(), coords);
+            var geometry = Grammar.Geometry().Parse(rec.Wkt);
+            return Geometry.Create(geometry);
         }
 
         private class Feature
@@ -67,28 +62,84 @@ namespace Calico
             }
 
             [JsonProperty("type")]
-            public string Type { get; private set; }
+            public string Type { get; }
 
             [JsonProperty("geometry")]
-            public Geometry Geometry { get; private set; }
+            public Geometry Geometry { get; }
 
             [JsonProperty("properties")]
-            public IDictionary<string, object> Properties { get; private set; }
+            public IDictionary<string, object> Properties { get; }
         }
 
         private class Geometry
         {
-            public Geometry(string type, IEnumerable<double[]> coordinates)
+            private readonly GeometryType type;
+            private readonly object coordinates;
+
+            private Geometry(GeometryType type, object coordinates)
             {
-                this.Type = type;
-                this.Coordinates = coordinates;
+                this.type = type;
+                this.coordinates = coordinates;
             }
 
             [JsonProperty("type")]
-            public string Type { get; private set; }
+            public string Type => this.type.ToString();
 
             [JsonProperty("coordinates")]
-            public IEnumerable<double[]> Coordinates { get; private set; }
+            public object Coordinates => this.coordinates;
+
+            public static Geometry Create(IGeometry geometry)
+            {
+                object coords;
+                switch (geometry.Type)
+                {
+                    case GeometryType.Point:
+                        coords = GetCoordinates((Point)geometry);
+                        return new Geometry(GeometryType.Point, coords);
+                    case GeometryType.Polygon:
+                        coords = GetCoordinates((Polygon)geometry);
+                        return new Geometry(GeometryType.Polygon, coords);
+                    case GeometryType.MultiPolygon:
+                        coords = GetCoordinates((MultiPolygon)geometry);
+                        return new Geometry(GeometryType.Polygon, coords);
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            private static IEnumerable<double> GetCoordinates(
+                Coordinate coord)
+            {
+                return new[] { coord.Lon, coord.Lat };
+            }
+
+            private static IEnumerable<double> GetCoordinates(
+                Point point)
+            {
+                var c = point.Coordinates.First();
+                return GetCoordinates(c);
+            }
+
+            private static IEnumerable<IEnumerable<double>> GetCoordinates(
+                LineString lineString)
+            {
+                return lineString.Coordinates
+                    .Select(GetCoordinates);
+            }
+
+            private static IEnumerable<IEnumerable<IEnumerable<double>>> GetCoordinates(
+                Polygon polygon)
+            {
+                return polygon.Geometries
+                    .Select(x => GetCoordinates((LineString)x));
+            }
+
+            private static IEnumerable<IEnumerable<IEnumerable<IEnumerable<double>>>> GetCoordinates(
+                MultiPolygon multiPolygon)
+            {
+                return multiPolygon.Geometries
+                    .Select(x => GetCoordinates((Polygon)x));
+            }
         }
     }
 }
