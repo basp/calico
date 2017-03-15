@@ -9,6 +9,7 @@ namespace Calico.Cmd
     public class GetAttributesArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.FeatureTypeId)]
         public int FeatureTypeId { get; set; }
     }
