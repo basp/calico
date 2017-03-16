@@ -103,6 +103,7 @@
     <Compile Include="Parsers\Wkt\GeometryType.cs" />
     <Compile Include="Parsers\Wkt\IGeometry.cs" />
     <Compile Include="Parsers\Wkt\LineString.cs" />
+    <Compile Include="Parsers\Wkt\MultiLineString.cs" />
     <Compile Include="Parsers\Wkt\MultiPoint.cs" />
     <Compile Include="Parsers\Wkt\MultiPolygon.cs" />
     <Compile Include="Parsers\Wkt\Point.cs" />
