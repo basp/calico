@@ -1,8 +1,8 @@
 ﻿namespace Calico.Data
 {
-    using Microsoft.SqlServer.Types;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
     public class Feature
     {
@@ -14,7 +14,7 @@
         [Column(Order = 2)]
         public int Index { get; set; }
 
-        // public SqlGeometry Geometry { get; set; }
+        public DbGeometry Geometry { get; set; }
 
         public int SRID { get; set; }
     }

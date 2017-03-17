@@ -57,6 +57,12 @@
     <Reference Include="DotSpatial.Topology, Version=1.9.0.0, Culture=neutral, PublicKeyToken=a66b5e9434ca3671, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Topology.1.9\lib\net40-Client\DotSpatial.Topology.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="GraphQL, Version=0.15.1.678, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GraphQL.0.15.1.678\lib\net45\GraphQL.dll</HintPath>
     </Reference>
@@ -83,6 +89,7 @@
       <HintPath>..\packages\SimpleInjector.4.0.0-beta2\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -164,6 +171,8 @@
     <Compile Include="Actions\GraphQL\GraphQLArgs.cs" />
     <Compile Include="Actions\GraphQL\CalicoQuery.cs" />
     <Compile Include="Actions\GraphQL\CalicoSchema.cs" />
+    <Compile Include="Actions\Sandbox\SandboxAction.cs" />
+    <Compile Include="Actions\Sandbox\SandboxArgs.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileAction.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileArgs.cs" />
     <Compile Include="IAction.cs" />
@@ -177,6 +186,10 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Calico.Data\Calico.Data.csproj">
+      <Project>{779e1a90-6300-4882-9755-db2e833488d1}</Project>
+      <Name>Calico.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Calico\Calico.csproj">
       <Project>{12a78c12-42af-4971-a339-30ee76f2cd06}</Project>
       <Name>Calico</Name>

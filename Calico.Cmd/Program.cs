@@ -169,6 +169,11 @@ namespace Calico.Cmd
             new GraphQLAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
+        [ArgDescription("Sandboxing")]
+        public void Sandbox(SandboxArgs args) =>
+            new SandboxAction(new Data.CalicoContext(connectionString)).Execute(args);
+
+        [ArgActionMethod]
         [ArgDescription("Scans a shapefile for information")]
         public void ScanShapefile(ScanShapefileArgs args) =>
             new ScanShapefileAction(ConnectionFactory).Execute(args);
