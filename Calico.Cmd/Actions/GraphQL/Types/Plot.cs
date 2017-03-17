@@ -2,9 +2,9 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Cmd.Actions.GQ.Types
+namespace Calico.Cmd.Actions.GraphQL.Types
 {
-    using GraphQL.Types;
+    using global::GraphQL.Types;
 
     public class Plot : ObjectGraphType<PlotRecord>
     {

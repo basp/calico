@@ -2,10 +2,10 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Cmd.Actions.GQ
+namespace Calico.Cmd.Actions.GraphQL
 {
     using System;
-    using GraphQL.Types;
+    using global::GraphQL.Types;
 
     public class CalicoSchema : Schema
     {
