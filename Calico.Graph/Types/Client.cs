@@ -2,14 +2,12 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Cmd.Actions.GraphQL.Types
+namespace Calico.Graph.Types
 {
-    using global::GraphQL.Types;
+    using GraphQL.Types;
 
-    internal class Client : ObjectGraphType<ClientRecord>
+    public class Client : ObjectGraphType<ClientRecord>
     {
-        private const int Top = 100;
-
         public Client(IRepository repository)
         {
             this.Field(x => x.Id).Description("The id of the client.");
@@ -17,11 +15,15 @@ namespace Calico.Cmd.Actions.GraphQL.Types
 
             this.Field<ListGraphType<Plot>>(
                 name: "plots",
-                resolve: c => repository.GetPlots(c.Source.Id, top: Top));
+                resolve: c => repository.GetPlots(
+                    c.Source.Id, 
+                    first: c.GetArgument("first", defaultValue: 100)));
 
             this.Field<ListGraphType<FeatureType>>(
                 name: "featureTypes",
-                resolve: c => repository.GetFeatureTypes(c.Source.Id, top: Top));
+                resolve: c => repository.GetFeatureTypes(
+                    c.Source.Id, 
+                    first: c.GetArgument("first", defaultValue: 100)));
         }
     }
 }

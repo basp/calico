@@ -2,9 +2,9 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Cmd.Actions.GraphQL.Types
+namespace Calico.Graph.Types
 {
-    using global::GraphQL.Types;
+    using GraphQL.Types;
 
     public class AttributeValue : ObjectGraphType<AttributeValueRecord>
     {
@@ -13,9 +13,9 @@ namespace Calico.Cmd.Actions.GraphQL.Types
             this.Field(x => x.DataSetId);
             this.Field(x => x.FeatureIndex);
             this.Field(x => x.AttributeIndex);
-            this.Field(x => x.DoubleValue);
-            this.Field(x => x.LongValue);
-            this.Field(x => x.StringValue);
+            this.Field(x => x.DoubleValue, nullable: true);
+            this.Field(x => x.LongValue, nullable: true);
+            this.Field(x => x.StringValue, nullable: true);
 
             this.Field<DataSet>(
                 name: "dataSet",

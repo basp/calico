@@ -1,37 +1,25 @@
 ﻿namespace Calico.Api.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
     using AutoMapper;
-    using Calico.Data;
-    using Calico.Api.Models;
+    using Models;
 
     public class FeaturesController : ApiController
     {
-        private readonly CalicoContext context;
+        private readonly IRepository repository;
 
-        public FeaturesController(CalicoContext context)
+        public FeaturesController(IRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
-        public IEnumerable<FeatureModel> Get([FromUri] int dataSetId)
+        public IEnumerable<FeatureModel> Get(
+            [FromUri] int dataSetId,
+            [FromUri] int first = 100)
         {
-            var features = this.context.Features
-                .Where(x => x.DataSetId == dataSetId)
-                .OrderBy(x => x.Index)
-                .ToList();
-
-            return features.Select(x => Mapper.Map<FeatureModel>(x));
-        }
-
-        public FeatureModel Get([FromUri] int dataSetId, [FromUri] int index)
-        {
-            var feature = this.context.Features
-                .Single(x => x.DataSetId == dataSetId && x.Index == index);
-
-            return Mapper.Map<FeatureModel>(feature);
+            var recs = this.repository.GetFeatures(dataSetId);
+            return Mapper.Map<IEnumerable<FeatureModel>>(recs);
         }
     }
 }

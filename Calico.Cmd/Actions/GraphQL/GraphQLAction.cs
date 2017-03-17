@@ -6,7 +6,7 @@ namespace Calico.Cmd
 {
     using System;
     using System.Data.SqlClient;
-    using Actions.GraphQL;
+    using Graph;
     using GraphQL;
     using GraphQL.Http;
     using GraphQL.Types;
@@ -35,12 +35,12 @@ namespace Calico.Cmd
 
                 this.container.Register<IRepository>(() => repo);
                 this.container.Register<CalicoQuery>();
-                this.container.Register<Actions.GraphQL.Types.Attribute>();
-                this.container.Register<Actions.GraphQL.Types.Client>();
-                this.container.Register<Actions.GraphQL.Types.DataSet>();
-                this.container.Register<Actions.GraphQL.Types.DataType>();
-                this.container.Register<Actions.GraphQL.Types.FeatureType>();
-                this.container.Register<Actions.GraphQL.Types.Plot>();
+                this.container.Register<Graph.Types.Attribute>();
+                this.container.Register<Graph.Types.Client>();
+                this.container.Register<Graph.Types.DataSet>();
+                this.container.Register<Graph.Types.DataType>();
+                this.container.Register<Graph.Types.FeatureType>();
+                this.container.Register<Graph.Types.Plot>();
 
                 var schema = new CalicoSchema(
                     x => (GraphType)this.container.GetInstance(x));

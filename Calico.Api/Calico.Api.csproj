@@ -43,14 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.0.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="GraphQL, Version=0.15.1.678, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphQL.0.15.1.678\lib\net45\GraphQL.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="GraphQL-Parser, Version=2.0.0.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphQL-Parser.2.0.0\lib\net45\GraphQL-Parser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -108,18 +108,28 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\FeatureTypeModel.cs" />
+    <Compile Include="Controllers\FeatureTypesController.cs" />
     <Content Include="Global.asax" />
+    <Compile Include="Controllers\GraphQLController.cs" />
+    <Compile Include="Models\AttributeModel.cs" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\DataSetsController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
+    <Compile Include="Controllers\PlotsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ClientModel.cs" />
+    <Compile Include="Models\DataSetModel.cs" />
+    <Compile Include="Models\DataTypeModel.cs" />
     <Compile Include="Models\FeatureModel.cs" />
+    <Compile Include="Models\PlotModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +139,14 @@
     <ProjectReference Include="..\Calico.Data\Calico.Data.csproj">
       <Project>{779e1a90-6300-4882-9755-db2e833488d1}</Project>
       <Name>Calico.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calico.Graph\Calico.Graph.csproj">
+      <Project>{2355c9b9-0d82-47bd-9a09-c45d1d7fc284}</Project>
+      <Name>Calico.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calico\Calico.csproj">
+      <Project>{12a78c12-42af-4971-a339-30ee76f2cd06}</Project>
+      <Name>Calico</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -138,9 +138,9 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<ClientRecord> GetClients(int top)
+        public virtual IEnumerable<ClientRecord> GetClients(int first)
         {
-            var @param = new { Top = top };
+            var @param = new { Top = first };
             return this.session.Query<ClientRecord>(
                 nameof(this.GetClients),
                 @param);
@@ -154,9 +154,9 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<DataSetRecord> GetDataSets(int plotId, int top)
+        public virtual IEnumerable<DataSetRecord> GetDataSets(int plotId, int first)
         {
-            var @param = new { PlotId = plotId, Top = top };
+            var @param = new { PlotId = plotId, Top = first };
             return this.session.Query<DataSetRecord>(
                 nameof(this.GetDataSets),
                 @param);
@@ -192,9 +192,9 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top)
+        public virtual IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int first)
         {
-            var @param = new { ClientId = clientId, Top = top };
+            var @param = new { ClientId = clientId, Top = first };
             return this.session.Query<FeatureTypeRecord>(
                 nameof(this.GetFeatureTypes),
                 @param);
@@ -208,9 +208,9 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<PlotRecord> GetPlots(int clientId, int top)
+        public virtual IEnumerable<PlotRecord> GetPlots(int clientId, int first)
         {
-            var @param = new { ClientId = clientId, Top = top };
+            var @param = new { ClientId = clientId, Top = first };
             return this.session.Query<PlotRecord>(
                 nameof(this.GetPlots),
                 @param);

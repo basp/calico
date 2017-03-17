@@ -1,6 +1,7 @@
 ﻿namespace Calico.Data
 {
     using System;
+    using System.Collections.Generic;
 
     public class DataSet
     {
@@ -13,5 +14,11 @@
         public string Name { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public virtual FeatureType FeatureType { get; set; }
+
+        public virtual ICollection<Feature> Features { get; set; }
+
+        public virtual ICollection<AttributeValue> AttributeValues { get; set; }
     }
 }

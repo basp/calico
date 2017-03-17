@@ -1,8 +1,9 @@
 ﻿namespace Calico.Data
 {
     using System.Collections.Generic;
+    using System.Data.Entity.Spatial;
 
-    public class FeatureType
+    public class Plot
     {
         public int Id { get; set; }
 
@@ -10,6 +11,8 @@
 
         public string Name { get; set; }
 
-        public virtual ICollection<Attribute> Attributes { get; set; }
+        public DbGeometry Geometry { get; set; }
+
+        public virtual ICollection<DataSet> DataSets { get; set; }
     }
 }

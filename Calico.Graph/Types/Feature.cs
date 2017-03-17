@@ -2,9 +2,9 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Cmd.Actions.GraphQL.Types
+namespace Calico.Graph.Types
 {
-    using global::GraphQL.Types;
+    using GraphQL.Types;
 
     public class Feature : ObjectGraphType<FeatureRecord>
     {

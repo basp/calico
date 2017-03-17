@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.0.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c29dbf30e059ca9d, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Data.2.0.0-rc1\lib\net40-client\DotSpatial.Data.dll</HintPath>
@@ -133,12 +133,6 @@
     <Compile Include="Actions\GetStyles\GetStylesArgs.cs" />
     <Compile Include="Actions\GetStyleTypes\GetStyleTypesAction.cs" />
     <Compile Include="Actions\GetStyleTypes\GetStyleTypesArgs.cs" />
-    <Compile Include="Actions\GraphQL\Types\Attribute.cs" />
-    <Compile Include="Actions\GraphQL\Types\AttributeValue.cs" />
-    <Compile Include="Actions\GraphQL\Types\DataSet.cs" />
-    <Compile Include="Actions\GraphQL\Types\DataType.cs" />
-    <Compile Include="Actions\GraphQL\Types\Feature.cs" />
-    <Compile Include="Actions\GraphQL\Types\FeatureType.cs" />
     <Compile Include="Actions\ImportAttributes\ImportAttributesAction.cs" />
     <Compile Include="Actions\ImportAttributes\ImportAttributesArgs.cs" />
     <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesAction.cs" />
@@ -165,12 +159,8 @@
     <Compile Include="Actions\NewPlot\NewPlotArgs.cs" />
     <Compile Include="Actions\NewFeatureType\NewStyle\NewStyleAction.cs" />
     <Compile Include="Actions\NewFeatureType\NewStyle\NewStyleArgs.cs" />
-    <Compile Include="Actions\GraphQL\Types\Client.cs" />
-    <Compile Include="Actions\GraphQL\Types\Plot.cs" />
     <Compile Include="Actions\GraphQL\GraphQLAction.cs" />
     <Compile Include="Actions\GraphQL\GraphQLArgs.cs" />
-    <Compile Include="Actions\GraphQL\CalicoQuery.cs" />
-    <Compile Include="Actions\GraphQL\CalicoSchema.cs" />
     <Compile Include="Actions\Sandbox\SandboxAction.cs" />
     <Compile Include="Actions\Sandbox\SandboxArgs.cs" />
     <Compile Include="Actions\ScanShapefile\ScanShapefileAction.cs" />
@@ -189,6 +179,10 @@
     <ProjectReference Include="..\Calico.Data\Calico.Data.csproj">
       <Project>{779e1a90-6300-4882-9755-db2e833488d1}</Project>
       <Name>Calico.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calico.Graph\Calico.Graph.csproj">
+      <Project>{2355c9b9-0d82-47bd-9a09-c45d1d7fc284}</Project>
+      <Name>Calico.Graph</Name>
     </ProjectReference>
     <ProjectReference Include="..\Calico\Calico.csproj">
       <Project>{12a78c12-42af-4971-a339-30ee76f2cd06}</Project>

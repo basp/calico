@@ -1,5 +1,6 @@
 ﻿namespace Calico.Data
 {
+    using System;
     using System.Data.Entity;
 
     public class CalicoContext : DbContext
@@ -8,6 +9,10 @@
             : base(nameOrConnectionString)
         {
         }
+
+        public virtual DbSet<Attribute> Attributes { get; set; }
+
+        public virtual DbSet<AttributeValue> AttributeValues { get; set; }
 
         public virtual DbSet<Client> Clients { get; set; }
 
@@ -18,5 +23,7 @@
         public virtual DbSet<Feature> Features { get; set; }
 
         public virtual DbSet<FeatureType> FeatureTypes { get; set; }
+
+        public virtual DbSet<Plot> Plots { get; set; }
     }
 }

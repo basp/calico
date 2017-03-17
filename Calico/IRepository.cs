@@ -27,11 +27,11 @@ namespace Calico
 
         ClientRecord GetClient(int id);
 
-        IEnumerable<ClientRecord> GetClients(int top);
+        IEnumerable<ClientRecord> GetClients(int first);
 
         DataSetRecord GetDataSet(int id);
 
-        IEnumerable<DataSetRecord> GetDataSets(int plotId, int top);
+        IEnumerable<DataSetRecord> GetDataSets(int plotId, int first);
 
         DataTypeRecord GetDataType(int id);
 
@@ -41,11 +41,11 @@ namespace Calico
 
         FeatureTypeRecord GetFeatureType(int id);
 
-        IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top);
+        IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int first);
 
         PlotRecord GetPlot(int id);
 
-        IEnumerable<PlotRecord> GetPlots(int clientId, int top);
+        IEnumerable<PlotRecord> GetPlots(int clientId, int first);
 
         IEnumerable<PlotRecord> GetPlotsContainingGeometry(int clientId, string wkt, int srid);
 

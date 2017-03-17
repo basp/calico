@@ -2,11 +2,11 @@
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
-namespace Calico.Cmd.Actions.GraphQL.Types
+namespace Calico.Graph.Types
 {
-    using global::GraphQL.Types;
+    using GraphQL.Types;
 
-    internal class DataSet : ObjectGraphType<DataSetRecord>
+    public class DataSet : ObjectGraphType<DataSetRecord>
     {
         public DataSet(IRepository repository)
         {

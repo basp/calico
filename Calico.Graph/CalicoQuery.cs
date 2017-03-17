@@ -1,10 +1,6 @@
-﻿// <copyright file="CalicoQuery.cs" company="TMG">
-// Copyright (c) TMG. All rights reserved.
-// </copyright>
-
-namespace Calico.Cmd.Actions.GraphQL
+﻿namespace Calico.Graph
 {
-    using global::GraphQL.Types;
+    using GraphQL.Types;
     using Types;
 
     public class CalicoQuery : ObjectGraphType
@@ -59,7 +55,8 @@ namespace Calico.Cmd.Actions.GraphQL
 
             this.Field<ListGraphType<Client>>(
                 name: "clients",
-                resolve: c => repository.GetClients(top: 100));
+                resolve: c => repository.GetClients(
+                    first: c.GetArgument("first", defaultValue: 100)));
         }
     }
 }

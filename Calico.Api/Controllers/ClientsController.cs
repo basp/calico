@@ -1,31 +1,52 @@
 ﻿namespace Calico.Api.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
     using AutoMapper;
-    using Calico.Api.Models;
-    using Calico.Data;
+    using Models;
 
+    [RoutePrefix("api/clients")]
     public class ClientsController : ApiController
     {
-        private readonly CalicoContext context;
+        private readonly IRepository repository;
 
-        public ClientsController(CalicoContext context)
+        public ClientsController(IRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
-        public ClientModel Get(int id)
+        [HttpGet]
+        public ClientModel Get([FromUri] int id)
         {
-            var client = this.context.Clients.Single(x => x.Id == id);
-            return Mapper.Map<ClientModel>(client);
+            var rec = this.repository.GetClient(id);
+            return Mapper.Map<ClientModel>(rec);
         }
 
-        public IEnumerable<ClientModel> Get()
+        [HttpGet]
+        public IEnumerable<ClientModel> GetAll([FromUri] int first = 100)
         {
-            var clients = this.context.Clients.ToList();
-            return clients.Select(x => Mapper.Map<ClientModel>(x));
+            var recs = this.repository.GetClients(first);
+            return Mapper.Map<IEnumerable<ClientModel>>(recs);
+        }
+
+        [HttpGet]
+        [Route("{clientId}/plots")]
+        public IEnumerable<PlotModel> GetPlots(
+            [FromUri] int clientId,
+            [FromUri] int first = 100)
+        {
+            var recs = this.repository.GetPlots(clientId, first);
+            return Mapper.Map<IEnumerable<PlotModel>>(recs);
+        }
+
+        [HttpGet]
+        [Route("{clientId}/featuretypes")]
+        public IEnumerable<FeatureTypeModel> GetFeatureTypes(
+            [FromUri] int clientId,
+            [FromUri] int first = 100)
+        {
+            var recs = this.repository.GetFeatureTypes(clientId, first);
+            return Mapper.Map<IEnumerable<FeatureTypeModel>>(recs);
         }
     }
 }
