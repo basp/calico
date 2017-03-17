@@ -4,6 +4,7 @@
 
 namespace Calico.Graph.Types
 {
+    using System.Collections.Generic;
     using GraphQL.Types;
 
     public class FeatureType : ObjectGraphType<FeatureTypeRecord>
@@ -17,6 +18,19 @@ namespace Calico.Graph.Types
             this.Field<ListGraphType<Attribute>>(
                 name: "attributes",
                 resolve: c => repository.GetAttributes(c.Source.Id));
+
+            this.Field<ListGraphType<DataSet>>(
+                name: "dataSets",
+                resolve: c => this.ResolveDataSets(c, repository));
+        }
+
+        private IEnumerable<DataSetRecord> ResolveDataSets(
+            ResolveFieldContext<FeatureTypeRecord> context,
+            IRepository repository)
+        {
+            var plotId = context.GetArgument<int>("plotId");
+            // var dataSets = repository.GetDataSets(plotId, )
+            throw new KeyNotFoundException();
         }
     }
 }

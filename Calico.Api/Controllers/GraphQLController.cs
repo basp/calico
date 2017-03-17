@@ -11,6 +11,8 @@
 
     public class GraphQLController : ApiController
     {
+        private const string MediaType = "application/json";
+
         private readonly CalicoSchema schema;
 
         public GraphQLController(CalicoSchema schema)
@@ -18,7 +20,7 @@
             this.schema = schema;
         }
 
-        private void InitOpts(ExecutionOptions opts, string query)
+        private void InitOptions(ExecutionOptions opts, string query)
         {
             opts.Schema = this.schema;
             opts.Query = $"query{query}";
@@ -28,14 +30,14 @@
         public async Task<HttpResponseMessage> Get([FromUri] string query)
         {
             var result = await new DocumentExecuter()
-                .ExecuteAsync(x => InitOpts(x, query))
+                .ExecuteAsync(x => InitOptions(x, query))
                 .ConfigureAwait(false);
 
             var json = new DocumentWriter(indent: true).Write(result);
             var content = new StringContent(
                 json,
                 Encoding.UTF8,
-                "application/json");
+                MediaType);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {

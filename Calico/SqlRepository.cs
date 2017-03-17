@@ -138,7 +138,7 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<ClientRecord> GetClients(int first)
+        public virtual IEnumerable<ClientRecord> GetClients(int first, int after = 0)
         {
             var @param = new { Top = first };
             return this.session.Query<ClientRecord>(
@@ -152,6 +152,11 @@ namespace Calico
             return this.session.QuerySingle<DataSetRecord>(
                 nameof(this.GetDataSet),
                 @param);
+        }
+
+        public virtual IEnumerable<DataSetRecord> GetDataSets(int plotId, int featureTypeId, int first)
+        {
+            throw new NotFiniteNumberException();
         }
 
         public virtual IEnumerable<DataSetRecord> GetDataSets(int plotId, int first)

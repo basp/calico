@@ -27,11 +27,13 @@ namespace Calico
 
         ClientRecord GetClient(int id);
 
-        IEnumerable<ClientRecord> GetClients(int first);
+        IEnumerable<ClientRecord> GetClients(int first, int after);
 
         DataSetRecord GetDataSet(int id);
 
         IEnumerable<DataSetRecord> GetDataSets(int plotId, int first);
+
+        IEnumerable<DataSetRecord> GetDataSets(int plotId, int featureTypeId, int first);
 
         DataTypeRecord GetDataType(int id);
 

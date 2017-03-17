@@ -56,7 +56,7 @@
             this.Field<ListGraphType<Client>>(
                 name: "clients",
                 resolve: c => repository.GetClients(
-                    first: c.GetArgument("first", defaultValue: 100)));
+                    first: c.GetArgument("first", defaultValue: 100), after: 0));
         }
     }
 }

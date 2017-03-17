@@ -85,7 +85,7 @@
             };
         }
 
-        public IEnumerable<ClientRecord> GetClients(int top)
+        public IEnumerable<ClientRecord> GetClients(int top, int after = 0)
         {
             return this.context.Clients
                 .Take(top)
@@ -114,6 +114,22 @@
         {
             return this.context.DataSets
                 .Where(x => x.PlotId == plotId)
+                .Take(top)
+                .ToList()
+                .Select(x => new DataSetRecord
+                {
+                    Id = x.Id,
+                    PlotId = x.PlotId,
+                    Name = x.Name,
+                    FeatureTypeId = x.FeatureTypeId,
+                    DateCreated = x.DateCreated,
+                });
+        }
+
+        public IEnumerable<DataSetRecord> GetDataSets(int plotId, int featureTypeId, int top)
+        {
+            return this.context.DataSets
+                .Where(x => x.PlotId == plotId && x.FeatureTypeId == featureTypeId)
                 .Take(top)
                 .ToList()
                 .Select(x => new DataSetRecord

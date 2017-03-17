@@ -10,7 +10,6 @@ namespace Calico.Cmd
     using GraphQL;
     using GraphQL.Http;
     using GraphQL.Types;
-    using Serilog;
     using SimpleInjector;
 
     public class GraphQLAction : IAction<GraphQLArgs>
@@ -26,8 +25,6 @@ namespace Calico.Cmd
 
         public async void Execute(GraphQLArgs args)
         {
-            Log.Information(args.Query);
-
             using (var conn = this.connectionFactory())
             using (var session = SqlSession.Open(conn))
             {

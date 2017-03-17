@@ -4,7 +4,7 @@
     using System.Web;
     using System.Web.Http;
     using AutoMapper;
-    using Calico.Api.Models;
+    using Models;
     using SimpleInjector;
     using SimpleInjector.Lifestyles;
     using SimpleInjector.Integration.WebApi;
@@ -42,10 +42,6 @@
                 () => new CalicoSchema(
                     x => (GraphType)container.GetInstance(x)),
                 Lifestyle.Scoped);
-
-            //container.Register(
-            //    () => new CalicoContext(ConnectionString),
-            //    Lifestyle.Scoped);
 
             container.Register<ISession>(
                 () => SqlSession.Open(new SqlConnection(ConnectionString)),

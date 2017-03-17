@@ -25,7 +25,7 @@ namespace Calico
         {
             try
             {
-                var clients = this.repository.GetClients(req.Top);
+                var clients = this.repository.GetClients(first: req.Top, after: 0);
                 var res = new Res { Clients = clients };
                 return Some<Res, Exception>(res);
             }

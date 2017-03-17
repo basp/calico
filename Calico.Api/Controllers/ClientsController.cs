@@ -25,7 +25,7 @@
         [HttpGet]
         public IEnumerable<ClientModel> GetAll([FromUri] int first = 100)
         {
-            var recs = this.repository.GetClients(first);
+            var recs = this.repository.GetClients(first, after: 0);
             return Mapper.Map<IEnumerable<ClientModel>>(recs);
         }
 
