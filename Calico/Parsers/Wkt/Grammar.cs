@@ -4,7 +4,6 @@
 
 namespace Calico.Parsers.Wkt
 {
-    using System;
     using System.Linq;
     using Sprache;
 
@@ -49,13 +48,26 @@ namespace Calico.Parsers.Wkt
             from rp in rparen
             select new Point(coord);
 
-        public static Parser<MultiPoint> MultiPoint() =>
-            MultiPoint(Parse.String(Wkt.MultiPoint.Ident).Text());
+        public static Parser<MultiPoint> MultiPoint()
+        {
+            var @explicit = MultiPoint(
+                Parse.String(Wkt.MultiPoint.Ident).Text(),
+                Point(Parse.Return(Wkt.Point.Ident)));
 
-        public static Parser<MultiPoint> MultiPoint(Parser<string> ident) =>
+            var @implicit = MultiPoint(
+                Parse.String(Wkt.MultiPoint.Ident).Text(),
+                Point(
+                    Parse.Return(Wkt.Point.Ident).Text(),
+                    Parse.Return(LPAREN),
+                    Parse.Return(RPAREN)));
+
+            return @explicit.Or(@implicit);
+        }
+
+        public static Parser<MultiPoint> MultiPoint(Parser<string> ident, Parser<Point> point) =>
             from id in ident.Token()
             from lp in Lparen
-            from points in Point(Parse.Return(Wkt.Point.Ident)).DelimitedBy(Comma)
+            from points in point.DelimitedBy(Comma).Token()
             from rp in Rparen
             select new MultiPoint(points);
 
@@ -74,9 +86,9 @@ namespace Calico.Parsers.Wkt
 
         public static Parser<Polygon> Polygon(Parser<string> ident) =>
             from id in ident.Token()
-            from lparen in Lparen
+            from lp in Lparen
             from lineStrings in LineString(Parse.Return(Wkt.LineString.Ident)).DelimitedBy(Comma)
-            from rparen in Rparen
+            from rp in Rparen
             select new Polygon(lineStrings);
 
         public static Parser<MultiPolygon> MultiPolygon() =>
@@ -84,9 +96,9 @@ namespace Calico.Parsers.Wkt
 
         public static Parser<MultiPolygon> MultiPolygon(Parser<string> ident) =>
             from id in ident.Token()
-            from lparen in Lparen
+            from lp in Lparen
             from polygons in Polygon(Parse.Return(Wkt.Polygon.Ident)).DelimitedBy(Comma)
-            from rparen in Rparen
+            from rp in Rparen
             select new MultiPolygon(polygons);
 
         public static Parser<IGeometry> Geometry() => Point()

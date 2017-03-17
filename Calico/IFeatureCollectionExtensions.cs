@@ -14,18 +14,16 @@ namespace Calico
 
     public static class IFeatureCollectionExtensions
     {
-        public static string ToGeoJson(this IFeatureCollection self)
+        public static dynamic ToGeoJsonObject(this IFeatureCollection self)
         {
             var features = self.Features
                 .Select(x => CreateFeature(self, x));
 
-            var collection = new
+            return new
             {
                 type = "FeatureCollection",
                 features = features,
             };
-
-            return JsonConvert.SerializeObject(collection);
         }
 
         private static Feature CreateFeature(
@@ -88,9 +86,6 @@ namespace Calico
             [JsonProperty("coordinates")]
             public object Coordinates => this.coordinates;
 
-            // NOTE: 
-            // This is bascially a parser so the switch is
-            // justified (somewhat... not really)
             public static Geometry Create(IGeometry geometry)
             {
                 object coords;
@@ -99,6 +94,15 @@ namespace Calico
                     case GeometryType.Point:
                         coords = GetCoordinates((Point)geometry);
                         return new Geometry(GeometryType.Point, coords);
+                    case GeometryType.MultiPoint:
+                        coords = GetCoordinates((MultiPoint)geometry);
+                        return new Geometry(GeometryType.MultiPoint, coords);
+                    case GeometryType.LineString:
+                        coords = GetCoordinates((LineString)geometry);
+                        return new Geometry(GeometryType.LineString, coords);
+                    case GeometryType.MultiLineString:
+                        coords = GetCoordinates((MultiLineString)geometry);
+                        return new Geometry(GeometryType.MultiLineString, coords);
                     case GeometryType.Polygon:
                         coords = GetCoordinates((Polygon)geometry);
                         return new Geometry(GeometryType.Polygon, coords);
@@ -106,7 +110,7 @@ namespace Calico
                         coords = GetCoordinates((MultiPolygon)geometry);
                         return new Geometry(GeometryType.Polygon, coords);
                     default:
-                        throw new NotImplementedException();
+                        throw new NotSupportedException();
                 }
             }
 
@@ -124,10 +128,24 @@ namespace Calico
             }
 
             private static IEnumerable<IEnumerable<double>> GetCoordinates(
+                MultiPoint point)
+            {
+                return point.Geometries
+                    .Select(x => GetCoordinates((Point)x));
+            }
+
+            private static IEnumerable<IEnumerable<double>> GetCoordinates(
                 LineString lineString)
             {
                 return lineString.Coordinates
                     .Select(GetCoordinates);
+            }
+
+            private static IEnumerable<IEnumerable<IEnumerable<double>>> GetCoordinates(
+                MultiLineString multiLineString)
+            {
+                return multiLineString.Geometries
+                    .Select(x => GetCoordinates((LineString)x));
             }
 
             private static IEnumerable<IEnumerable<IEnumerable<double>>> GetCoordinates(

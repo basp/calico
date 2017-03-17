@@ -7,7 +7,6 @@ namespace Calico
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.IO;
     using System.Linq;
 
     public static class GetDataSetResponseExtensions
@@ -69,15 +68,9 @@ namespace Calico
 
             foreach (var f in features)
             {
-                var values = f.OrderBy(x => x.AttributeIndex);
                 var row = table.NewRow();
                 foreach (var v in f)
                 {
-                    // TODO:
-                    // Validate invariant `providers.Count() == f.Count()`
-                    // In other words: make sure there's never more
-                    // `AttributeValues` than `Attribute` instances for a
-                    // given feature in a given data set.
                     var i = v.AttributeIndex;
                     row[i] = providers[i](v) ?? DBNull.Value;
                 }

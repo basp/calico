@@ -164,9 +164,9 @@ namespace Calico.Cmd
             new NewStyleAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
-        [ArgDescription("A method to execute experimental commands")]
-        public void Sandbox(SandboxArgs args) =>
-            new SandboxAction(ConnectionFactory).Execute(args);
+        [ArgDescription("Execute a query on the Calico graph.")]
+        public void GraphQL(GraphQLArgs args) =>
+            new GraphQLAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
         [ArgDescription("Scans a shapefile for information")]

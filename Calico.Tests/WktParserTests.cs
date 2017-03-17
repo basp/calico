@@ -68,8 +68,20 @@ namespace Calico.Tests
         [TestMethod]
         public void ParseImplicitMultiPoint()
         {
-            // var wkt = "MULTIPOINT (10 40, 40 30, 20 20, 30 10)";
-            // TODO: Who the @#$# thought this was a good idea?!
+            var wkt = "MULTIPOINT (10 40, 40 30, 20 20, 30 10)";
+            var res = Grammar.MultiPoint().Parse(wkt);
+
+            var p1 = res.Geometries.First();
+            var c1 = p1.Coordinates.First();
+
+            var p2 = res.Geometries.Skip(1).First();
+            var c2 = p2.Coordinates.First();
+
+            Assert.AreEqual(10, c1.Lon);
+            Assert.AreEqual(40, c1.Lat);
+
+            Assert.AreEqual(40, c2.Lon);
+            Assert.AreEqual(30, c2.Lat);
         }
 
         [TestMethod]

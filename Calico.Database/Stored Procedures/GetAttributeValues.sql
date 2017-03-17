@@ -9,4 +9,5 @@ SELECT
 	[LongValue],
 	[StringValue]
 FROM [dbo].[AttributeValues]
+WHERE [DataSetId] = @DataSetId
 ORDER BY [FeatureIndex], [AttributeIndex]

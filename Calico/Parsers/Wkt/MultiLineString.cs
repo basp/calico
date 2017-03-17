@@ -4,7 +4,6 @@
 
 namespace Calico.Parsers.Wkt
 {
-    using System;
     using System.Collections.Generic;
 
     public class MultiLineString : IGeometry
@@ -16,16 +15,12 @@ namespace Calico.Parsers.Wkt
             this.lineStrings = lineStrings;
         }
 
-        public static string Ident => 
-            nameof(MultiLineString).ToUpperInvariant();
+        public static string Ident => nameof(MultiLineString).ToUpperInvariant();
 
-        public GeometryType Type => 
-            throw new NotImplementedException();
+        public GeometryType Type => GeometryType.MultiLineString;
 
-        public IEnumerable<Coordinate> Coordinates => 
-            throw new NotImplementedException();
+        public IEnumerable<Coordinate> Coordinates => new Coordinate[0];
 
-        public IEnumerable<IGeometry> Geometries => 
-            throw new NotImplementedException();
+        public IEnumerable<IGeometry> Geometries => this.lineStrings;
     }
 }
