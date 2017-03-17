@@ -6,6 +6,7 @@ namespace Calico.Web
 {
     using System.Configuration;
     using System.Data.SqlClient;
+    using Calico.Data;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -62,6 +63,10 @@ namespace Calico.Web
             this.container.RegisterMvcControllers(app);
             this.container.RegisterSingleton(
                 app.ApplicationServices.GetService<ILoggerFactory>());
+
+            this.container.Register(
+                () => new CalicoContext(connectionString),
+                Lifestyle.Scoped);
 
             this.container.Register(
                 () => new SqlConnection(connectionString),

@@ -1,4 +1,4 @@
-﻿// <copyright file="AttributeValueType.cs" company="TMG">
+﻿// <copyright file="AttributeValue.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,9 +6,9 @@ namespace Calico.Cmd.Actions.GraphQL.Types
 {
     using global::GraphQL.Types;
 
-    public class AttributeValueType : ObjectGraphType<AttributeValueRecord>
+    public class AttributeValue : ObjectGraphType<AttributeValueRecord>
     {
-        public AttributeValueType(IRepository repository)
+        public AttributeValue(IRepository repository)
         {
             this.Field(x => x.DataSetId);
             this.Field(x => x.FeatureIndex);
@@ -17,7 +17,7 @@ namespace Calico.Cmd.Actions.GraphQL.Types
             this.Field(x => x.LongValue);
             this.Field(x => x.StringValue);
 
-            this.Field<DataSetType>(
+            this.Field<DataSet>(
                 name: "dataSet",
                 resolve: c => repository.GetDataSet(c.Source.DataSetId));
         }

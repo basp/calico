@@ -165,9 +165,6 @@ namespace Calico.Cmd
 
         [ArgActionMethod]
         [ArgDescription("Execute a GraphQL query on the Calico graph.")]
-        [ArgExample(
-            @"calico graphql 'query{featureType(id: 2){id name attributes{index name, dataType{id name sqlType bclType}}}}'",
-            "This stopped working suddenly...s")]
         public void GraphQL(GraphQLArgs args) =>
             new GraphQLAction(ConnectionFactory).Execute(args);
 

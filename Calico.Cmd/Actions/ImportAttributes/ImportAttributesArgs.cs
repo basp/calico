@@ -9,10 +9,12 @@ namespace Calico.Cmd
     public class ImportAttributesArgs
     {
         [ArgRequired]
+        [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.FeatureTypeId)]
         public int FeatureTypeId { get; set; }
 
         [ArgRequired]
+        [ArgPosition(2)]
         [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
     }

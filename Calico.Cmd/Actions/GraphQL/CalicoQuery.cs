@@ -11,7 +11,9 @@ namespace Calico.Cmd.Actions.GraphQL
     {
         public CalicoQuery(IRepository repository)
         {
-            this.Field<ClientType>(
+            this.Name = "Query";
+
+            this.Field<Client>(
                 name: "client",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>>()
@@ -21,7 +23,7 @@ namespace Calico.Cmd.Actions.GraphQL
                 resolve: c => repository.GetClient(
                     c.GetArgument<int>("id")));
 
-            this.Field<DataSetType>(
+            this.Field<DataSet>(
                 name: "dataSet",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>>()
@@ -31,7 +33,7 @@ namespace Calico.Cmd.Actions.GraphQL
                 resolve: c => repository.GetDataSet(
                     c.GetArgument<int>("id")));
 
-            this.Field<FeatureTypeType>(
+            this.Field<FeatureType>(
                 name: "featureType",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>>()
@@ -41,7 +43,7 @@ namespace Calico.Cmd.Actions.GraphQL
                 resolve: c => repository.GetFeatureType(
                     c.GetArgument<int>("id")));
 
-            this.Field<PlotType>(
+            this.Field<Plot>(
                 name: "plot",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>>()
@@ -51,11 +53,11 @@ namespace Calico.Cmd.Actions.GraphQL
                 resolve: c => repository.GetPlot(
                     c.GetArgument<int>("id")));
 
-            this.Field<ListGraphType<DataTypeType>>(
+            this.Field<ListGraphType<DataType>>(
                 name: "dataTypes",
                 resolve: c => repository.GetDataTypes());
 
-            this.Field<ListGraphType<ClientType>>(
+            this.Field<ListGraphType<Client>>(
                 name: "clients",
                 resolve: c => repository.GetClients(top: 100));
         }

@@ -10,6 +10,7 @@ namespace Calico.Cmd
     {
         [ArgRequired]
         [ArgPosition(1)]
+        [ArgDescription(DefaultArgDescriptions.Shapefile)]
         public string PathToShapefile { get; set; }
     }
 }

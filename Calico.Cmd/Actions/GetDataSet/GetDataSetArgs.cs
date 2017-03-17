@@ -10,6 +10,7 @@ namespace Calico.Cmd
     {
         [ArgRequired]
         [ArgPosition(1)]
+        [ArgDescription(DefaultArgDescriptions.DataSetId)]
         public int DataSetId { get; set; }
     }
 }

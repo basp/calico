@@ -21,6 +21,12 @@ namespace Calico.Web
                 x.CreateMap<DataSetRecord, DataSetModel>();
                 x.CreateMap<FeatureTypeRecord, FeatureTypeModel>();
                 x.CreateMap<PlotRecord, PlotModel>();
+
+                x.CreateMap<Data.Client, ClientModel>();
+                x.CreateMap<Data.DataType, DataTypeModel>();
+                x.CreateMap<Data.DataSet, DataSetModel>();
+                x.CreateMap<Data.Feature, FeatureModel>();
+                x.CreateMap<Data.FeatureType, FeatureTypeModel>();
             });
 
             var host = new WebHostBuilder()

@@ -7,48 +7,47 @@ namespace Calico.Web.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
+    using Calico.Data;
     using Microsoft.AspNetCore.Mvc;
     using Models;
 
     [Route("api/[controller]")]
     public class FeatureTypesController : Controller
     {
-        private readonly IRepository repository;
-        private readonly ISession session;
+        private readonly CalicoContext context;
 
-        public FeatureTypesController(ISession session, IRepository repository)
+        public FeatureTypesController(CalicoContext context)
         {
-            this.repository = repository;
-            this.session = session;
+            this.context = context;
+        }
+
+        [HttpGet]
+        [Route("client/{clientId}")]
+        public IEnumerable<FeatureTypeModel> GetByClient(int clientId)
+        {
+            var featureTypes = this.context.FeatureTypes
+                .Where(x => x.ClientId == clientId)
+                .ToList();
+
+            return featureTypes.Select(x => Mapper.Map<FeatureTypeModel>(x));
         }
 
         [HttpGet]
         public IEnumerable<FeatureTypeModel> Get()
         {
-            var cmd = new GetFeatureTypesCommand(this.repository);
-            var req = new GetFeatureTypesRequest
-            {
-                ClientId = 1,
-                Top = 100,
-            };
+            var featureTypes = this.context.FeatureTypes
+                .ToList();
 
-            var res = cmd.Execute(req);
-            return res.Match(
-                some => some.FeatureTypes.Select(x => Mapper.Map<FeatureTypeModel>(x)),
-                none => throw none);
+            return featureTypes.Select(x => Mapper.Map<FeatureTypeModel>(x));
         }
 
         [HttpGet("{id}")]
-        public PlotModel Get(int id)
+        public FeatureTypeModel Get(int id)
         {
-            var rec = this.repository.GetPlot(id);
-            return new PlotModel
-            {
-                Id = rec.Id,
-                ClientId = rec.ClientId,
-                Name = rec.Name,
-                Uri = string.Empty,
-            };
+            var featureType = this.context.FeatureTypes
+                .Single(x => x.Id == id);
+
+            return Mapper.Map<FeatureTypeModel>(featureType);
         }
     }
 }

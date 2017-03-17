@@ -5,11 +5,9 @@
 namespace Calico.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using AutoMapper;
+    using System.Net;
+    using System.Net.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Models;
 
     [Route("api/[controller]")]
     public class GraphController : Controller
@@ -24,9 +22,9 @@ namespace Calico.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<dynamic> Get()
+        public HttpResponseMessage Get()
         {
-            throw new NotImplementedException();
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

@@ -6,13 +6,17 @@ namespace Calico.Cmd.Actions.GraphQL.Types
 {
     using global::GraphQL.Types;
 
-    public class FeatureType : ObjectGraphType<FeatureRecord>
+    internal class FeatureType : ObjectGraphType<FeatureTypeRecord>
     {
         public FeatureType(IRepository repository)
         {
-            this.Field(x => x.DataSetId);
-            this.Field(x => x.Index);
-            this.Field(x => x.Wkt);
+            this.Field(x => x.Id);
+            this.Field(x => x.ClientId);
+            this.Field(x => x.Name);
+
+            this.Field<ListGraphType<Attribute>>(
+                name: "attributes",
+                resolve: c => repository.GetAttributes(c.Source.Id));
         }
     }
 }

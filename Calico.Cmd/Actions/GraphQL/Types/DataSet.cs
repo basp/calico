@@ -1,4 +1,4 @@
-﻿// <copyright file="DataSetType.cs" company="TMG">
+﻿// <copyright file="DataSet.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,9 +6,9 @@ namespace Calico.Cmd.Actions.GraphQL.Types
 {
     using global::GraphQL.Types;
 
-    internal class DataSetType : ObjectGraphType<DataSetRecord>
+    internal class DataSet : ObjectGraphType<DataSetRecord>
     {
-        public DataSetType(IRepository repository)
+        public DataSet(IRepository repository)
         {
             this.Field(x => x.Id);
             this.Field(x => x.PlotId);
@@ -16,15 +16,15 @@ namespace Calico.Cmd.Actions.GraphQL.Types
             this.Field(x => x.Name);
             this.Field(x => x.DateCreated);
 
-            this.Field<PlotType>(
+            this.Field<Plot>(
                 name: "plot",
                 resolve: c => repository.GetPlot(c.Source.PlotId));
 
-            this.Field<FeatureTypeType>(
+            this.Field<FeatureType>(
                 name: "featureType",
                 resolve: c => repository.GetFeatureType(c.Source.FeatureTypeId));
 
-            this.Field<ListGraphType<FeatureType>>(
+            this.Field<ListGraphType<Feature>>(
                 name: "features",
                 resolve: c => repository.GetFeatures(c.Source.Id));
         }

@@ -1,4 +1,4 @@
-﻿// <copyright file="AttributeType.cs" company="TMG">
+﻿// <copyright file="Attribute.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,15 +6,15 @@ namespace Calico.Cmd.Actions.GraphQL.Types
 {
     using global::GraphQL.Types;
 
-    public class AttributeType : ObjectGraphType<AttributeRecord>
+    public class Attribute : ObjectGraphType<AttributeRecord>
     {
-        public AttributeType(IRepository repository)
+        public Attribute(IRepository repository)
         {
             this.Field(x => x.Index);
             this.Field(x => x.Name);
             this.Field(x => x.DataTypeId);
 
-            this.Field<DataTypeType>(
+            this.Field<DataType>(
                 name: "dataType",
                 resolve: c => repository.GetDataType(c.Source.DataTypeId));
         }

@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.0" />
+    <PackageReference Include="EntityFramework" Version="6.1.3" />
     <PackageReference Include="GraphQL" Version="0.15.1.678" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
@@ -37,6 +38,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Calico.Data\Calico.Data.csproj" />
     <ProjectReference Include="..\Calico\Calico.csproj" />
   </ItemGroup>
   <ItemGroup>

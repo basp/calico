@@ -7,41 +7,35 @@ namespace Calico.Web.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
+    using Calico.Data;
     using Microsoft.AspNetCore.Mvc;
     using Models;
 
     [Route("api/[controller]")]
     public class ClientsController : Controller
     {
-        private readonly IRepository repository;
-        private readonly ISession session;
+        private readonly CalicoContext context;
 
-        public ClientsController(ISession session, IRepository repository)
+        public ClientsController(CalicoContext context)
         {
-            this.session = session;
-            this.repository = repository;
+            this.context = context;
         }
 
         [HttpGet]
         public IEnumerable<ClientModel> Get()
         {
-            var cmd = new GetClientsCommand(this.repository);
-            var req = new GetClientsRequest
-            {
-                Top = 100,
-            };
+            var clients = this.context.Clients
+                .ToList();
 
-            var res = cmd.Execute(req);
-
-            return res.Match(
-                some => some.Clients.Select(x => Mapper.Map<ClientModel>(x)),
-                none => throw none);
+            return clients.Select(x => Mapper.Map<ClientModel>(x));
         }
 
         [HttpGet("{id}")]
         public ClientModel Get(int id)
         {
-            var client = this.repository.GetClient(id);
+            var client = this.context.Clients
+                .Single(x => x.Id == id);
+
             return Mapper.Map<ClientModel>(client);
         }
     }

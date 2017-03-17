@@ -6,26 +6,31 @@ namespace Calico.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using AutoMapper;
+    using Calico.Data;
     using Microsoft.AspNetCore.Mvc;
     using Models;
 
     [Route("api/[controller]")]
     public class FeaturesController : Controller
     {
-        private readonly IRepository repository;
-        private readonly ISession session;
+        private readonly CalicoContext context;
 
-        public FeaturesController(ISession session, IRepository repository)
+        public FeaturesController(CalicoContext context)
         {
-            this.repository = repository;
-            this.session = session;
+            this.context = context;
         }
 
         [HttpGet]
-        [Route("")]
-        public IEnumerable<PlotModel> Get(int dataSetId)
+        [Route("dataset/{dataSetId}")]
+        public IEnumerable<FeatureModel> Get(int dataSetId)
         {
-            throw new NotImplementedException();
+            var features = this.context.Features
+                .Where(x => x.DataSetId == dataSetId)
+                .ToList();
+
+            return features.Select(x => Mapper.Map<FeatureModel>(x));
         }
     }
 }

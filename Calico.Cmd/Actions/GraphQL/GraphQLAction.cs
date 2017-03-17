@@ -10,6 +10,7 @@ namespace Calico.Cmd
     using GraphQL;
     using GraphQL.Http;
     using GraphQL.Types;
+    using Serilog;
     using SimpleInjector;
 
     public class GraphQLAction : IAction<GraphQLArgs>
@@ -25,6 +26,8 @@ namespace Calico.Cmd
 
         public async void Execute(GraphQLArgs args)
         {
+            Log.Information(args.Query);
+
             using (var conn = this.connectionFactory())
             using (var session = SqlSession.Open(conn))
             {
@@ -32,17 +35,17 @@ namespace Calico.Cmd
 
                 this.container.Register<IRepository>(() => repo);
                 this.container.Register<CalicoQuery>();
-                this.container.Register<Actions.GraphQL.Types.AttributeType>();
-                this.container.Register<Actions.GraphQL.Types.ClientType>();
-                this.container.Register<Actions.GraphQL.Types.DataSetType>();
-                this.container.Register<Actions.GraphQL.Types.DataTypeType>();
-                this.container.Register<Actions.GraphQL.Types.FeatureTypeType>();
-                this.container.Register<Actions.GraphQL.Types.PlotType>();
+                this.container.Register<Actions.GraphQL.Types.Attribute>();
+                this.container.Register<Actions.GraphQL.Types.Client>();
+                this.container.Register<Actions.GraphQL.Types.DataSet>();
+                this.container.Register<Actions.GraphQL.Types.DataType>();
+                this.container.Register<Actions.GraphQL.Types.FeatureType>();
+                this.container.Register<Actions.GraphQL.Types.Plot>();
 
                 var schema = new CalicoSchema(
                     x => (GraphType)this.container.GetInstance(x));
 
-                var q = args.Query;
+                var q = $"query{args.Query}";
                 var result = await new DocumentExecuter().ExecuteAsync(x =>
                 {
                     x.Schema = schema;

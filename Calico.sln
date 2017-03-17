@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Web", "Calico.Web\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Tests", "Calico.Tests\Calico.Tests.csproj", "{9D17AA4B-2810-40CC-AF14-104B89E95343}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calico.Data", "Calico.Data\Calico.Data.csproj", "{779E1A90-6300-4882-9755-DB2E833488D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{9D17AA4B-2810-40CC-AF14-104B89E95343}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D17AA4B-2810-40CC-AF14-104B89E95343}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D17AA4B-2810-40CC-AF14-104B89E95343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{779E1A90-6300-4882-9755-DB2E833488D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{779E1A90-6300-4882-9755-DB2E833488D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{779E1A90-6300-4882-9755-DB2E833488D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{779E1A90-6300-4882-9755-DB2E833488D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

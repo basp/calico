@@ -1,4 +1,4 @@
-﻿// <copyright file="PlotType.cs" company="TMG">
+﻿// <copyright file="Plot.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -6,15 +6,15 @@ namespace Calico.Cmd.Actions.GraphQL.Types
 {
     using global::GraphQL.Types;
 
-    internal class PlotType : ObjectGraphType<PlotRecord>
+    internal class Plot : ObjectGraphType<PlotRecord>
     {
-        public PlotType(IRepository repository)
+        public Plot(IRepository repository)
         {
             this.Field(x => x.Id);
             this.Field(x => x.Name);
             this.Field(x => x.Wkt);
 
-            this.Field<ListGraphType<DataSetType>>(
+            this.Field<ListGraphType<DataSet>>(
                 name: "dataSets",
                 resolve: c => repository.GetDataSets(c.Source.Id, top: 100));
         }
