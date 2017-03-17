@@ -21,6 +21,16 @@ namespace Calico.Cmd.Actions.GraphQL
                 resolve: c => repository.GetClient(
                     c.GetArgument<int>("id")));
 
+            this.Field<DataSetType>(
+                name: "dataSet",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IntGraphType>>()
+                    {
+                        Name = "id",
+                    }),
+                resolve: c => repository.GetDataSet(
+                    c.GetArgument<int>("id")));
+
             this.Field<FeatureTypeType>(
                 name: "featureType",
                 arguments: new QueryArguments(
