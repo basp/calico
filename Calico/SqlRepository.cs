@@ -26,7 +26,7 @@ namespace Calico
             return new SqlRepository(SqlSession.Open(conn));
         }
 
-        public int BulkCopyAttributes(IEnumerable<AttributeRecord> recs)
+        public virtual int BulkCopyAttributes(IEnumerable<AttributeRecord> recs)
         {
             var table = CreateAttributeTable();
             foreach (var a in recs)
@@ -42,7 +42,7 @@ namespace Calico
             return this.session.BulkCopy("Attributes", table);
         }
 
-        public int BulkCopyAttributeValues(IEnumerable<AttributeValueRecord> recs)
+        public virtual int BulkCopyAttributeValues(IEnumerable<AttributeValueRecord> recs)
         {
             var table = CreateAttributeValueTable();
             foreach (var v in recs)
@@ -73,7 +73,7 @@ namespace Calico
             return this.session.BulkCopy("AttributeValues", table);
         }
 
-        public int BulkCopyFeatures(IEnumerable<FeatureRecord> recs)
+        public virtual int BulkCopyFeatures(IEnumerable<FeatureRecord> recs)
         {
             var table = CreateFeatureTable();
             foreach (var f in recs)
@@ -90,7 +90,7 @@ namespace Calico
             return this.session.BulkCopy("Features", table);
         }
 
-        public int DeleteDataSet(int id)
+        public virtual int DeleteDataSet(int id)
         {
             var @param = new { Id = id };
             return this.session.Execute(
@@ -98,7 +98,7 @@ namespace Calico
                 @param);
         }
 
-        public int DeleteFeatureType(int id)
+        public virtual int DeleteFeatureType(int id)
         {
             var @param = new { Id = id };
             return this.session.Execute(
@@ -106,7 +106,7 @@ namespace Calico
                 @param);
         }
 
-        public int DeletePlot(int id)
+        public virtual int DeletePlot(int id)
         {
             var @param = new { Id = id };
             return this.session.Execute(
@@ -114,7 +114,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<AttributeRecord> GetAttributes(int featureTypeId)
+        public virtual IEnumerable<AttributeRecord> GetAttributes(int featureTypeId)
         {
             var @param = new { FeatureTypeId = featureTypeId };
             return this.session.Query<AttributeRecord>(
@@ -122,7 +122,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<AttributeValueRecord> GetAttributeValues(int dataSetId)
+        public virtual IEnumerable<AttributeValueRecord> GetAttributeValues(int dataSetId)
         {
             var @param = new { DataSetId = dataSetId };
             return this.session.Query<AttributeValueRecord>(
@@ -130,7 +130,7 @@ namespace Calico
                 @param);
         }
 
-        public ClientRecord GetClient(int id)
+        public virtual ClientRecord GetClient(int id)
         {
             var @param = new { Id = id };
             return this.session.QuerySingle<ClientRecord>(
@@ -138,7 +138,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<ClientRecord> GetClients(int top)
+        public virtual IEnumerable<ClientRecord> GetClients(int top)
         {
             var @param = new { Top = top };
             return this.session.Query<ClientRecord>(
@@ -146,7 +146,7 @@ namespace Calico
                 @param);
         }
 
-        public DataSetRecord GetDataSet(int id)
+        public virtual DataSetRecord GetDataSet(int id)
         {
             var @param = new { Id = id };
             return this.session.QuerySingle<DataSetRecord>(
@@ -154,7 +154,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<DataSetRecord> GetDataSets(int plotId, int top)
+        public virtual IEnumerable<DataSetRecord> GetDataSets(int plotId, int top)
         {
             var @param = new { PlotId = plotId, Top = top };
             return this.session.Query<DataSetRecord>(
@@ -162,13 +162,21 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<DataTypeRecord> GetDataTypes()
+        public virtual DataTypeRecord GetDataType(int id)
+        {
+            var @param = new { Id = id };
+            return this.session.QuerySingle<DataTypeRecord>(
+                nameof(this.GetDataType),
+                @param);
+        }
+
+        public virtual IEnumerable<DataTypeRecord> GetDataTypes()
         {
             return this.session.Query<DataTypeRecord>(
                 nameof(this.GetDataTypes));
         }
 
-        public IEnumerable<FeatureRecord> GetFeatures(int dataSetId)
+        public virtual IEnumerable<FeatureRecord> GetFeatures(int dataSetId)
         {
             var @param = new { DataSetId = dataSetId };
             return this.session.Query<FeatureRecord>(
@@ -176,7 +184,7 @@ namespace Calico
                 @param);
         }
 
-        public FeatureTypeRecord GetFeatureType(int id)
+        public virtual FeatureTypeRecord GetFeatureType(int id)
         {
             var @param = new { Id = id };
             return this.session.QuerySingle<FeatureTypeRecord>(
@@ -184,7 +192,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top)
+        public virtual IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int top)
         {
             var @param = new { ClientId = clientId, Top = top };
             return this.session.Query<FeatureTypeRecord>(
@@ -192,7 +200,7 @@ namespace Calico
                 @param);
         }
 
-        public PlotRecord GetPlot(int plotId)
+        public virtual PlotRecord GetPlot(int plotId)
         {
             var @param = new { PlotId = plotId };
             return this.session.QuerySingle<PlotRecord>(
@@ -200,7 +208,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<PlotRecord> GetPlots(int clientId, int top)
+        public virtual IEnumerable<PlotRecord> GetPlots(int clientId, int top)
         {
             var @param = new { ClientId = clientId, Top = top };
             return this.session.Query<PlotRecord>(
@@ -208,7 +216,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<PlotRecord> GetPlotsContainingGeometry(
+        public virtual IEnumerable<PlotRecord> GetPlotsContainingGeometry(
             int clientId,
             string wkt,
             int srid)
@@ -220,7 +228,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<StyleClassRecord> GetStyleClasses(int styleId)
+        public virtual IEnumerable<StyleClassRecord> GetStyleClasses(int styleId)
         {
             var @param = new { StyleId = styleId };
             return this.session.Query<StyleClassRecord>(
@@ -228,7 +236,7 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<StyleRecord> GetStyles(int featureTypeId)
+        public virtual IEnumerable<StyleRecord> GetStyles(int featureTypeId)
         {
             var @param = new { FeatureTypeId = featureTypeId };
             return this.session.Query<StyleRecord>(
@@ -236,13 +244,13 @@ namespace Calico
                 @param);
         }
 
-        public IEnumerable<StyleTypeRecord> GetStyleTypes()
+        public virtual IEnumerable<StyleTypeRecord> GetStyleTypes()
         {
             return this.session.Query<StyleTypeRecord>(
                 nameof(this.GetStyleTypes));
         }
 
-        public int InsertClient(ClientRecord rec)
+        public virtual int InsertClient(ClientRecord rec)
         {
             var @param = new { rec.Name };
             return this.session.Insert(
@@ -250,7 +258,7 @@ namespace Calico
                 @param);
         }
 
-        public int InsertDataSet(DataSetRecord rec)
+        public virtual int InsertDataSet(DataSetRecord rec)
         {
             var @param = new { rec.PlotId, rec.FeatureTypeId, rec.Name, rec.DateCreated };
             return this.session.Insert(
@@ -258,7 +266,7 @@ namespace Calico
                 @param);
         }
 
-        public int InsertDataType(DataTypeRecord rec)
+        public virtual int InsertDataType(DataTypeRecord rec)
         {
             var @param = new { rec.Name, rec.SqlType, rec.BclType };
             return this.session.Insert(
@@ -266,7 +274,7 @@ namespace Calico
                 @param);
         }
 
-        public int InsertFeatureType(FeatureTypeRecord rec)
+        public virtual int InsertFeatureType(FeatureTypeRecord rec)
         {
             var @param = new { rec.ClientId, rec.Name };
             return this.session.Insert(
@@ -274,7 +282,7 @@ namespace Calico
                 @param);
         }
 
-        public int InsertPlot(PlotRecord rec)
+        public virtual int InsertPlot(PlotRecord rec)
         {
             var geom = ValidSqlGeometryFromWkt(rec.Wkt, rec.SRID);
             var geog = ValidSqlGeographyFromWkt(rec.Wkt, rec.SRID);
@@ -292,7 +300,7 @@ namespace Calico
                 @param);
         }
 
-        public int InsertStyle(StyleRecord rec)
+        public virtual int InsertStyle(StyleRecord rec)
         {
             var @param = new
             {
@@ -307,7 +315,7 @@ namespace Calico
                 @param);
         }
 
-        public int InsertStyleClass(StyleClassRecord rec)
+        public virtual int InsertStyleClass(StyleClassRecord rec)
         {
             var @param = new
             {

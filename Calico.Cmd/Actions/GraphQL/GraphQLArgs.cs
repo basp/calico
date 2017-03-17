@@ -10,10 +10,6 @@ namespace Calico.Cmd
     {
         [ArgRequired]
         [ArgPosition(1)]
-        public int ClientId { get; set; }
-
-        [ArgRequired]
-        [ArgPosition(2)]
         public string Query { get; set; }
     }
 }

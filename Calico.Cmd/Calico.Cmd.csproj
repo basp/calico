@@ -126,6 +126,12 @@
     <Compile Include="Actions\GetStyles\GetStylesArgs.cs" />
     <Compile Include="Actions\GetStyleTypes\GetStyleTypesAction.cs" />
     <Compile Include="Actions\GetStyleTypes\GetStyleTypesArgs.cs" />
+    <Compile Include="Actions\GraphQL\Types\AttributeType.cs" />
+    <Compile Include="Actions\GraphQL\Types\AttributeValueType.cs" />
+    <Compile Include="Actions\GraphQL\Types\DataSetType.cs" />
+    <Compile Include="Actions\GraphQL\Types\DataTypeType.cs" />
+    <Compile Include="Actions\GraphQL\Types\FeatureType.cs" />
+    <Compile Include="Actions\GraphQL\Types\FeatureTypeType.cs" />
     <Compile Include="Actions\ImportAttributes\ImportAttributesAction.cs" />
     <Compile Include="Actions\ImportAttributes\ImportAttributesArgs.cs" />
     <Compile Include="Actions\ImportAttributeValues\ImportAttributeValuesAction.cs" />
@@ -152,8 +158,8 @@
     <Compile Include="Actions\NewPlot\NewPlotArgs.cs" />
     <Compile Include="Actions\NewStyle\NewStyleAction.cs" />
     <Compile Include="Actions\NewStyle\NewStyleArgs.cs" />
-    <Compile Include="Actions\GraphQL\Types\Client.cs" />
-    <Compile Include="Actions\GraphQL\Types\Plot.cs" />
+    <Compile Include="Actions\GraphQL\Types\ClientType.cs" />
+    <Compile Include="Actions\GraphQL\Types\PlotType.cs" />
     <Compile Include="Actions\GraphQL\GraphQLAction.cs" />
     <Compile Include="Actions\GraphQL\GraphQLArgs.cs" />
     <Compile Include="Actions\GraphQL\CalicoQuery.cs" />

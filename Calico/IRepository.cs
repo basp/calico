@@ -33,6 +33,8 @@ namespace Calico
 
         IEnumerable<DataSetRecord> GetDataSets(int plotId, int top);
 
+        DataTypeRecord GetDataType(int id);
+
         IEnumerable<DataTypeRecord> GetDataTypes();
 
         IEnumerable<FeatureRecord> GetFeatures(int dataSetId);

@@ -106,6 +106,7 @@
     <Build Include="Stored Procedures\GetStyleClasses.sql" />
     <Build Include="Stored Procedures\GetFeatures.sql" />
     <Build Include="Stored Procedures\GetAttributeValues.sql" />
+    <Build Include="Stored Procedures\GetDataType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeploy.sql" />
