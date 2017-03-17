@@ -9,13 +9,16 @@ namespace Calico.Cmd.Actions.GQ
 
     public class CalicoQuery : ObjectGraphType
     {
-        private const int ClientId = 1;
-
         public CalicoQuery(IRepository repository)
         {
             this.Field<Client>(
                 name: "client",
-                resolve: c => repository.GetClient(ClientId));
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IntGraphType>>()
+                    {
+                        Name = "id",
+                    }),
+                resolve: c => repository.GetClient(c.GetArgument<int>("id")));
         }
     }
 }
