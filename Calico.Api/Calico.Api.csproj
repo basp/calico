@@ -118,14 +118,14 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AttributesController.cs" />
-    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Controllers\DataSetsController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\PlotsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClientModel.cs" />
+    <Compile Include="Models\TenantModel.cs" />
     <Compile Include="Models\DataSetModel.cs" />
     <Compile Include="Models\DataTypeModel.cs" />
     <Compile Include="Models\FeatureModel.cs" />

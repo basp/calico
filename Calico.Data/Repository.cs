@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class EFRepository : IRepository
+    public class Repository : IRepository
     {
         private CalicoContext context;
 
-        public EFRepository(CalicoContext context)
+        public Repository(CalicoContext context)
         {
             this.context = context;
         }
@@ -75,22 +75,22 @@
                 });
         }
 
-        public ClientRecord GetClient(int id)
+        public TenantRecord GetTenant(int id)
         {
             var x = this.context.Clients.Single(y => y.Id == id);
-            return new ClientRecord
+            return new TenantRecord
             {
                 Id = x.Id,
                 Name = x.Name,
             };
         }
 
-        public IEnumerable<ClientRecord> GetClients(int top, int after = 0)
+        public IEnumerable<TenantRecord> GetTenants(int top, int after = 0)
         {
             return this.context.Clients
                 .Take(top)
                 .ToList()
-                .Select(x => new ClientRecord
+                .Select(x => new TenantRecord
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -197,7 +197,7 @@
             throw new NotImplementedException();
         }
 
-        public int InsertClient(ClientRecord rec)
+        public int InsertTenant(TenantRecord rec)
         {
             throw new NotImplementedException();
         }

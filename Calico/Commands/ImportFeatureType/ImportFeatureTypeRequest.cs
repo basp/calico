@@ -6,7 +6,7 @@ namespace Calico
 {
     public class ImportFeatureTypeRequest
     {
-        public int ClientId { get; set; }
+        public int TenantId { get; set; }
 
         public string Name { get; set; }
     }

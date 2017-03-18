@@ -8,6 +8,6 @@ namespace Calico
     {
         public int Top { get; set; }
 
-        public int ClientId { get; set; }
+        public int TenantId { get; set; }
     }
 }

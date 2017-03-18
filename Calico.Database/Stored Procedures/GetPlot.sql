@@ -3,7 +3,7 @@
 AS
 SELECT 
 	[Id], 
-	[ClientId], 
+	[TenantId], 
 	[Name], 
 	[Geometry].ToString() AS [Wkt],
 	[SRID]

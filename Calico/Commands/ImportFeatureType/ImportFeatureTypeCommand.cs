@@ -9,8 +9,6 @@ namespace Calico
     using Optional;
     using Optional.Linq;
 
-    using static Optional.Option;
-
     using Req = ImportFeatureTypeRequest;
     using Res = ImportFeatureTypeResponse;
 
@@ -31,10 +29,10 @@ namespace Calico
         {
             return from featureType in this.InsertFeatureType(req)
                    from attrs in this.ImportAttributes(featureType.Id, req)
-                   let client = this.repository.GetClient(req.ClientId)
+                   let tenant = this.repository.GetTenant(req.TenantId)
                    select new Res
                    {
-                       Client = client,
+                       Tenant = tenant,
                        FeatureType = featureType,
                        Attributes = attrs,
                    };
@@ -45,7 +43,7 @@ namespace Calico
             var cmd = new NewFeatureTypeCommand(this.repository);
             var res = cmd.Execute(new NewFeatureTypeRequest
             {
-                ClientId = req.ClientId,
+                TenantId = req.TenantId,
                 Name = req.Name,
             });
 

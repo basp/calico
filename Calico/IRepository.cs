@@ -5,7 +5,6 @@
 namespace Calico
 {
     using System.Collections.Generic;
-    using Optional;
 
     public interface IRepository
     {
@@ -25,9 +24,9 @@ namespace Calico
 
         IEnumerable<AttributeValueRecord> GetAttributeValues(int dataSetId);
 
-        ClientRecord GetClient(int id);
+        TenantRecord GetTenant(int id);
 
-        IEnumerable<ClientRecord> GetClients(int first, int after);
+        IEnumerable<TenantRecord> GetTenants(int first, int after);
 
         DataSetRecord GetDataSet(int id);
 
@@ -43,13 +42,13 @@ namespace Calico
 
         FeatureTypeRecord GetFeatureType(int id);
 
-        IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int first);
+        IEnumerable<FeatureTypeRecord> GetFeatureTypes(int tenantId, int first);
 
         PlotRecord GetPlot(int id);
 
-        IEnumerable<PlotRecord> GetPlots(int clientId, int first);
+        IEnumerable<PlotRecord> GetPlots(int tenantId, int first);
 
-        IEnumerable<PlotRecord> GetPlotsContainingGeometry(int clientId, string wkt, int srid);
+        IEnumerable<PlotRecord> GetPlotsContainingGeometry(int tenantId, string wkt, int srid);
 
         IEnumerable<StyleClassRecord> GetStyleClasses(int styleId);
 
@@ -57,7 +56,7 @@ namespace Calico
 
         IEnumerable<StyleTypeRecord> GetStyleTypes();
 
-        int InsertClient(ClientRecord rec);
+        int InsertTenant(TenantRecord rec);
 
         int InsertDataSet(DataSetRecord rec);
 

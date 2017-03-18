@@ -6,12 +6,12 @@ namespace Calico.Graph.Types
 {
     using GraphQL.Types;
 
-    public class Client : ObjectGraphType<ClientRecord>
+    public class Tenant : ObjectGraphType<TenantRecord>
     {
-        public Client(IRepository repository)
+        public Tenant(IRepository repository)
         {
-            this.Field(x => x.Id).Description("The id of the client.");
-            this.Field(x => x.Name).Description("The name of the client.");
+            this.Field(x => x.Id);
+            this.Field(x => x.Name);
 
             this.Field<ListGraphType<Plot>>(
                 name: "plots",

@@ -8,7 +8,7 @@ namespace Calico
 
     public class ImportFeatureTypeResponse
     {
-        public ClientRecord Client { get; set; }
+        public TenantRecord Tenant { get; set; }
 
         public FeatureTypeRecord FeatureType { get; set; }
 

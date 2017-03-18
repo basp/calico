@@ -12,7 +12,7 @@ namespace Calico.Graph.Types
         public FeatureType(IRepository repository)
         {
             this.Field(x => x.Id);
-            this.Field(x => x.ClientId);
+            this.Field(x => x.TenantId);
             this.Field(x => x.Name);
 
             this.Field<ListGraphType<Attribute>>(

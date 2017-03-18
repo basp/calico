@@ -33,11 +33,11 @@ namespace Calico.Cmd
                 {
                     session.Commit();
                     Log.Information(
-                        "Imported feature type {FeatureTypeName} ({FeatureTypeId}) for client {ClientName} ({ClientId})",
+                        "Imported feature type {FeatureTypeName} ({FeatureTypeId}) for tenant {TenantName} ({TenantId})",
                         x.FeatureType.Name,
                         x.FeatureType.Id,
-                        x.Client.Name,
-                        x.Client.Id);
+                        x.Tenant.Name,
+                        x.Tenant.Id);
                 });
 
                 res.MatchNone(x =>

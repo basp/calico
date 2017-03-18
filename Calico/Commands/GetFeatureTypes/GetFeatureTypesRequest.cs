@@ -6,7 +6,7 @@ namespace Calico
 {
     public class GetFeatureTypesRequest
     {
-        public int ClientId { get; set; }
+        public int TenantId { get; set; }
 
         public int Top { get; set; }
     }

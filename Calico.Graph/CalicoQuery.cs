@@ -9,14 +9,14 @@
         {
             this.Name = "Query";
 
-            this.Field<Client>(
-                name: "client",
+            this.Field<Tenant>(
+                name: "tenant",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>>()
                     {
                         Name = "id",
                     }),
-                resolve: c => repository.GetClient(
+                resolve: c => repository.GetTenant(
                     c.GetArgument<int>("id")));
 
             this.Field<DataSet>(
@@ -53,9 +53,9 @@
                 name: "dataTypes",
                 resolve: c => repository.GetDataTypes());
 
-            this.Field<ListGraphType<Client>>(
-                name: "clients",
-                resolve: c => repository.GetClients(
+            this.Field<ListGraphType<Tenant>>(
+                name: "tenants",
+                resolve: c => repository.GetTenants(
                     first: c.GetArgument("first", defaultValue: 100), after: 0));
         }
     }

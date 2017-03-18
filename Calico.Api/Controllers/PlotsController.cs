@@ -24,10 +24,10 @@
 
         [HttpGet]
         public IEnumerable<PlotModel> Get(
-            [FromUri] int clientId,
+            [FromUri] int tenantId,
             [FromUri] int first = 100)
         {
-            var recs = this.repository.GetPlots(clientId, first);
+            var recs = this.repository.GetPlots(tenantId, first);
             return Mapper.Map<IEnumerable<PlotModel>>(recs);
         }
 

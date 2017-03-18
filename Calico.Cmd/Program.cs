@@ -54,9 +54,9 @@ namespace Calico.Cmd
             new GetClassesAction().Execute(args);
 
         [ArgActionMethod]
-        [ArgDescription("Gets a list of clients")]
-        public void GetClients(GetClientsArgs args) =>
-            new GetClientsAction(ConnectionFactory).Execute(args);
+        [ArgDescription("Gets a list of tenants")]
+        public void GetTenants(GetTenantsArgs args) =>
+            new GetTenantsAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
         [ArgDescription("Gets the feature collection for the specified data set")]
@@ -134,9 +134,9 @@ namespace Calico.Cmd
             new ImportStyleAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
-        [ArgDescription("Creates a new client")]
-        public void NewClient(NewClientArgs args) =>
-            new NewClientAction(ConnectionFactory).Execute(args);
+        [ArgDescription("Creates a new tenant")]
+        public void NewTenant(NewTenantArgs args) =>
+            new NewTenantAction(ConnectionFactory).Execute(args);
 
         [ArgActionMethod]
         [ArgDescription("Creates a new data set")]
@@ -196,7 +196,7 @@ namespace Calico.Cmd
                 x.CreateMap<DeletePlotArgs, DeletePlotRequest>();
                 x.CreateMap<GetAttributesArgs, GetAttributesRequest>();
                 x.CreateMap<GetClassesArgs, GetClassesRequest>();
-                x.CreateMap<GetClientsArgs, GetClientsRequest>();
+                x.CreateMap<GetTenantsArgs, GetTenantsRequest>();
                 x.CreateMap<GetDataSetArgs, GetDataSetRequest>();
                 x.CreateMap<GetDataSetsArgs, GetDataSetsRequest>();
                 x.CreateMap<GetDataTypesArgs, GetDataTypesRequest>();
@@ -205,7 +205,7 @@ namespace Calico.Cmd
                 x.CreateMap<GetStatisticsArgs, GetStatisticsRequest>();
                 x.CreateMap<GetStylesArgs, GetStylesRequest>();
                 x.CreateMap<GetStyleTypesArgs, GetStyleTypesRequest>();
-                x.CreateMap<NewClientArgs, NewClientRequest>();
+                x.CreateMap<NewTenantArgs, NewTenantRequest>();
                 x.CreateMap<NewDataSetArgs, NewDataSetRequest>()
                     .ForMember(dest => dest.DateCreated, opt => opt.UseValue(DateTime.UtcNow));
                 x.CreateMap<NewDataTypeArgs, NewDataTypeRequest>();

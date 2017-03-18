@@ -10,8 +10,8 @@ namespace Calico.Cmd
     {
         [ArgRequired]
         [ArgPosition(1)]
-        [ArgDescription(DefaultArgDescriptions.ClientId)]
-        public int ClientId { get; set; }
+        [ArgDescription(DefaultArgDescriptions.TenantId)]
+        public int TenantId { get; set; }
 
         [ArgDefaultValue(50)]
         [ArgPosition(2)]

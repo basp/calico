@@ -33,7 +33,7 @@ namespace Calico
             {
                 return from features in this.featureCollectionProvider()
                        let first = features.Features.First()
-                       let rec = this.InsertPlot(req.ClientId, req.Name, first.Wkt, req.SRID)
+                       let rec = this.InsertPlot(req.TenantId, req.Name, first.Wkt, req.SRID)
                        select new Res { Plot = rec };
             }
             catch (Exception ex)
@@ -42,11 +42,11 @@ namespace Calico
             }
         }
 
-        private PlotRecord InsertPlot(int clientId, string name, string wkt, int srid)
+        private PlotRecord InsertPlot(int tenantId, string name, string wkt, int srid)
         {
             var rec = new PlotRecord
             {
-                ClientId = clientId,
+                TenantId = tenantId,
                 Name = name,
                 Wkt = wkt,
                 SRID = srid,

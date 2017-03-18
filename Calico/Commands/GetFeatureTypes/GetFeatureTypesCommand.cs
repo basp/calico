@@ -25,7 +25,7 @@ namespace Calico
         {
             try
             {
-                var featureTypes = this.repository.GetFeatureTypes(req.ClientId, req.Top);
+                var featureTypes = this.repository.GetFeatureTypes(req.TenantId, req.Top);
                 var res = new Res { FeatureTypes = featureTypes };
                 return Some<Res, Exception>(res);
             }

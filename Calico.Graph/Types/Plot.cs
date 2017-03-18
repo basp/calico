@@ -12,7 +12,7 @@ namespace Calico.Graph.Types
         {
             this.Field(x => x.Id);
             this.Field(x => x.Name);
-            this.Field(x => x.ClientId);
+            this.Field(x => x.TenantId);
             this.Field(x => x.Wkt);
 
             this.Field<ListGraphType<DataSet>>(

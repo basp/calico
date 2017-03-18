@@ -22,7 +22,7 @@
             Mapper.Initialize(x =>
             {
                 x.CreateMap<AttributeRecord, AttributeModel>();
-                x.CreateMap<ClientRecord, ClientModel>();
+                x.CreateMap<TenantRecord, TenantModel>();
                 x.CreateMap<DataSetRecord, DataSetModel>();
                 x.CreateMap<DataTypeRecord, DataTypeModel>();
                 x.CreateMap<FeatureRecord, FeatureModel>()
@@ -53,7 +53,7 @@
 
             container.Register<Attribute>(Lifestyle.Scoped);
             container.Register<AttributeValue>(Lifestyle.Scoped);
-            container.Register<Client>(Lifestyle.Scoped);
+            container.Register<Tenant>(Lifestyle.Scoped);
             container.Register<DataSet>(Lifestyle.Scoped);
             container.Register<DataType>(Lifestyle.Scoped);
             container.Register<Feature>(Lifestyle.Scoped);

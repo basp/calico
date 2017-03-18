@@ -1,13 +1,13 @@
 ﻿CREATE PROCEDURE [dbo].[GetPlotsContainingGeometry]
-	@ClientId int,
+	@TenantId int,
 	@Geometry geometry
 AS
 SELECT 
 	[Id], 
-	[ClientId], 
+	[TenantId], 
 	[Name], 
 	[Geometry].ToString() AS Wkt,
 	[SRID]
 FROM [dbo].[Plots]
-WHERE [ClientId ] = @ClientId
+WHERE [TenantId ] = @TenantId
 AND [Geometry].STContains(@Geometry) = 1

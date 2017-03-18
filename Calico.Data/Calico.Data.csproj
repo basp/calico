@@ -54,7 +54,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="DataSet.cs" />
     <Compile Include="DataType.cs" />
-    <Compile Include="EFRepository.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="FeatureType.cs" />
     <Compile Include="Plot.cs" />

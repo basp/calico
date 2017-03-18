@@ -117,8 +117,8 @@
     <Compile Include="Actions\DeletePlot\DeletePlotArgs.cs" />
     <Compile Include="Actions\GetAttributes\GetAttributesAction.cs" />
     <Compile Include="Actions\GetAttributes\GetAttributesArgs.cs" />
-    <Compile Include="Actions\GetClients\GetClientsAction.cs" />
-    <Compile Include="Actions\GetClients\GetClientsArgs.cs" />
+    <Compile Include="Actions\GetTenants\GetTenantsAction.cs" />
+    <Compile Include="Actions\GetTenants\GetTenantsArgs.cs" />
     <Compile Include="Actions\GetDataSets\GetDataSetsAction.cs" />
     <Compile Include="Actions\GetDataSets\GetDataSetsArgs.cs" />
     <Compile Include="Actions\GetDataSet\GetDataSetAction.cs" />
@@ -147,8 +147,8 @@
     <Compile Include="Actions\ImportPlot\ImportPlotArgs.cs" />
     <Compile Include="Actions\ImportStyle\ImportStyleAction.cs" />
     <Compile Include="Actions\ImportStyle\ImportStyleArgs.cs" />
-    <Compile Include="Actions\NewClient\NewClientAction.cs" />
-    <Compile Include="Actions\NewClient\NewClientArgs.cs" />
+    <Compile Include="Actions\NewClient\NewTenantAction.cs" />
+    <Compile Include="Actions\NewClient\NewTenantArgs.cs" />
     <Compile Include="Actions\NewDataSet\NewDataSetAction.cs" />
     <Compile Include="Actions\NewDataSet\NewDataSetArgs.cs" />
     <Compile Include="Actions\NewDataType\NewDataTypeAction.cs" />
@@ -171,7 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Calico.ps1" />
     <None Include="packages.config" />
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>

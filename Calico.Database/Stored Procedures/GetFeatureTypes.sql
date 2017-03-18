@@ -1,8 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[GetFeatureTypes]
-	@ClientId int,
+	@TenantId int,
 	@Top int
 AS
-SELECT TOP(@Top) [Id], [ClientId], [Name]
+SELECT TOP(@Top) 
+	[Id], 
+	[TenantId], 
+	[Name]
 FROM [dbo].[FeatureTypes]
-WHERE [ClientId] = @ClientId
+WHERE [TenantId] = @TenantId
 ORDER BY [Id]

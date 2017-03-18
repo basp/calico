@@ -25,7 +25,7 @@ namespace Calico
         {
             try
             {
-                var rec = this.InsertFeatureType(req.ClientId, req.Name);
+                var rec = this.InsertFeatureType(req.TenantId, req.Name);
                 var res = new Res { FeatureType = rec };
                 return Some<Res, Exception>(res);
             }
@@ -35,11 +35,11 @@ namespace Calico
             }
         }
 
-        private FeatureTypeRecord InsertFeatureType(int clientId, string name)
+        private FeatureTypeRecord InsertFeatureType(int tenantId, string name)
         {
             var rec = new FeatureTypeRecord
             {
-                ClientId = clientId,
+                TenantId = tenantId,
                 Name = name,
             };
 

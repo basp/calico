@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Tenants]
+(
+	[Id] INT NOT NULL IDENTITY(1,1),
+	[Name] NVARCHAR(MAX) NOT NULL, 
+    CONSTRAINT [PK_Tenants] PRIMARY KEY ([Id])
+)

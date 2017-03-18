@@ -1,4 +1,4 @@
-﻿// <copyright file="GetClientsAction.cs" company="TMG">
+﻿// <copyright file="GetTenantsAction.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -10,36 +10,36 @@ namespace Calico.Cmd
     using Newtonsoft.Json;
     using Serilog;
 
-    public class GetClientsAction : IAction<GetClientsArgs>
+    public class GetTenantsAction : IAction<GetTenantsArgs>
     {
         private readonly Func<SqlConnection> connectionFactory;
 
-        public GetClientsAction(Func<SqlConnection> connectionFactory)
+        public GetTenantsAction(Func<SqlConnection> connectionFactory)
         {
             this.connectionFactory = connectionFactory;
         }
 
-        public void Execute(GetClientsArgs args)
+        public void Execute(GetTenantsArgs args)
         {
             using (var conn = this.connectionFactory())
             using (var session = SqlSession.Open(conn))
             {
                 var repo = new SqlRepository(session);
-                var cmd = new GetClientsCommand(repo);
-                var req = Mapper.Map<GetClientsRequest>(args);
+                var cmd = new GetTenantsCommand(repo);
+                var req = Mapper.Map<GetTenantsRequest>(args);
                 var res = cmd.Execute(req);
 
                 res.MatchSome(x =>
                 {
                     session.Commit();
-                    var json = JsonConvert.SerializeObject(x.Clients);
+                    var json = JsonConvert.SerializeObject(x.Tenants);
                     Console.WriteLine(json);
                 });
 
                 res.MatchNone(x =>
                 {
                     session.Rollback();
-                    Log.Error(x, "Could not get clients");
+                    Log.Error(x, "Could not get tenants");
                 });
             }
         }

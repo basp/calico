@@ -6,7 +6,7 @@ namespace Calico
 {
     public class ScanShapefileRequest
     {
-        public int ClientId { get; set; }
+        public int TenantId { get; set; }
 
         public string PathToShapefile { get; set; }
 

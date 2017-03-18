@@ -1,8 +1,8 @@
 ﻿CREATE VIEW [Info].[DataSets]
 AS
 SELECT
-	Clients.Id AS ClientId,
-	Clients.[Name] AS ClientName,
+	Tenants.Id AS TenantId,
+	Tenants.[Name] AS TenantName,
 	Plots.Id AS PlotId,
 	Plots.[Name] AS PlotName,
 	FeatureTypes.Id AS FeatureTypeId,
@@ -14,5 +14,5 @@ INNER JOIN [dbo].Plots AS Plots
 	ON DataSets.PlotId = Plots.Id
 INNER JOIN [dbo].FeatureTypes AS FeatureTypes
 	ON DataSets.FeatureTypeId = FeatureTypes.Id
-INNER JOIN [dbo].Clients AS Clients
-	ON Plots.ClientId = Clients.Id
+INNER JOIN [dbo].Tenants AS Tenants
+	ON Plots.TenantId = Tenants.Id

@@ -44,7 +44,7 @@ namespace Calico
             var cmd = new NewPlotCommand(this.repository, this.featureCollectionProvider);
             var res = cmd.Execute(new NewPlotRequest
             {
-                ClientId = req.ClientId,
+                TenantId = req.TenantId,
                 Name = req.Name,
                 SRID = req.SRID,
             });

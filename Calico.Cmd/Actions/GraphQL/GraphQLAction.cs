@@ -33,7 +33,7 @@ namespace Calico.Cmd
                 this.container.Register<IRepository>(() => repo);
                 this.container.Register<CalicoQuery>();
                 this.container.Register<Graph.Types.Attribute>();
-                this.container.Register<Graph.Types.Client>();
+                this.container.Register<Graph.Types.Tenant>();
                 this.container.Register<Graph.Types.DataSet>();
                 this.container.Register<Graph.Types.DataType>();
                 this.container.Register<Graph.Types.FeatureType>();

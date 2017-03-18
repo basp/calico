@@ -1,13 +1,13 @@
 ﻿CREATE TABLE [dbo].[Plots]
 (
 	[Id] INT NOT NULL IDENTITY(1,1),
-	[ClientId] INT NOT NULL,
+	[TenantId] INT NOT NULL,
 	[Name] NVARCHAR(MAX) NOT NULL,
 	[Geometry] GEOMETRY NOT NULL, 
     [Geography] [sys].[geography] NOT NULL, 
     [SRID] INT NOT NULL, 
-    CONSTRAINT [FK_Plots_Clients] FOREIGN KEY ([ClientId]) 
-		REFERENCES [Clients]([Id]), 
+    CONSTRAINT [FK_Plots_Tenants] FOREIGN KEY ([TenantId]) 
+		REFERENCES [Tenants]([Id]), 
     CONSTRAINT [PK_Plots] PRIMARY KEY ([Id]) 
 )
 

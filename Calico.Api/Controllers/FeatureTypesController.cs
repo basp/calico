@@ -16,10 +16,10 @@
 
         [HttpGet]
         public IEnumerable<FeatureTypeModel> Get(
-            [FromUri] int clientId,
+            [FromUri] int tenantId,
             [FromUri] int first = 100)
         {
-            var recs = this.repository.GetFeatureTypes(clientId, first);
+            var recs = this.repository.GetFeatureTypes(tenantId, first);
             return Mapper.Map<IEnumerable<FeatureTypeModel>>(recs);
         }
     }

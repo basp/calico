@@ -1,13 +1,13 @@
 ﻿CREATE PROCEDURE [dbo].[GetPlots]
-	@ClientId int,
+	@TenantId int,
 	@Top int
 AS
 SELECT TOP(@Top) 
 	[Id], 
-	[ClientId], 
+	[TenantId], 
 	[Name], 
 	[Geometry].ToString() AS Wkt,
 	[SRID]
 FROM [dbo].[Plots]
-WHERE [ClientId] = @ClientId
+WHERE [TenantId] = @TenantId
 ORDER BY [Id]

@@ -3,7 +3,7 @@
 AS
 SELECT 
 	[Id], 
-	[ClientId], 
+	[TenantId], 
 	[Name]
 FROM [dbo].[FeatureTypes]
 WHERE [Id] = @Id

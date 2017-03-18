@@ -130,19 +130,19 @@ namespace Calico
                 @param);
         }
 
-        public virtual ClientRecord GetClient(int id)
+        public virtual TenantRecord GetTenant(int id)
         {
             var @param = new { Id = id };
-            return this.session.QuerySingle<ClientRecord>(
-                nameof(this.GetClient),
+            return this.session.QuerySingle<TenantRecord>(
+                nameof(this.GetTenant),
                 @param);
         }
 
-        public virtual IEnumerable<ClientRecord> GetClients(int first, int after = 0)
+        public virtual IEnumerable<TenantRecord> GetTenants(int first, int after = 0)
         {
             var @param = new { Top = first };
-            return this.session.Query<ClientRecord>(
-                nameof(this.GetClients),
+            return this.session.Query<TenantRecord>(
+                nameof(this.GetTenants),
                 @param);
         }
 
@@ -197,9 +197,9 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<FeatureTypeRecord> GetFeatureTypes(int clientId, int first)
+        public virtual IEnumerable<FeatureTypeRecord> GetFeatureTypes(int tenantId, int first)
         {
-            var @param = new { ClientId = clientId, Top = first };
+            var @param = new { TenantId = tenantId, Top = first };
             return this.session.Query<FeatureTypeRecord>(
                 nameof(this.GetFeatureTypes),
                 @param);
@@ -213,21 +213,21 @@ namespace Calico
                 @param);
         }
 
-        public virtual IEnumerable<PlotRecord> GetPlots(int clientId, int first)
+        public virtual IEnumerable<PlotRecord> GetPlots(int tenantId, int first)
         {
-            var @param = new { ClientId = clientId, Top = first };
+            var @param = new { TenantId = tenantId, Top = first };
             return this.session.Query<PlotRecord>(
                 nameof(this.GetPlots),
                 @param);
         }
 
         public virtual IEnumerable<PlotRecord> GetPlotsContainingGeometry(
-            int clientId,
+            int tenantId,
             string wkt,
             int srid)
         {
             var geometry = ValidSqlGeometryFromWkt(wkt, srid);
-            var @param = new { ClientId = clientId, Geometry = geometry };
+            var @param = new { TenantId = tenantId, Geometry = geometry };
             return this.session.Query<PlotRecord>(
                 nameof(this.GetPlotsContainingGeometry),
                 @param);
@@ -255,11 +255,11 @@ namespace Calico
                 nameof(this.GetStyleTypes));
         }
 
-        public virtual int InsertClient(ClientRecord rec)
+        public virtual int InsertTenant(TenantRecord rec)
         {
             var @param = new { rec.Name };
             return this.session.Insert(
-                nameof(this.InsertClient),
+                nameof(this.InsertTenant),
                 @param);
         }
 
@@ -281,7 +281,7 @@ namespace Calico
 
         public virtual int InsertFeatureType(FeatureTypeRecord rec)
         {
-            var @param = new { rec.ClientId, rec.Name };
+            var @param = new { rec.TenantId, rec.Name };
             return this.session.Insert(
                 nameof(this.InsertFeatureType),
                 @param);
@@ -293,7 +293,7 @@ namespace Calico
             var geog = ValidSqlGeographyFromWkt(rec.Wkt, rec.SRID);
             var @param = new
             {
-                rec.ClientId,
+                rec.TenantId,
                 rec.Name,
                 Geometry = geom,
                 Geography = geog,

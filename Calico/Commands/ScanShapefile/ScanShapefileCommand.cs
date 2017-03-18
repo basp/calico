@@ -36,7 +36,7 @@ namespace Calico
             try
             {
                 return from features in this.featureCollectionProvider()
-                       let featureTypes = this.GetMatchingFeatureTypes(req.ClientId, features.DataTable)
+                       let featureTypes = this.GetMatchingFeatureTypes(req.TenantId, features.DataTable)
                        let numberOfFeatures = features.Features.Count()
                        let cols = features.DataTable.Columns.Cast<DataColumn>()
                        let attributes = cols.Select(x => GetStatisticsCommand.GetStatistics(features.DataTable, x))
@@ -47,7 +47,7 @@ namespace Calico
                            NumberOfFeatures = numberOfFeatures,
                            Attributes = attributes,
                            FeatureTypes = featureTypes,
-                           Plots = this.GetMatchingPlots(req.ClientId, feature.Wkt, req.SRID),
+                           Plots = this.GetMatchingPlots(req.TenantId, feature.Wkt, req.SRID),
                        };
             }
             catch (Exception ex)
@@ -85,24 +85,24 @@ namespace Calico
         }
 
         private IEnumerable<PlotRecord> GetMatchingPlots(
-            int clientId,
+            int tenantId,
             string geometry,
             int srid)
         {
             return this.repository.GetPlotsContainingGeometry(
-                clientId,
+                tenantId,
                 geometry,
                 srid);
         }
 
         private IEnumerable<FeatureTypeRecord> GetMatchingFeatureTypes(
-            int clientId,
+            int tenantId,
             DataTable table)
         {
             var md5 = MD5.Create();
 
             var stack = this.repository
-                .GetFeatureTypes(clientId, 100)
+                .GetFeatureTypes(tenantId, 100)
                 .ToDictionary(x => this.ComputeHash(md5, x), x => x);
 
             var columns = table.Columns.Cast<DataColumn>().ToArray();

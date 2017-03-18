@@ -25,7 +25,7 @@ namespace Calico
         {
             try
             {
-                var plots = this.repository.GetPlots(req.ClientId, req.Top);
+                var plots = this.repository.GetPlots(req.TenantId, req.Top);
                 var res = new Res { Plots = plots };
                 return Some<Res, Exception>(res);
             }

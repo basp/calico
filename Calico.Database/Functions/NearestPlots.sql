@@ -6,7 +6,7 @@
 RETURNS @returntable TABLE
 (
 	[Id] int,
-	[ClientId] int,
+	[TenantId] int,
 	[Name] nvarchar(max),
 	[Wkt] nvarchar(max),
 	[Distance] float(53)
@@ -16,7 +16,7 @@ BEGIN
 	INSERT @returntable
 	SELECT TOP(@Top)
 		[Id],
-		[ClientId],
+		[TenantId],
 		[Name],
 		[Geometry].ToString() AS Wkt,
 		[Geography].STDistance(@Target)

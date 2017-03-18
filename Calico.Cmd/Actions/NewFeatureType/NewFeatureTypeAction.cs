@@ -42,9 +42,9 @@ namespace Calico.Cmd
                     session.Rollback();
                     Log.Error(
                         x,
-                        "Failed to create feature type {FeatureTypeName} for client {ClientId}",
+                        "Failed to create feature type {FeatureTypeName} for tenant {TenantId}",
                         req.Name,
-                        req.ClientId);
+                        req.TenantId);
                 });
             }
         }

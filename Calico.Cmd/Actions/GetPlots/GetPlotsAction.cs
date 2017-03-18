@@ -36,7 +36,7 @@ namespace Calico.Cmd
                     var plots = x.Plots.Select(y => new
                     {
                         y.Id,
-                        y.ClientId,
+                        y.TenantId,
                         y.Name,
                         Geometry = y.Wkt,
                         y.SRID,
@@ -51,8 +51,8 @@ namespace Calico.Cmd
                     session.Rollback();
                     Log.Error(
                         x,
-                        "Could not get plots for client {ClientId}",
-                        args.ClientId);
+                        "Could not get plots for tenant {TenantId}",
+                        args.TenantId);
                 });
             }
         }

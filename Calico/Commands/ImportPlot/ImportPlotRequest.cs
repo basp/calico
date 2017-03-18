@@ -8,7 +8,7 @@ namespace Calico
 
     public class ImportPlotRequest
     {
-        public int ClientId { get; set; }
+        public int TenantId { get; set; }
 
         public int FeatureTypeId { get; set; }
 

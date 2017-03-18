@@ -23,5 +23,5 @@ INSERT INTO [dbo].[StyleTypes] ([Name]) VALUES (N'Categorized')
 IF NOT EXISTS(SELECT [Id] FROM [dbo].StyleTypes WHERE [Name] = N'Graduated')
 INSERT INTO [dbo].[StyleTypes] ([Name]) VALUES (N'Graduated')
 
-IF NOT EXISTS(SELECT [Id] FROM [dbo].Clients WHERE [Id] = 1)
-INSERT INTO [dbo].[Clients] ([Name]) VALUES (N'System')
+IF NOT EXISTS(SELECT [Id] FROM [dbo].Tenants WHERE [Id] = 1)
+INSERT INTO [dbo].[Tenants] ([Name]) VALUES (N'System')

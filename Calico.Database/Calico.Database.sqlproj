@@ -64,7 +64,7 @@
     <Folder Include="Functions" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Clients.sql" />
+    <Build Include="Tables\Tenants.sql" />
     <Build Include="Tables\DataSets.sql" />
     <Build Include="Tables\Features.sql" />
     <Build Include="Tables\DataTypes.sql" />
@@ -77,7 +77,7 @@
     <Build Include="Stored Procedures\InsertPlot.sql" />
     <Build Include="Stored Procedures\InsertFeatureType.sql" />
     <Build Include="Stored Procedures\InsertDataSet.sql" />
-    <Build Include="Stored Procedures\GetClients.sql" />
+    <Build Include="Stored Procedures\GetTenants.sql" />
     <Build Include="Stored Procedures\GetPlots.sql" />
     <Build Include="Stored Procedures\GetDataSets.sql" />
     <Build Include="Stored Procedures\GetFeatureTypes.sql" />
@@ -87,7 +87,7 @@
     <Build Include="Stored Procedures\GetFeatureType.sql" />
     <Build Include="Stored Procedures\GetPlot.sql" />
     <Build Include="Stored Procedures\GetPlotsContainingGeometry.sql" />
-    <Build Include="Stored Procedures\GetClient.sql" />
+    <Build Include="Stored Procedures\GetTenant.sql" />
     <Build Include="Views\Info.DataSets.sql" />
     <Build Include="Scripts\CreateInfoSchema.sql" />
     <Build Include="Views\Info.Attributes.sql" />

@@ -1,10 +1,10 @@
 ﻿CREATE VIEW [Info].[FeatureTypes]
 AS 
 SELECT
-	Clients.Id AS ClientId,
-	Clients.[Name] AS ClientName,
+	Tenants.Id AS TenantId,
+	Tenants.[Name] AS TenantName,
 	FeatureTypes.Id AS FeatureTypeId,
 	FeatureTypes.[Name] AS FeatureTypeName
 FROM [dbo].[FeatureTypes] AS FeatureTypes
-INNER JOIN [dbo].[Clients] AS Clients
-	ON FeatureTypes.ClientId = Clients.Id
+INNER JOIN [dbo].Tenants AS Tenants
+	ON FeatureTypes.TenantId = Tenants.Id

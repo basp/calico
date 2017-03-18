@@ -11,7 +11,7 @@ namespace Calico.Cmd
         [ArgRequired]
         [ArgPosition(1)]
         [ArgDescription(DefaultArgDescriptions.PlotId)]
-        public int ClientId { get; set; }
+        public int TenantId { get; set; }
 
         [ArgRequired]
         [ArgPosition(2)]

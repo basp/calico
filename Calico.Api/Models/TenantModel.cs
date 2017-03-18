@@ -1,6 +1,6 @@
 ﻿namespace Calico.Api.Models
 {
-    public class ClientModel
+    public class TenantModel
     {
         public int Id { get; set; }
 

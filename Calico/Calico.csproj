@@ -117,7 +117,7 @@
     <Compile Include="Visualization\IColorRamp.cs" />
     <Compile Include="Visualization\NestedMeansClassifier.cs" />
     <Compile Include="Visualization\Normal.cs" />
-    <Compile Include="ClientRecord.cs" />
+    <Compile Include="TenantRecord.cs" />
     <Compile Include="Commands\GetCategories\GetCategoriesCommand.cs" />
     <Compile Include="Commands\GetCategories\GetCategoriesRequest.cs" />
     <Compile Include="Commands\GetCategories\GetCategoriesResponse.cs" />
@@ -136,9 +136,9 @@
     <Compile Include="Commands\GetAttributes\GetAttributesCommand.cs" />
     <Compile Include="Commands\GetAttributes\GetAttributesRequest.cs" />
     <Compile Include="Commands\GetAttributes\GetAttributesResponse.cs" />
-    <Compile Include="Commands\GetClients\GetClientsRequest.cs" />
-    <Compile Include="Commands\GetClients\GetClientsResponse.cs" />
-    <Compile Include="Commands\GetClients\GetClientsCommand.cs" />
+    <Compile Include="Commands\GetTenants\GetTenantsRequest.cs" />
+    <Compile Include="Commands\GetTenants\GetTenantsResponse.cs" />
+    <Compile Include="Commands\GetTenants\GetTenantsCommand.cs" />
     <Compile Include="Commands\GetDataSets\GetDataSetsCommand.cs" />
     <Compile Include="Commands\GetDataSets\GetDataSetsRequest.cs" />
     <Compile Include="Commands\GetDataSets\GetDataSetsResponse.cs" />
@@ -195,9 +195,9 @@
     <Compile Include="Visualization\CategorizingClassifier.cs" />
     <Compile Include="IClassifier.cs" />
     <Compile Include="ICommand.cs" />
-    <Compile Include="Commands\NewClient\NewClientCommand.cs" />
-    <Compile Include="Commands\NewClient\NewClientRequest.cs" />
-    <Compile Include="Commands\NewClient\NewClientResponse.cs" />
+    <Compile Include="Commands\NewTenant\NewTenantCommand.cs" />
+    <Compile Include="Commands\NewTenant\NewTenantRequest.cs" />
+    <Compile Include="Commands\NewTenant\NewTenantResponse.cs" />
     <Compile Include="Commands\NewPlot\NewPlotCommand.cs" />
     <Compile Include="Commands\NewPlot\NewPlotRequest.cs" />
     <Compile Include="Commands\NewPlot\NewPlotResponse.cs" />

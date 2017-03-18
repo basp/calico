@@ -6,8 +6,8 @@ namespace Calico
 {
     public static class DefaultArgDescriptions
     {
-        public const string ClientId =
-            @"The id of the client that owns the data";
+        public const string TenantId =
+            @"The id of the tenant that owns the data";
 
         public const string DataSetId =
             @"The id of the data set";
@@ -19,7 +19,7 @@ namespace Calico
             @"The id of the plot that the data is associated with";
 
         public const string Shapefile =
-            @"The full path to a shapefile file";
+            @"The path to a shapefile file";
 
         public const string SpatialReferenceSystem =
             @"The spatial reference system id (SRID) to use";

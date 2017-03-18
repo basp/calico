@@ -1,4 +1,4 @@
-﻿// <copyright file="GetClientsCommand.cs" company="TMG">
+﻿// <copyright file="GetTenantsCommand.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -9,14 +9,14 @@ namespace Calico
 
     using static Optional.Option;
 
-    using Req = GetClientsRequest;
-    using Res = GetClientsResponse;
+    using Req = GetTenantsRequest;
+    using Res = GetTenantsResponse;
 
-    public class GetClientsCommand : ICommand<Req, Res, Exception>
+    public class GetTenantsCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
 
-        public GetClientsCommand(IRepository repository)
+        public GetTenantsCommand(IRepository repository)
         {
             this.repository = repository;
         }
@@ -25,8 +25,8 @@ namespace Calico
         {
             try
             {
-                var clients = this.repository.GetClients(first: req.Top, after: 0);
-                var res = new Res { Clients = clients };
+                var tenants = this.repository.GetTenants(first: req.Top, after: 0);
+                var res = new Res { Tenants = tenants };
                 return Some<Res, Exception>(res);
             }
             catch (Exception ex)

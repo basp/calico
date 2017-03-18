@@ -1,4 +1,4 @@
-﻿// <copyright file="NewClientCommand.cs" company="TMG">
+﻿// <copyright file="NewTenantCommand.cs" company="TMG">
 // Copyright (c) TMG. All rights reserved.
 // </copyright>
 
@@ -9,14 +9,14 @@ namespace Calico
 
     using static Optional.Option;
 
-    using Req = NewClientRequest;
-    using Res = NewClientResponse;
+    using Req = NewTenantRequest;
+    using Res = NewTenantResponse;
 
-    public class NewClientCommand : ICommand<Req, Res, Exception>
+    public class NewTenantCommand : ICommand<Req, Res, Exception>
     {
         private readonly IRepository repository;
 
-        public NewClientCommand(IRepository repository)
+        public NewTenantCommand(IRepository repository)
         {
             this.repository = repository;
         }
@@ -25,8 +25,8 @@ namespace Calico
         {
             try
             {
-                var rec = this.InsertClient(req.Name);
-                var res = new Res { Client = rec };
+                var rec = this.InsertTenant(req.Name);
+                var res = new Res { Tenant = rec };
                 return Some<Res, Exception>(res);
             }
             catch (Exception ex)
@@ -35,14 +35,14 @@ namespace Calico
             }
         }
 
-        private ClientRecord InsertClient(string name)
+        private TenantRecord InsertTenant(string name)
         {
-            var rec = new ClientRecord
+            var rec = new TenantRecord
             {
                 Name = name,
             };
 
-            rec.Id = this.repository.InsertClient(rec);
+            rec.Id = this.repository.InsertTenant(rec);
             return rec;
         }
     }
