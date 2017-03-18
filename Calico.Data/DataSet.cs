@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class DataSet
     {
+        [Key]
         public int Id { get; set; }
 
         public int PlotId { get; set; }

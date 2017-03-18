@@ -6,11 +6,11 @@
     public class Attribute
     {
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 0)]
         public int FeatureTypeId { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         public int Index { get; set; }
 
         public int DataTypeId { get; set; }

@@ -77,7 +77,7 @@
 
         public TenantRecord GetTenant(int id)
         {
-            var x = this.context.Clients.Single(y => y.Id == id);
+            var x = this.context.Tenants.Single(y => y.Id == id);
             return new TenantRecord
             {
                 Id = x.Id,
@@ -87,7 +87,7 @@
 
         public IEnumerable<TenantRecord> GetTenants(int top, int after = 0)
         {
-            return this.context.Clients
+            return this.context.Tenants
                 .Take(top)
                 .ToList()
                 .Select(x => new TenantRecord

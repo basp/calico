@@ -5,6 +5,11 @@
 
     public class CalicoContext : DbContext
     {
+        public CalicoContext()
+            : this("Name=dev")
+        {
+        }
+
         public CalicoContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
@@ -14,7 +19,7 @@
 
         public virtual DbSet<AttributeValue> AttributeValues { get; set; }
 
-        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Tenant> Tenants { get; set; }
 
         public virtual DbSet<DataType> DataTypes { get; set; }
 

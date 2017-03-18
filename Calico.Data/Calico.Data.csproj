@@ -51,7 +51,7 @@
     <Compile Include="Attribute.cs" />
     <Compile Include="AttributeValue.cs" />
     <Compile Include="CalicoContext.cs" />
-    <Compile Include="Client.cs" />
+    <Compile Include="Tenant.cs" />
     <Compile Include="DataSet.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="Repository.cs" />
